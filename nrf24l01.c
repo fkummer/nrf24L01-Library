@@ -39,6 +39,22 @@ void init_SPI(){
     EnableINT1;
 }
 
+
+void nrf_write_reg_byte(char reg, char data){
+	_csn = 0; // begin transmission
+	status = rf_spiwrite(nrf24l01_W_REGISTER | reg); // send command to write reg
+	rf_spiwrite(data);
+	_csn = 1; // end transmission
+}
+
+
+char nrf_read_reg_byte(char reg){
+	_csn = 0;
+	status = rf_spiwrite(nrf24l01_R_REGISTER | reg); // send command to read register
+	return rf_spiwrite(nrf24l01_SEND_CLOCK); // send clock pulse to continue receiveing data
+	_csn = 1; // end transmission
+}
+
 // Read a register from the nrf24l01
 // reg is the array to read, len is the length of data expected to be received (1-5 bytes)
 // NOTE: only address 0 and 1 registers use 5 bytes all others use 1 byte 
