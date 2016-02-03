@@ -241,44 +241,86 @@ char rf_spiwrite(unsigned char c);
 
 void init_SPI();
 
-// Read a register from the nrf24l01
-// reg is the array to read, len is the length of data expected to be received (1-5 bytes)
-// NOTE: only address 0 and 1 registers use 5 bytes all others use 1 byte 
-// NOTE: writing or reading payload is done using a specific command
+/**
+   * Write a single byte to a register
+   *
+   * @param reg What register to write to.  Use constants in nrf24l01.h
+   * @param data What to write to the register
+   */
+void nrf_write_reg_byte(char reg, char data);
+
+/**
+   * Read a single byte from a register
+   *
+   * @param reg What register to read from.  Use constants in nrf24l01.h
+   * @return Data in the register.
+   */
+char nrf_read_reg_byte(char reg);
+
+/**
+   * Read a register and store the data in an array. Can be multiple bytes of data.
+   *
+   * @param reg What register to read from.  Use constants in nrf24l01.h
+   * @param buff Pointer to array to store data. LSB first.
+   * @param len How many bytes of data need to be read. 1 to 5 bytes.
+   */
 void nrf_read_reg(char reg, char * buff, int len);
 
-
+/**
+   * Write to a register from an array. Can be multiple bytes of data.
+   *
+   * @param reg What register to read from.  Use constants in nrf24l01.h
+   * @param buff Pointer to array to write data from. LSB first.
+   * @param len How many bytes of data to be written. (1-5bytes)
+   */
 void nrf_write_reg(char reg, char * data, char len);
 
-// flushes the tx FIFO
+/**
+   * Flush the TX FIFO.
+   */
 void nrf_flush_tx();
 
-
-// flushes the rx FIFO
-// NOTE: do not use while sending acknowledge
+/**
+   * Flush the RX FIFO.
+   */
 void nrf_flush_rx();
 
-
-// Write a payload to be sent over the radio
-// data: array of chars to be sent (1-32 chars/bytes)
-// len: amount of chars in array/bytes to be sent
-// NOT TESTED YET
+/**
+   * Write a payload to the TX FIFO. 
+   *
+   * @param data Pointer to data to be written.
+   * @param len How many bytes of data to be written. (1-32bytes)
+   */
 void nrf_write_payload(char * data, char len);
 
-// should read the payload into a buffer NOT TESTED YET
+/**
+   * Read a payload from the RX FIFO. 
+   *
+   * @param buff Pointer to array where data will be written.
+   */
 void nrf_read_payload(char * buff);
 
-//Sets the power up bit and waits for the startup time, putting the radio in Standby-I mode
+/**
+   * Sets the power up bit in the status register to leave the power down state.
+   */
 void nrf_pwrup();
 
-//Clear the pwr_up bit, transitioning to power down mode
+/**
+   * Clears the power up bit in the status register to enter the power down state.
+   */
 void nrf_pwrdown();
 
-//Transitions to rx mode from standby mode
+/**
+   * Sets PRIM_RX in status register and sets CE to transition to RX mode state from standby-I state.
+   */
 void nrf_rx_mode();
 
-//Transitions to tx mode from standby mode
+/**
+   * Clears PRIM_RX in status register and CE to transition to TX mode state from standby-I state if there is data in the TX FIFO.  
+   */
 void nrf_tx_mode();
+
+
 
 void nrf_standby_mode();
 
@@ -288,16 +330,35 @@ void nrf_standby_mode();
 // -6dBm: nrf24l01_RF_SETUP_RF_PWR_6
 // -12dBm: nrf24l01_RF_SETUP_RF_PWR_12
 // -18dBm: nrf24l01_RF_SETUP_RF_PWR_18
+/**
+   * Set power of transmitter.
+   *
+   * @param power Power level to set transmitter to.  Possible values are:
+   * 0dBm: nrf24l01_RF_SETUP_RF_PWR_0
+   *-6dBm: nrf24l01_RF_SETUP_RF_PWR_6
+   *-12dBm: nrf24l01_RF_SETUP_RF_PWR_12
+   *-18dBm: nrf24l01_RF_SETUP_RF_PWR_18
+   */
 void nrf_set_transmit_pwr(char power);
 
-// sets the rf data rate, possible values and definitoins for them are
-// 250 kbps: nrf24l01_DR_LOW
-// 1 Mbps: nrf24l01_DR_MED
-// 2 Mbps: nrf24l01_DR_HIGH
+/**
+   * Set data rate.
+   *
+   * @param rate Rate to set transmitter to.  Possible values are:
+   * 250 kbps: nrf24l01_DR_LOW
+   * 1 Mbps: nrf24l01_DR_MED
+   * 2 Mbps: nrf24l01_DR_HIGH
+   */
 void nrf_set_transmit_rate(char rate);
 
 // Sends out a specified payload (in auto acknowledge mode by default)
 // use after powering up radio, and setting address or other settings
+/**
+   * Send a payload over the radio.
+   *
+   * @param data Pointer to data to be sent.
+   * @param len How many bytes of data to be sent. (1-32bytes)
+   */
 void nrf_send_payload(char * data, int len);
 
 

@@ -39,7 +39,6 @@ void init_SPI(){
     EnableINT1;
 }
 
-
 void nrf_write_reg_byte(char reg, char data){
 	_csn = 0; // begin transmission
 	status = rf_spiwrite(nrf24l01_W_REGISTER | reg); // send command to write reg
