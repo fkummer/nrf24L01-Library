@@ -1,0 +1,822 @@
+\hypertarget{nrf24l01_8h}{}\section{nrf24l01.\+h File Reference}
+\label{nrf24l01_8h}\index{nrf24l01.\+h@{nrf24l01.\+h}}
+
+
+Library for use of the nrf24l01+ radio module with a P\+I\+C32.  
+
+
+{\ttfamily \#include $<$plib.\+h$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries \+\_\+\+S\+U\+P\+P\+R\+E\+S\+S\+\_\+\+P\+L\+I\+B\+\_\+\+W\+A\+R\+N\+I\+NG}~1\hypertarget{nrf24l01_8h_a0c5ad667ee8b3fc41e20f88fef4093d8}{}\label{nrf24l01_8h_a0c5ad667ee8b3fc41e20f88fef4093d8}
+
+\item 
+\#define {\bfseries S\+P\+I\+\_\+\+C\+H\+A\+N\+N\+EL}~2\hypertarget{nrf24l01_8h_aa8cbb3355883e35c18820bfa63c4ce3a}{}\label{nrf24l01_8h_aa8cbb3355883e35c18820bfa63c4ce3a}
+
+\item 
+\#define {\bfseries S\+DI}~R\+P\+A4\hypertarget{nrf24l01_8h_a9617ba9cce1470da68cda07de38b035a}{}\label{nrf24l01_8h_a9617ba9cce1470da68cda07de38b035a}
+
+\item 
+\#define {\bfseries S\+DO}~R\+P\+A2\hypertarget{nrf24l01_8h_a08e733edc95130b35f713014414851b7}{}\label{nrf24l01_8h_a08e733edc95130b35f713014414851b7}
+
+\item 
+\#define {\bfseries I\+RQ}~R\+P\+B10\hypertarget{nrf24l01_8h_a46fc8a17c0936cda0556a966cc2f62fb}{}\label{nrf24l01_8h_a46fc8a17c0936cda0556a966cc2f62fb}
+
+\item 
+\#define {\bfseries \+\_\+csn}~L\+A\+T\+Bbits.\+L\+A\+T\+B9\hypertarget{nrf24l01_8h_a6a99e9efbe2a7193a6813166ded4d21f}{}\label{nrf24l01_8h_a6a99e9efbe2a7193a6813166ded4d21f}
+
+\item 
+\#define {\bfseries T\+R\+I\+S\+\_\+csn}~T\+R\+I\+S\+Bbits.\+T\+R\+I\+S\+B9\hypertarget{nrf24l01_8h_a0f47fff17f0caf59f12499bf13ce60a3}{}\label{nrf24l01_8h_a0f47fff17f0caf59f12499bf13ce60a3}
+
+\item 
+\#define {\bfseries \+\_\+ce}~L\+A\+T\+Bbits.\+L\+A\+T\+B8\hypertarget{nrf24l01_8h_a61bc81751caf1c3b813031fced4b29e1}{}\label{nrf24l01_8h_a61bc81751caf1c3b813031fced4b29e1}
+
+\item 
+\#define {\bfseries T\+R\+I\+S\+\_\+ce}~T\+R\+I\+S\+Bbits.\+T\+R\+I\+S\+B8\hypertarget{nrf24l01_8h_a5c28679706f82955764ea0d80c7a1d62}{}\label{nrf24l01_8h_a5c28679706f82955764ea0d80c7a1d62}
+
+\item 
+\#define {\bfseries \+\_\+\+L\+E\+D\+R\+ED}~L\+A\+T\+Abits.\+L\+A\+T\+A0\hypertarget{nrf24l01_8h_a40154ae2797e0b39a8c4e0ae2fdba95c}{}\label{nrf24l01_8h_a40154ae2797e0b39a8c4e0ae2fdba95c}
+
+\item 
+\#define {\bfseries \+\_\+\+T\+R\+I\+S\+\_\+\+L\+E\+D\+R\+ED}~T\+R\+I\+S\+Abits.\+T\+R\+I\+S\+A0\hypertarget{nrf24l01_8h_a08b79481d150145d623d7acf011b9036}{}\label{nrf24l01_8h_a08b79481d150145d623d7acf011b9036}
+
+\item 
+\#define {\bfseries \+\_\+\+L\+E\+D\+Y\+E\+L\+L\+OW}~L\+A\+T\+Bbits.\+L\+A\+T\+B0\hypertarget{nrf24l01_8h_ae6879f85d1278401cbdfef9c4e7572e4}{}\label{nrf24l01_8h_ae6879f85d1278401cbdfef9c4e7572e4}
+
+\item 
+\#define {\bfseries \+\_\+\+T\+R\+I\+S\+\_\+\+L\+E\+D\+Y\+E\+L\+L\+OW}~T\+R\+I\+S\+Bbits.\+T\+R\+I\+S\+B0\hypertarget{nrf24l01_8h_a84e4a88db06851c594bb602604823133}{}\label{nrf24l01_8h_a84e4a88db06851c594bb602604823133}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+\_\+\+R\+E\+G\+I\+S\+T\+ER}~0x00\hypertarget{nrf24l01_8h_adb4b83c2cd72bab8601d97c1a569f0df}{}\label{nrf24l01_8h_adb4b83c2cd72bab8601d97c1a569f0df}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+W\+\_\+\+R\+E\+G\+I\+S\+T\+ER}~0x20\hypertarget{nrf24l01_8h_a874c786ef1da72f25f2e95b35f04b901}{}\label{nrf24l01_8h_a874c786ef1da72f25f2e95b35f04b901}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+\_\+\+R\+E\+G\+I\+S\+T\+E\+R\+\_\+\+W\+ID}~0x61\hypertarget{nrf24l01_8h_ad8f73804b4522f97384873ee547903f3}{}\label{nrf24l01_8h_ad8f73804b4522f97384873ee547903f3}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+\_\+\+R\+X\+\_\+\+P\+A\+Y\+L\+O\+AD}~0x61\hypertarget{nrf24l01_8h_a2e1eda1560834420445f0b2d5dbaf974}{}\label{nrf24l01_8h_a2e1eda1560834420445f0b2d5dbaf974}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+W\+\_\+\+T\+X\+\_\+\+P\+A\+Y\+L\+O\+AD}~0x\+A0\hypertarget{nrf24l01_8h_ad0d21b2e401e7acafcbdd77f1c221a1e}{}\label{nrf24l01_8h_ad0d21b2e401e7acafcbdd77f1c221a1e}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+F\+L\+U\+S\+H\+\_\+\+TX}~0x\+E1\hypertarget{nrf24l01_8h_ac37a5cba4ab4303fef17df3ee0c688bc}{}\label{nrf24l01_8h_ac37a5cba4ab4303fef17df3ee0c688bc}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+F\+L\+U\+S\+H\+\_\+\+RX}~0x\+E2\hypertarget{nrf24l01_8h_a8a4c8588e5cdf3560b54846debb3a3dc}{}\label{nrf24l01_8h_a8a4c8588e5cdf3560b54846debb3a3dc}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+E\+U\+S\+E\+\_\+\+T\+X\+\_\+\+PL}~0x\+E3\hypertarget{nrf24l01_8h_a8b3ad8cdfab9070d5c3cdb713e502d3b}{}\label{nrf24l01_8h_a8b3ad8cdfab9070d5c3cdb713e502d3b}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+N\+OP}~0x\+FF\hypertarget{nrf24l01_8h_aeb7640c9bf133feb3179cf00a046280b}{}\label{nrf24l01_8h_aeb7640c9bf133feb3179cf00a046280b}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+C\+O\+N\+F\+IG}~0x00\hypertarget{nrf24l01_8h_add4273b8bc2056aa86ce188881ad4d01}{}\label{nrf24l01_8h_add4273b8bc2056aa86ce188881ad4d01}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+AA}~0x01\hypertarget{nrf24l01_8h_adcc2126eb4eabeeef4b97dbc527c27bc}{}\label{nrf24l01_8h_adcc2126eb4eabeeef4b97dbc527c27bc}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+R\+X\+A\+D\+DR}~0x02\hypertarget{nrf24l01_8h_a5d0a5e55872d21c4b297eb067c3a8ec4}{}\label{nrf24l01_8h_a5d0a5e55872d21c4b297eb067c3a8ec4}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+AW}~0x03\hypertarget{nrf24l01_8h_a88c4b6f53604de003535fc7dcbed4b8f}{}\label{nrf24l01_8h_a88c4b6f53604de003535fc7dcbed4b8f}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+TR}~0x04\hypertarget{nrf24l01_8h_a2c06675ba968b092e28d5e5e7af20f8c}{}\label{nrf24l01_8h_a2c06675ba968b092e28d5e5e7af20f8c}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+F\+\_\+\+CH}~0x05\hypertarget{nrf24l01_8h_a0e0b5a1a5a16e3cfeeab8ee9dc10c7d0}{}\label{nrf24l01_8h_a0e0b5a1a5a16e3cfeeab8ee9dc10c7d0}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+UP}~0x06\hypertarget{nrf24l01_8h_a75e6eaf7b28fb273fbcb593c017d502f}{}\label{nrf24l01_8h_a75e6eaf7b28fb273fbcb593c017d502f}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+T\+A\+T\+US}~0x07\hypertarget{nrf24l01_8h_a0e74323de9aa40dd09a01901c0ce3b22}{}\label{nrf24l01_8h_a0e74323de9aa40dd09a01901c0ce3b22}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+O\+B\+S\+E\+R\+V\+E\+\_\+\+TX}~0x08\hypertarget{nrf24l01_8h_a1efd91e806061958b5640eb688ce5c4c}{}\label{nrf24l01_8h_a1efd91e806061958b5640eb688ce5c4c}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+CD}~0x09\hypertarget{nrf24l01_8h_ac7b3c1dba4c1aa61b134da143df7b84f}{}\label{nrf24l01_8h_ac7b3c1dba4c1aa61b134da143df7b84f}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+A\+D\+D\+R\+\_\+\+P0}~0x0A\hypertarget{nrf24l01_8h_ab85c1b269a076bd64fc658eeea29232d}{}\label{nrf24l01_8h_ab85c1b269a076bd64fc658eeea29232d}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+A\+D\+D\+R\+\_\+\+P1}~0x0B\hypertarget{nrf24l01_8h_a7a33dc8623f9e1fadc90e31306c2dc23}{}\label{nrf24l01_8h_a7a33dc8623f9e1fadc90e31306c2dc23}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+A\+D\+D\+R\+\_\+\+P2}~0x0C\hypertarget{nrf24l01_8h_af40d8d5789018e30347afa71a8d5f877}{}\label{nrf24l01_8h_af40d8d5789018e30347afa71a8d5f877}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+A\+D\+D\+R\+\_\+\+P3}~0x0D\hypertarget{nrf24l01_8h_a81efc42b2af4a2e362ebda8d52647cf0}{}\label{nrf24l01_8h_a81efc42b2af4a2e362ebda8d52647cf0}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+A\+D\+D\+R\+\_\+\+P4}~0x0E\hypertarget{nrf24l01_8h_ad6b5f81722069f237f9cd0e8f79cc207}{}\label{nrf24l01_8h_ad6b5f81722069f237f9cd0e8f79cc207}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+A\+D\+D\+R\+\_\+\+P5}~0x0F\hypertarget{nrf24l01_8h_ab3cf5fc990a22db1f6c5f322abdc390a}{}\label{nrf24l01_8h_ab3cf5fc990a22db1f6c5f322abdc390a}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+T\+X\+\_\+\+A\+D\+DR}~0x10\hypertarget{nrf24l01_8h_afe7c99dd29e51d9cc5fb7e97f2bc952c}{}\label{nrf24l01_8h_afe7c99dd29e51d9cc5fb7e97f2bc952c}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+P\+W\+\_\+\+P0}~0x11\hypertarget{nrf24l01_8h_a62076606c2fb8bf2b94f8eaa6f591c80}{}\label{nrf24l01_8h_a62076606c2fb8bf2b94f8eaa6f591c80}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+P\+W\+\_\+\+P1}~0x12\hypertarget{nrf24l01_8h_aaf37358a8f47e20e43e17e5e4356f580}{}\label{nrf24l01_8h_aaf37358a8f47e20e43e17e5e4356f580}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+P\+W\+\_\+\+P2}~0x13\hypertarget{nrf24l01_8h_a756db496a8945fc3d35c0cd0dc232bf6}{}\label{nrf24l01_8h_a756db496a8945fc3d35c0cd0dc232bf6}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+P\+W\+\_\+\+P3}~0x14\hypertarget{nrf24l01_8h_a5b946e809444f135ad1d32535b253d23}{}\label{nrf24l01_8h_a5b946e809444f135ad1d32535b253d23}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+P\+W\+\_\+\+P4}~0x15\hypertarget{nrf24l01_8h_a39c29d353fc926d407243de609a2b23a}{}\label{nrf24l01_8h_a39c29d353fc926d407243de609a2b23a}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+P\+W\+\_\+\+P5}~0x16\hypertarget{nrf24l01_8h_a09cf1ba0ddb395bde99ca4e4c646d2ea}{}\label{nrf24l01_8h_a09cf1ba0ddb395bde99ca4e4c646d2ea}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+F\+I\+F\+O\+\_\+\+S\+T\+A\+T\+US}~0x17\hypertarget{nrf24l01_8h_a666de65e852fb8e16936f8424a805790}{}\label{nrf24l01_8h_a666de65e852fb8e16936f8424a805790}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+R\+E\+S\+E\+R\+V\+ED}~0x80\hypertarget{nrf24l01_8h_a82741425888fb0a5d57a5a741c31824b}{}\label{nrf24l01_8h_a82741425888fb0a5d57a5a741c31824b}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+M\+A\+S\+K\+\_\+\+R\+X\+\_\+\+DR}~0x40\hypertarget{nrf24l01_8h_a12a5217f6cbc240b84bd41792909c9c6}{}\label{nrf24l01_8h_a12a5217f6cbc240b84bd41792909c9c6}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+M\+A\+S\+K\+\_\+\+T\+X\+\_\+\+DS}~0x20\hypertarget{nrf24l01_8h_a65aa284334b9744b998a6c4ba5ce6eb5}{}\label{nrf24l01_8h_a65aa284334b9744b998a6c4ba5ce6eb5}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+M\+A\+S\+K\+\_\+\+M\+A\+X\+\_\+\+RT}~0x10\hypertarget{nrf24l01_8h_a46a50b2723180f0616f94535c9189dae}{}\label{nrf24l01_8h_a46a50b2723180f0616f94535c9189dae}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+E\+N\+\_\+\+C\+RC}~0x08\hypertarget{nrf24l01_8h_a006f6ec1b7a59343cc6baddaf9a20c20}{}\label{nrf24l01_8h_a006f6ec1b7a59343cc6baddaf9a20c20}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+C\+R\+CO}~0x04\hypertarget{nrf24l01_8h_af9fa0421eb63410cbb096687a7a616f9}{}\label{nrf24l01_8h_af9fa0421eb63410cbb096687a7a616f9}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+P\+W\+R\+\_\+\+UP}~0x02\hypertarget{nrf24l01_8h_a85bea228bbdb418cb14fd8dd851a9f38}{}\label{nrf24l01_8h_a85bea228bbdb418cb14fd8dd851a9f38}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+P\+R\+I\+M\+\_\+\+RX}~0x01\hypertarget{nrf24l01_8h_a013ca87d164db3377327ffd1688b9c92}{}\label{nrf24l01_8h_a013ca87d164db3377327ffd1688b9c92}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+A\+A\+\_\+\+R\+E\+S\+E\+R\+V\+ED}~0x\+C0\hypertarget{nrf24l01_8h_ae4798050ca3763f1aa6bfc51ee1ebeff}{}\label{nrf24l01_8h_ae4798050ca3763f1aa6bfc51ee1ebeff}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+A\+A\+\_\+\+E\+N\+A\+A\+\_\+\+A\+LL}~0x3F\hypertarget{nrf24l01_8h_aa2c4e937053cd8c48780c1fe33fa0cf2}{}\label{nrf24l01_8h_aa2c4e937053cd8c48780c1fe33fa0cf2}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+A\+A\+\_\+\+E\+N\+A\+A\+\_\+\+P5}~0x20\hypertarget{nrf24l01_8h_a11a344f5b1005744224bd7aebd8524ac}{}\label{nrf24l01_8h_a11a344f5b1005744224bd7aebd8524ac}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+A\+A\+\_\+\+E\+N\+A\+A\+\_\+\+P4}~0x10\hypertarget{nrf24l01_8h_aa9680a9574a72698424d616e5e61450a}{}\label{nrf24l01_8h_aa9680a9574a72698424d616e5e61450a}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+A\+A\+\_\+\+E\+N\+A\+A\+\_\+\+P3}~0x08\hypertarget{nrf24l01_8h_aca73dfb64c1fe1eeecc9157c4a759b01}{}\label{nrf24l01_8h_aca73dfb64c1fe1eeecc9157c4a759b01}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+A\+A\+\_\+\+E\+N\+A\+A\+\_\+\+P2}~0x04\hypertarget{nrf24l01_8h_a7bc65a53361a06c55c662587ae34e2de}{}\label{nrf24l01_8h_a7bc65a53361a06c55c662587ae34e2de}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+A\+A\+\_\+\+E\+N\+A\+A\+\_\+\+P1}~0x02\hypertarget{nrf24l01_8h_afdb4e1eb96d18c8fbc8d78dbae3cf8d3}{}\label{nrf24l01_8h_afdb4e1eb96d18c8fbc8d78dbae3cf8d3}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+A\+A\+\_\+\+E\+N\+A\+A\+\_\+\+P0}~0x01\hypertarget{nrf24l01_8h_af1f667ccd6ec9996c97d272be79ba502}{}\label{nrf24l01_8h_af1f667ccd6ec9996c97d272be79ba502}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+A\+A\+\_\+\+E\+N\+A\+A\+\_\+\+N\+O\+NE}~0x00\hypertarget{nrf24l01_8h_aa86102590eb9efe4dc730d305f32fa5e}{}\label{nrf24l01_8h_aa86102590eb9efe4dc730d305f32fa5e}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+R\+X\+A\+D\+D\+R\+\_\+\+R\+E\+S\+E\+R\+V\+ED}~0x\+C0\hypertarget{nrf24l01_8h_a7cfbd0d457b4d0b5d6d3062c442afa1f}{}\label{nrf24l01_8h_a7cfbd0d457b4d0b5d6d3062c442afa1f}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+R\+X\+A\+D\+D\+R\+\_\+\+E\+R\+X\+\_\+\+A\+LL}~0x3F\hypertarget{nrf24l01_8h_a855c2a51081917923b46836d7769ec9a}{}\label{nrf24l01_8h_a855c2a51081917923b46836d7769ec9a}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+R\+X\+A\+D\+D\+R\+\_\+\+E\+R\+X\+\_\+\+P5}~0x20\hypertarget{nrf24l01_8h_a9d2706e096ee7d66b6cfb2a35255cda1}{}\label{nrf24l01_8h_a9d2706e096ee7d66b6cfb2a35255cda1}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+R\+X\+A\+D\+D\+R\+\_\+\+E\+R\+X\+\_\+\+P4}~0x10\hypertarget{nrf24l01_8h_a45cb727fe8e49e86eebf9dde60325728}{}\label{nrf24l01_8h_a45cb727fe8e49e86eebf9dde60325728}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+R\+X\+A\+D\+D\+R\+\_\+\+E\+R\+X\+\_\+\+P3}~0x08\hypertarget{nrf24l01_8h_a23bb4e9d08aff511fa450a48d9b14303}{}\label{nrf24l01_8h_a23bb4e9d08aff511fa450a48d9b14303}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+R\+X\+A\+D\+D\+R\+\_\+\+E\+R\+X\+\_\+\+P2}~0x04\hypertarget{nrf24l01_8h_a2ba8e6646cc1f88d5e41ba0ca8494e08}{}\label{nrf24l01_8h_a2ba8e6646cc1f88d5e41ba0ca8494e08}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+R\+X\+A\+D\+D\+R\+\_\+\+E\+R\+X\+\_\+\+P1}~0x02\hypertarget{nrf24l01_8h_aa809887d0fe9cb02209e66e93659ef46}{}\label{nrf24l01_8h_aa809887d0fe9cb02209e66e93659ef46}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+R\+X\+A\+D\+D\+R\+\_\+\+E\+R\+X\+\_\+\+P0}~0x01\hypertarget{nrf24l01_8h_a7c408aee98f6a0739340f9f07840b390}{}\label{nrf24l01_8h_a7c408aee98f6a0739340f9f07840b390}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+E\+N\+\_\+\+R\+X\+A\+D\+D\+R\+\_\+\+E\+R\+X\+\_\+\+N\+O\+NE}~0x00\hypertarget{nrf24l01_8h_aff4c642f836f08d033fe16d3eba0c733}{}\label{nrf24l01_8h_aff4c642f836f08d033fe16d3eba0c733}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+A\+W\+\_\+\+R\+E\+S\+E\+R\+V\+ED}~0x\+FC\hypertarget{nrf24l01_8h_a48e17f256f0cbe4e8a1cc354b53c1797}{}\label{nrf24l01_8h_a48e17f256f0cbe4e8a1cc354b53c1797}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+AW}~0x03\hypertarget{nrf24l01_8h_a88c4b6f53604de003535fc7dcbed4b8f}{}\label{nrf24l01_8h_a88c4b6f53604de003535fc7dcbed4b8f}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+A\+W\+\_\+5\+B\+Y\+T\+ES}~0x03\hypertarget{nrf24l01_8h_a263d5db5a18037fc2685819e7d141f7b}{}\label{nrf24l01_8h_a263d5db5a18037fc2685819e7d141f7b}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+A\+W\+\_\+4\+B\+Y\+T\+ES}~0x02\hypertarget{nrf24l01_8h_ac8f8b396f2f41482003009bb10967430}{}\label{nrf24l01_8h_ac8f8b396f2f41482003009bb10967430}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+A\+W\+\_\+3\+B\+Y\+T\+ES}~0x01\hypertarget{nrf24l01_8h_a2d8877db3e88cd20e751951c6bbf2764}{}\label{nrf24l01_8h_a2d8877db3e88cd20e751951c6bbf2764}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+A\+W\+\_\+\+I\+L\+L\+E\+G\+AL}~0x00\hypertarget{nrf24l01_8h_a5cd34c821dd384797bcc00eb988525e2}{}\label{nrf24l01_8h_a5cd34c821dd384797bcc00eb988525e2}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+RD}~0x\+F0\hypertarget{nrf24l01_8h_ace902f76eaf8b266743c13e9cd2e134d}{}\label{nrf24l01_8h_ace902f76eaf8b266743c13e9cd2e134d}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+D\+\_\+4000}~0x\+F0\hypertarget{nrf24l01_8h_a2246f6fc7917230635185ad314a74fdc}{}\label{nrf24l01_8h_a2246f6fc7917230635185ad314a74fdc}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+D\+\_\+3750}~0x\+E0\hypertarget{nrf24l01_8h_a730240974962dbea7a28d36ce9d1d6b2}{}\label{nrf24l01_8h_a730240974962dbea7a28d36ce9d1d6b2}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+D\+\_\+3500}~0x\+D0\hypertarget{nrf24l01_8h_ac72fbbfdd06d16fbe0f2c027a2626c70}{}\label{nrf24l01_8h_ac72fbbfdd06d16fbe0f2c027a2626c70}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+D\+\_\+3250}~0x\+C0\hypertarget{nrf24l01_8h_a474964c06bf37217d79d478e1cf0ab8f}{}\label{nrf24l01_8h_a474964c06bf37217d79d478e1cf0ab8f}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+D\+\_\+3000}~0x\+B0\hypertarget{nrf24l01_8h_a0e04f85ed50366f93bf11dc5aeffb7ef}{}\label{nrf24l01_8h_a0e04f85ed50366f93bf11dc5aeffb7ef}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+D\+\_\+2750}~0x\+A0\hypertarget{nrf24l01_8h_a0853a5cc22bb08f5053afb883b6f07ef}{}\label{nrf24l01_8h_a0853a5cc22bb08f5053afb883b6f07ef}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+D\+\_\+2500}~0x90\hypertarget{nrf24l01_8h_a8acec6bcb5b6bb93cd7694f7f03a3cec}{}\label{nrf24l01_8h_a8acec6bcb5b6bb93cd7694f7f03a3cec}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+D\+\_\+2250}~0x80\hypertarget{nrf24l01_8h_a0c3ae31e72b76ee9c037482154a45580}{}\label{nrf24l01_8h_a0c3ae31e72b76ee9c037482154a45580}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+D\+\_\+2000}~0x70\hypertarget{nrf24l01_8h_ad7dc9a291495aa9bfb3243087870bd2c}{}\label{nrf24l01_8h_ad7dc9a291495aa9bfb3243087870bd2c}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+D\+\_\+1750}~0x60\hypertarget{nrf24l01_8h_af50c9b6a2b79a4ac5ae32973b0d33633}{}\label{nrf24l01_8h_af50c9b6a2b79a4ac5ae32973b0d33633}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+D\+\_\+1500}~0x50\hypertarget{nrf24l01_8h_adc1c61dca5df373f703f0cd122088731}{}\label{nrf24l01_8h_adc1c61dca5df373f703f0cd122088731}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+D\+\_\+1250}~0x40\hypertarget{nrf24l01_8h_a9874eea7f9280195f39b79fb28412e47}{}\label{nrf24l01_8h_a9874eea7f9280195f39b79fb28412e47}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+D\+\_\+1000}~0x30\hypertarget{nrf24l01_8h_a6559260f0ef25edf11189b129bc13264}{}\label{nrf24l01_8h_a6559260f0ef25edf11189b129bc13264}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+D\+\_\+750}~0x20\hypertarget{nrf24l01_8h_aa8f3a9af3bdaaf26d9071e804c3c83a3}{}\label{nrf24l01_8h_aa8f3a9af3bdaaf26d9071e804c3c83a3}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+D\+\_\+500}~0x10\hypertarget{nrf24l01_8h_a13cab21443433f3b444d542f5f333882}{}\label{nrf24l01_8h_a13cab21443433f3b444d542f5f333882}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+D\+\_\+250}~0x00\hypertarget{nrf24l01_8h_a72a4be6149b353de5530724e6cca1da3}{}\label{nrf24l01_8h_a72a4be6149b353de5530724e6cca1da3}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+RC}~0x0F\hypertarget{nrf24l01_8h_acd603fdfd137a9bed98ea121ee938c00}{}\label{nrf24l01_8h_acd603fdfd137a9bed98ea121ee938c00}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+C\+\_\+15}~0x0F\hypertarget{nrf24l01_8h_ad2913bcf57106f267800ff5a282b7aaf}{}\label{nrf24l01_8h_ad2913bcf57106f267800ff5a282b7aaf}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+C\+\_\+14}~0x0E\hypertarget{nrf24l01_8h_aba667eeaac1c0d8182975b85d64c251e}{}\label{nrf24l01_8h_aba667eeaac1c0d8182975b85d64c251e}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+C\+\_\+13}~0x0D\hypertarget{nrf24l01_8h_a56942c7f519c4fdd601b3b0fde1f309f}{}\label{nrf24l01_8h_a56942c7f519c4fdd601b3b0fde1f309f}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+C\+\_\+12}~0x0C\hypertarget{nrf24l01_8h_ab928c061972983d9ff03381a2890583a}{}\label{nrf24l01_8h_ab928c061972983d9ff03381a2890583a}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+C\+\_\+11}~0x0B\hypertarget{nrf24l01_8h_a592ed51b7cd8c11b8517daf798a2f16a}{}\label{nrf24l01_8h_a592ed51b7cd8c11b8517daf798a2f16a}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+C\+\_\+10}~0x0A\hypertarget{nrf24l01_8h_a483410d01b0fc7c0842f87b9fba298b7}{}\label{nrf24l01_8h_a483410d01b0fc7c0842f87b9fba298b7}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+C\+\_\+9}~0x09\hypertarget{nrf24l01_8h_ae25727300436211fcb5fa872749d50cb}{}\label{nrf24l01_8h_ae25727300436211fcb5fa872749d50cb}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+C\+\_\+8}~0x08\hypertarget{nrf24l01_8h_a183cd5c966b065e65b549345908cdd2c}{}\label{nrf24l01_8h_a183cd5c966b065e65b549345908cdd2c}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+C\+\_\+7}~0x07\hypertarget{nrf24l01_8h_a455c371c2cc34db308eaa5185db7a70e}{}\label{nrf24l01_8h_a455c371c2cc34db308eaa5185db7a70e}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+C\+\_\+6}~0x06\hypertarget{nrf24l01_8h_a4ed7e52c8b932ada07519c04aa72c05d}{}\label{nrf24l01_8h_a4ed7e52c8b932ada07519c04aa72c05d}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+C\+\_\+5}~0x05\hypertarget{nrf24l01_8h_a48ed8fdc6e0bdbc1ba0ef74bc40ac058}{}\label{nrf24l01_8h_a48ed8fdc6e0bdbc1ba0ef74bc40ac058}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+C\+\_\+4}~0x04\hypertarget{nrf24l01_8h_a2a222afe06cff3b9765bfe0306abb1f5}{}\label{nrf24l01_8h_a2a222afe06cff3b9765bfe0306abb1f5}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+C\+\_\+3}~0x03\hypertarget{nrf24l01_8h_a852c0cb6891f0aa06121429d312501ed}{}\label{nrf24l01_8h_a852c0cb6891f0aa06121429d312501ed}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+C\+\_\+2}~0x02\hypertarget{nrf24l01_8h_ad47767dcc5f37c832bf7a6761fe14551}{}\label{nrf24l01_8h_ad47767dcc5f37c832bf7a6761fe14551}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+C\+\_\+1}~0x01\hypertarget{nrf24l01_8h_ad48581fa3f3562a722f4a7cc679de63d}{}\label{nrf24l01_8h_ad48581fa3f3562a722f4a7cc679de63d}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+T\+R\+\_\+\+A\+R\+C\+\_\+0}~0x00\hypertarget{nrf24l01_8h_a19f853d1b52b6dfdf7302f549e345c1c}{}\label{nrf24l01_8h_a19f853d1b52b6dfdf7302f549e345c1c}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+F\+\_\+\+C\+H\+\_\+\+R\+E\+S\+E\+R\+V\+ED}~0x80\hypertarget{nrf24l01_8h_acdb5a5f1701d7e08d7deee2093a15ea4}{}\label{nrf24l01_8h_acdb5a5f1701d7e08d7deee2093a15ea4}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+E\+S\+E\+R\+V\+ED}~0x\+E0\hypertarget{nrf24l01_8h_acb78a440b75be4bea5dc585a4428ec84}{}\label{nrf24l01_8h_acb78a440b75be4bea5dc585a4428ec84}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+P\+L\+L\+\_\+\+L\+O\+CK}~0x10\hypertarget{nrf24l01_8h_ab5fad7bddec41dad6eb17eee877e9a33}{}\label{nrf24l01_8h_ab5fad7bddec41dad6eb17eee877e9a33}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+DR}~0x08\hypertarget{nrf24l01_8h_adb10f750c1fc5bb10a88a6a46c3e8c15}{}\label{nrf24l01_8h_adb10f750c1fc5bb10a88a6a46c3e8c15}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+WR}~0x06\hypertarget{nrf24l01_8h_aead4659762c9a0676a002fa2e52318f7}{}\label{nrf24l01_8h_aead4659762c9a0676a002fa2e52318f7}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+W\+R\+\_\+0}~0x06\hypertarget{nrf24l01_8h_a267a0307c8890b0369449556266ae6e5}{}\label{nrf24l01_8h_a267a0307c8890b0369449556266ae6e5}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+W\+R\+\_\+6}~0x04\hypertarget{nrf24l01_8h_adb07100a99f67cb36ba8a0c643d75ae6}{}\label{nrf24l01_8h_adb07100a99f67cb36ba8a0c643d75ae6}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+W\+R\+\_\+12}~0x02\hypertarget{nrf24l01_8h_a85c546676d3f7817eed1c39b9874c9d5}{}\label{nrf24l01_8h_a85c546676d3f7817eed1c39b9874c9d5}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+W\+R\+\_\+18}~0x00\hypertarget{nrf24l01_8h_aca0232cdc76ae86066a1384e9faadac3}{}\label{nrf24l01_8h_aca0232cdc76ae86066a1384e9faadac3}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+L\+N\+A\+\_\+\+H\+C\+U\+RR}~0x01\hypertarget{nrf24l01_8h_a9d6029e54cf6778aeb0de1bfbcf0791d}{}\label{nrf24l01_8h_a9d6029e54cf6778aeb0de1bfbcf0791d}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+ED}~0x80\hypertarget{nrf24l01_8h_a1e64a78591c125ff35fdea41125d1535}{}\label{nrf24l01_8h_a1e64a78591c125ff35fdea41125d1535}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+X\+\_\+\+DR}~0x40\hypertarget{nrf24l01_8h_a33ff6987e8d074672becd46f3bb72a3e}{}\label{nrf24l01_8h_a33ff6987e8d074672becd46f3bb72a3e}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+X\+\_\+\+DS}~0x20\hypertarget{nrf24l01_8h_aa178e6154af2e28d6cea10b5596a6e35}{}\label{nrf24l01_8h_aa178e6154af2e28d6cea10b5596a6e35}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+M\+A\+X\+\_\+\+RT}~0x10\hypertarget{nrf24l01_8h_a451f792d9dbe7b509203f406dce9f730}{}\label{nrf24l01_8h_a451f792d9dbe7b509203f406dce9f730}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+X\+\_\+\+P\+\_\+\+NO}~0x0E\hypertarget{nrf24l01_8h_a7a4c918bf755921475b81741d4b85a22}{}\label{nrf24l01_8h_a7a4c918bf755921475b81741d4b85a22}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+X\+\_\+\+P\+\_\+\+N\+O\+\_\+\+R\+X\+\_\+\+F\+I\+F\+O\+\_\+\+N\+O\+T\+\_\+\+E\+M\+P\+TY}~0x0E\hypertarget{nrf24l01_8h_a0e1c0a128a873791ba5c260ea59e29e6}{}\label{nrf24l01_8h_a0e1c0a128a873791ba5c260ea59e29e6}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+X\+\_\+\+P\+\_\+\+N\+O\+\_\+\+U\+N\+U\+S\+ED}~0x0C\hypertarget{nrf24l01_8h_a8ec3009724919009ef54f2a5b3826e7c}{}\label{nrf24l01_8h_a8ec3009724919009ef54f2a5b3826e7c}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+X\+\_\+\+P\+\_\+\+N\+O\+\_\+5}~0x0A\hypertarget{nrf24l01_8h_a7fa8341d673ef6d8c754e1d559cd18ac}{}\label{nrf24l01_8h_a7fa8341d673ef6d8c754e1d559cd18ac}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+X\+\_\+\+P\+\_\+\+N\+O\+\_\+4}~0x08\hypertarget{nrf24l01_8h_a3c32e0caa51b40a4646918409da60b86}{}\label{nrf24l01_8h_a3c32e0caa51b40a4646918409da60b86}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+X\+\_\+\+P\+\_\+\+N\+O\+\_\+3}~0x06\hypertarget{nrf24l01_8h_a196f6c2b13dcf4c392867aa05582fc88}{}\label{nrf24l01_8h_a196f6c2b13dcf4c392867aa05582fc88}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+X\+\_\+\+P\+\_\+\+N\+O\+\_\+2}~0x04\hypertarget{nrf24l01_8h_afb93ddc5c28625f7b531f481c11c9eb1}{}\label{nrf24l01_8h_afb93ddc5c28625f7b531f481c11c9eb1}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+X\+\_\+\+P\+\_\+\+N\+O\+\_\+1}~0x02\hypertarget{nrf24l01_8h_ad4c58c742a7ddd0d866c8a3c2b240b92}{}\label{nrf24l01_8h_ad4c58c742a7ddd0d866c8a3c2b240b92}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+X\+\_\+\+P\+\_\+\+N\+O\+\_\+0}~0x00\hypertarget{nrf24l01_8h_a1502b41282dbeeee3c3a81bca4f9f971}{}\label{nrf24l01_8h_a1502b41282dbeeee3c3a81bca4f9f971}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+X\+\_\+\+F\+U\+LL}~0x01\hypertarget{nrf24l01_8h_a4db1ebcf1ac669c09949e6d5f631d470}{}\label{nrf24l01_8h_a4db1ebcf1ac669c09949e6d5f631d470}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+O\+B\+S\+E\+R\+V\+E\+\_\+\+T\+X\+\_\+\+P\+L\+O\+S\+\_\+\+C\+NT}~0x\+F0\hypertarget{nrf24l01_8h_a78812751ae6dd085492a9d1ce3e2ab1a}{}\label{nrf24l01_8h_a78812751ae6dd085492a9d1ce3e2ab1a}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+O\+B\+S\+E\+R\+V\+E\+\_\+\+T\+X\+\_\+\+A\+R\+C\+\_\+\+C\+NT}~0x0F\hypertarget{nrf24l01_8h_a92551c6664d111d88c8e023ed5e8fb4b}{}\label{nrf24l01_8h_a92551c6664d111d88c8e023ed5e8fb4b}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+C\+D\+\_\+\+R\+E\+S\+E\+R\+V\+ED}~0x\+FE\hypertarget{nrf24l01_8h_a96d80bd29efb0446b1804aea95564ca8}{}\label{nrf24l01_8h_a96d80bd29efb0446b1804aea95564ca8}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+C\+D\+\_\+\+CD}~0x01\hypertarget{nrf24l01_8h_a3ad042a5ac92b75b9b53b1d103341d53}{}\label{nrf24l01_8h_a3ad042a5ac92b75b9b53b1d103341d53}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+P\+W\+\_\+\+P0\+\_\+\+R\+E\+S\+E\+R\+V\+ED}~0x\+C0\hypertarget{nrf24l01_8h_aec6a96362698a7db1bd0bceb4ec442d2}{}\label{nrf24l01_8h_aec6a96362698a7db1bd0bceb4ec442d2}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+P\+W\+\_\+\+P0\+\_\+\+R\+E\+S\+E\+R\+V\+ED}~0x\+C0\hypertarget{nrf24l01_8h_aec6a96362698a7db1bd0bceb4ec442d2}{}\label{nrf24l01_8h_aec6a96362698a7db1bd0bceb4ec442d2}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+P\+W\+\_\+\+P1\+\_\+\+R\+E\+S\+E\+R\+V\+ED}~0x\+C0\hypertarget{nrf24l01_8h_af6cfd99f8ee4ab6a307db4fe25d6ee5b}{}\label{nrf24l01_8h_af6cfd99f8ee4ab6a307db4fe25d6ee5b}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+P\+W\+\_\+\+P2\+\_\+\+R\+E\+S\+E\+R\+V\+ED}~0x\+C0\hypertarget{nrf24l01_8h_a9748bff7cc41d826737fa7b68fb8be92}{}\label{nrf24l01_8h_a9748bff7cc41d826737fa7b68fb8be92}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+P\+W\+\_\+\+P3\+\_\+\+R\+E\+S\+E\+R\+V\+ED}~0x\+C0\hypertarget{nrf24l01_8h_abc92fd9ff7494250955d3d55ebf4dd4c}{}\label{nrf24l01_8h_abc92fd9ff7494250955d3d55ebf4dd4c}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+P\+W\+\_\+\+P4\+\_\+\+R\+E\+S\+E\+R\+V\+ED}~0x\+C0\hypertarget{nrf24l01_8h_af88655a56424ac01c98fbac3deeec624}{}\label{nrf24l01_8h_af88655a56424ac01c98fbac3deeec624}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+R\+X\+\_\+\+P\+W\+\_\+\+P5\+\_\+\+R\+E\+S\+E\+R\+V\+ED}~0x\+C0\hypertarget{nrf24l01_8h_a3e68090a96a4b15f5481c5f42edad1f6}{}\label{nrf24l01_8h_a3e68090a96a4b15f5481c5f42edad1f6}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+F\+I\+F\+O\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+ED}~0x8C\hypertarget{nrf24l01_8h_a1aad45e5adbb9db8d700f18deef7883c}{}\label{nrf24l01_8h_a1aad45e5adbb9db8d700f18deef7883c}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+F\+I\+F\+O\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+X\+\_\+\+R\+E\+U\+SE}~0x40\hypertarget{nrf24l01_8h_a6b21d3fcb4ec3997bea59ec660b3bc39}{}\label{nrf24l01_8h_a6b21d3fcb4ec3997bea59ec660b3bc39}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+F\+I\+F\+O\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+X\+\_\+\+F\+U\+LL}~0x20\hypertarget{nrf24l01_8h_ada60cbd664040f9339038e14404eac60}{}\label{nrf24l01_8h_ada60cbd664040f9339038e14404eac60}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+F\+I\+F\+O\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+X\+\_\+\+E\+M\+P\+TY}~0x10\hypertarget{nrf24l01_8h_ab6de1c14b2974518ee7eab9cb9063560}{}\label{nrf24l01_8h_ab6de1c14b2974518ee7eab9cb9063560}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+F\+I\+F\+O\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+X\+\_\+\+F\+U\+LL}~0x02\hypertarget{nrf24l01_8h_a4eeddaf91930dbe35724596c72a3d5fb}{}\label{nrf24l01_8h_a4eeddaf91930dbe35724596c72a3d5fb}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+F\+I\+F\+O\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+X\+\_\+\+E\+M\+P\+TY}~0x01\hypertarget{nrf24l01_8h_a67b8a37b3255c6f845ce9d4645d4881c}{}\label{nrf24l01_8h_a67b8a37b3255c6f845ce9d4645d4881c}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+D\+R\+\_\+\+L\+OW}~0x20\hypertarget{nrf24l01_8h_a8e96aebc93287c59350d3c7dbfbdb166}{}\label{nrf24l01_8h_a8e96aebc93287c59350d3c7dbfbdb166}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+D\+R\+\_\+\+M\+ED}~0x00\hypertarget{nrf24l01_8h_aa6d9c70d87e347821a70799913be332d}{}\label{nrf24l01_8h_aa6d9c70d87e347821a70799913be332d}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+D\+R\+\_\+\+H\+I\+GH}~0x08\hypertarget{nrf24l01_8h_aa7224ba957914fb616c359c2bf8b7c82}{}\label{nrf24l01_8h_aa7224ba957914fb616c359c2bf8b7c82}
+
+\item 
+\#define {\bfseries nrf24l01\+\_\+\+S\+E\+N\+D\+\_\+\+C\+L\+O\+CK}~0x00\hypertarget{nrf24l01_8h_ac3cb84a8511db5dbfecda89ffd0ec8fe}{}\label{nrf24l01_8h_ac3cb84a8511db5dbfecda89ffd0ec8fe}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char {\bfseries rf\+\_\+spiwrite} (unsigned char c)\hypertarget{nrf24l01_8h_a791a7e9ce53d1cebfcbf3482ed8b3088}{}\label{nrf24l01_8h_a791a7e9ce53d1cebfcbf3482ed8b3088}
+
+\item 
+void {\bfseries init\+\_\+\+S\+PI} ()\hypertarget{nrf24l01_8h_a1065be4c03eff55f82e136ccb95a2854}{}\label{nrf24l01_8h_a1065be4c03eff55f82e136ccb95a2854}
+
+\item 
+void \hyperlink{nrf24l01_8h_a0b43364348632e13d98688e8d441d1ee}{nrf\+\_\+write\+\_\+reg\+\_\+byte} (char reg, char data)
+\begin{DoxyCompactList}\small\item\em Write a single byte to a register. \end{DoxyCompactList}\item 
+char \hyperlink{nrf24l01_8h_a79578e07cb4af17f8e4475bbdfd6f581}{nrf\+\_\+read\+\_\+reg\+\_\+byte} (char reg)
+\item 
+void \hyperlink{nrf24l01_8h_afb423b6fa53a9b3f5d62c9a7b764767e}{nrf\+\_\+read\+\_\+reg} (char reg, char $\ast$buff, int len)
+\item 
+void \hyperlink{nrf24l01_8h_a78df189d810ff071607f940bd4dc1d1e}{nrf\+\_\+write\+\_\+reg} (char reg, char $\ast$data, char len)
+\item 
+void \hyperlink{nrf24l01_8h_a0dbdc466783e7a7463a5b062c5153845}{nrf\+\_\+flush\+\_\+tx} ()
+\item 
+void \hyperlink{nrf24l01_8h_a2202d7987490038eefb270445900189a}{nrf\+\_\+flush\+\_\+rx} ()
+\item 
+void \hyperlink{nrf24l01_8h_a9786fb43141c287c235e37d9c8b6c5c6}{nrf\+\_\+write\+\_\+payload} (char $\ast$data, char len)
+\item 
+void \hyperlink{nrf24l01_8h_aae3b4320f6f731a94b99236ca54e0ed3}{nrf\+\_\+read\+\_\+payload} (char $\ast$buff)
+\item 
+void \hyperlink{nrf24l01_8h_a0aff41d82f977ee13b061b9d6c58457a}{nrf\+\_\+pwrup} ()
+\item 
+void \hyperlink{nrf24l01_8h_ac113e8e3f58a1d82700fd4d0b8784110}{nrf\+\_\+pwrdown} ()
+\item 
+void \hyperlink{nrf24l01_8h_a55d293b99f7fb62d72dd3c3cd4c01757}{nrf\+\_\+rx\+\_\+mode} ()
+\item 
+void \hyperlink{nrf24l01_8h_af62822470d2e0b9e3de782d722b76730}{nrf\+\_\+tx\+\_\+mode} ()
+\item 
+void {\bfseries nrf\+\_\+standby\+\_\+mode} ()\hypertarget{nrf24l01_8h_a07d50febfacf92a11328846c0e6af62f}{}\label{nrf24l01_8h_a07d50febfacf92a11328846c0e6af62f}
+
+\item 
+void \hyperlink{nrf24l01_8h_ab6847a9be46161756478ac38a091a755}{nrf\+\_\+set\+\_\+transmit\+\_\+pwr} (char power)
+\item 
+void \hyperlink{nrf24l01_8h_a62bbc3e318cd92552d65d9ce240c595c}{nrf\+\_\+set\+\_\+transmit\+\_\+rate} (char rate)
+\item 
+void \hyperlink{nrf24l01_8h_a67e52b7b8f6d4acae16e7f7d99951347}{nrf\+\_\+send\+\_\+payload} (char $\ast$data, int len)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char {\bfseries status}\hypertarget{nrf24l01_8h_a051c9e198ee930358372c407a17e8b78}{}\label{nrf24l01_8h_a051c9e198ee930358372c407a17e8b78}
+
+\item 
+char {\bfseries config}\hypertarget{nrf24l01_8h_a2fc28c605d40412757b5872649b33a38}{}\label{nrf24l01_8h_a2fc28c605d40412757b5872649b33a38}
+
+\item 
+char {\bfseries buffer} \mbox{[}120\mbox{]}\hypertarget{nrf24l01_8h_a5af81e48f7eac475f86da6b02360e4f2}{}\label{nrf24l01_8h_a5af81e48f7eac475f86da6b02360e4f2}
+
+\item 
+volatile char {\bfseries R\+X\+\_\+payload} \mbox{[}32\mbox{]}\hypertarget{nrf24l01_8h_a3c430b2007a794246f33bcc5c90882e8}{}\label{nrf24l01_8h_a3c430b2007a794246f33bcc5c90882e8}
+
+\item 
+char {\bfseries payload\+\_\+size}\hypertarget{nrf24l01_8h_ab8c627e4ca85e84f89dffd3509e3b1bd}{}\label{nrf24l01_8h_ab8c627e4ca85e84f89dffd3509e3b1bd}
+
+\item 
+volatile int {\bfseries received}\hypertarget{nrf24l01_8h_aa18a586975da79e5f04a8a19e08df7e2}{}\label{nrf24l01_8h_aa18a586975da79e5f04a8a19e08df7e2}
+
+\item 
+volatile int {\bfseries sent}\hypertarget{nrf24l01_8h_a284bef2e03fa3bce582ff54990b1b0f7}{}\label{nrf24l01_8h_a284bef2e03fa3bce582ff54990b1b0f7}
+
+\item 
+volatile int {\bfseries error}\hypertarget{nrf24l01_8h_a92dad899cc7fec5f17e847448f03a8ac}{}\label{nrf24l01_8h_a92dad899cc7fec5f17e847448f03a8ac}
+
+\item 
+int {\bfseries TX}\hypertarget{nrf24l01_8h_abc08a0fcd8df4e6bce105cb4d4f8a21e}{}\label{nrf24l01_8h_abc08a0fcd8df4e6bce105cb4d4f8a21e}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Library for use of the nrf24l01+ radio module with a P\+I\+C32. 
+
+\begin{DoxyAuthor}{Author}
+Douglas Katz and Frederick Kummer 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+February 7 2016 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+flush\+\_\+rx@{nrf\+\_\+flush\+\_\+rx}}
+\index{nrf\+\_\+flush\+\_\+rx@{nrf\+\_\+flush\+\_\+rx}!nrf24l01.\+h@{nrf24l01.\+h}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+flush\+\_\+rx()}{nrf_flush_rx()}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+flush\+\_\+rx (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{nrf24l01_8h_a2202d7987490038eefb270445900189a}{}\label{nrf24l01_8h_a2202d7987490038eefb270445900189a}
+Flush the RX F\+I\+FO. 
+
+Definition at line 95 of file nrf24l01.\+c.
+
+\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+flush\+\_\+tx@{nrf\+\_\+flush\+\_\+tx}}
+\index{nrf\+\_\+flush\+\_\+tx@{nrf\+\_\+flush\+\_\+tx}!nrf24l01.\+h@{nrf24l01.\+h}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+flush\+\_\+tx()}{nrf_flush_tx()}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+flush\+\_\+tx (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{nrf24l01_8h_a0dbdc466783e7a7463a5b062c5153845}{}\label{nrf24l01_8h_a0dbdc466783e7a7463a5b062c5153845}
+Flush the TX F\+I\+FO. 
+
+Definition at line 86 of file nrf24l01.\+c.
+
+\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+pwrdown@{nrf\+\_\+pwrdown}}
+\index{nrf\+\_\+pwrdown@{nrf\+\_\+pwrdown}!nrf24l01.\+h@{nrf24l01.\+h}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+pwrdown()}{nrf_pwrdown()}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+pwrdown (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{nrf24l01_8h_ac113e8e3f58a1d82700fd4d0b8784110}{}\label{nrf24l01_8h_ac113e8e3f58a1d82700fd4d0b8784110}
+Clears the power up bit in the status register to enter the power down state. 
+
+Definition at line 138 of file nrf24l01.\+c.
+
+\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+pwrup@{nrf\+\_\+pwrup}}
+\index{nrf\+\_\+pwrup@{nrf\+\_\+pwrup}!nrf24l01.\+h@{nrf24l01.\+h}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+pwrup()}{nrf_pwrup()}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+pwrup (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{nrf24l01_8h_a0aff41d82f977ee13b061b9d6c58457a}{}\label{nrf24l01_8h_a0aff41d82f977ee13b061b9d6c58457a}
+Sets the power up bit in the status register to leave the power down state. 
+
+Definition at line 130 of file nrf24l01.\+c.
+
+\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+read\+\_\+payload@{nrf\+\_\+read\+\_\+payload}}
+\index{nrf\+\_\+read\+\_\+payload@{nrf\+\_\+read\+\_\+payload}!nrf24l01.\+h@{nrf24l01.\+h}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+read\+\_\+payload(char $\ast$buff)}{nrf_read_payload(char *buff)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+read\+\_\+payload (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{buff}
+\end{DoxyParamCaption}
+)}\hypertarget{nrf24l01_8h_aae3b4320f6f731a94b99236ca54e0ed3}{}\label{nrf24l01_8h_aae3b4320f6f731a94b99236ca54e0ed3}
+Read a payload from the RX F\+I\+FO.
+
+
+\begin{DoxyParams}{Parameters}
+{\em buff} & Pointer to array where data will be written. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 118 of file nrf24l01.\+c.
+
+\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+read\+\_\+reg@{nrf\+\_\+read\+\_\+reg}}
+\index{nrf\+\_\+read\+\_\+reg@{nrf\+\_\+read\+\_\+reg}!nrf24l01.\+h@{nrf24l01.\+h}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+read\+\_\+reg(char reg, char $\ast$buff, int len)}{nrf_read_reg(char reg, char *buff, int len)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+read\+\_\+reg (
+\begin{DoxyParamCaption}
+\item[{char}]{reg, }
+\item[{char $\ast$}]{buff, }
+\item[{int}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{nrf24l01_8h_afb423b6fa53a9b3f5d62c9a7b764767e}{}\label{nrf24l01_8h_afb423b6fa53a9b3f5d62c9a7b764767e}
+Read a register and store the data in an array. Can be multiple bytes of data.
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg} & What register to read from. Use constants in \hyperlink{nrf24l01_8h}{nrf24l01.\+h} \\
+\hline
+{\em buff} & Pointer to array to store data. L\+SB first. \\
+\hline
+{\em len} & How many bytes of data need to be read. 1 to 5 bytes. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 62 of file nrf24l01.\+c.
+
+\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+read\+\_\+reg\+\_\+byte@{nrf\+\_\+read\+\_\+reg\+\_\+byte}}
+\index{nrf\+\_\+read\+\_\+reg\+\_\+byte@{nrf\+\_\+read\+\_\+reg\+\_\+byte}!nrf24l01.\+h@{nrf24l01.\+h}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+read\+\_\+reg\+\_\+byte(char reg)}{nrf_read_reg_byte(char reg)}}]{\setlength{\rightskip}{0pt plus 5cm}char nrf\+\_\+read\+\_\+reg\+\_\+byte (
+\begin{DoxyParamCaption}
+\item[{char}]{reg}
+\end{DoxyParamCaption}
+)}\hypertarget{nrf24l01_8h_a79578e07cb4af17f8e4475bbdfd6f581}{}\label{nrf24l01_8h_a79578e07cb4af17f8e4475bbdfd6f581}
+Read a single byte from a register
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg} & What register to read from. Use constants in \hyperlink{nrf24l01_8h}{nrf24l01.\+h} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Data in the register. 
+\end{DoxyReturn}
+
+
+Definition at line 51 of file nrf24l01.\+c.
+
+\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+rx\+\_\+mode@{nrf\+\_\+rx\+\_\+mode}}
+\index{nrf\+\_\+rx\+\_\+mode@{nrf\+\_\+rx\+\_\+mode}!nrf24l01.\+h@{nrf24l01.\+h}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+rx\+\_\+mode()}{nrf_rx_mode()}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+rx\+\_\+mode (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{nrf24l01_8h_a55d293b99f7fb62d72dd3c3cd4c01757}{}\label{nrf24l01_8h_a55d293b99f7fb62d72dd3c3cd4c01757}
+Sets P\+R\+I\+M\+\_\+\+RX in status register and sets CE to transition to RX mode state from standby-\/I state. 
+
+Definition at line 146 of file nrf24l01.\+c.
+
+\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+send\+\_\+payload@{nrf\+\_\+send\+\_\+payload}}
+\index{nrf\+\_\+send\+\_\+payload@{nrf\+\_\+send\+\_\+payload}!nrf24l01.\+h@{nrf24l01.\+h}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+send\+\_\+payload(char $\ast$data, int len)}{nrf_send_payload(char *data, int len)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+send\+\_\+payload (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{data, }
+\item[{int}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{nrf24l01_8h_a67e52b7b8f6d4acae16e7f7d99951347}{}\label{nrf24l01_8h_a67e52b7b8f6d4acae16e7f7d99951347}
+Send a payload over the radio.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Pointer to data to be sent. \\
+\hline
+{\em len} & How many bytes of data to be sent. (1-\/32bytes) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 210 of file nrf24l01.\+c.
+
+\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+set\+\_\+transmit\+\_\+pwr@{nrf\+\_\+set\+\_\+transmit\+\_\+pwr}}
+\index{nrf\+\_\+set\+\_\+transmit\+\_\+pwr@{nrf\+\_\+set\+\_\+transmit\+\_\+pwr}!nrf24l01.\+h@{nrf24l01.\+h}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+set\+\_\+transmit\+\_\+pwr(char power)}{nrf_set_transmit_pwr(char power)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+set\+\_\+transmit\+\_\+pwr (
+\begin{DoxyParamCaption}
+\item[{char}]{power}
+\end{DoxyParamCaption}
+)}\hypertarget{nrf24l01_8h_ab6847a9be46161756478ac38a091a755}{}\label{nrf24l01_8h_ab6847a9be46161756478ac38a091a755}
+Set power of transmitter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em power} & Power level to set transmitter to. Possible values are\+: 0d\+Bm\+: nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+W\+R\+\_\+0 -\/6d\+Bm\+: nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+W\+R\+\_\+6 -\/12d\+Bm\+: nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+W\+R\+\_\+12 -\/18d\+Bm\+: nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+W\+R\+\_\+18 \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 189 of file nrf24l01.\+c.
+
+\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+set\+\_\+transmit\+\_\+rate@{nrf\+\_\+set\+\_\+transmit\+\_\+rate}}
+\index{nrf\+\_\+set\+\_\+transmit\+\_\+rate@{nrf\+\_\+set\+\_\+transmit\+\_\+rate}!nrf24l01.\+h@{nrf24l01.\+h}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+set\+\_\+transmit\+\_\+rate(char rate)}{nrf_set_transmit_rate(char rate)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+set\+\_\+transmit\+\_\+rate (
+\begin{DoxyParamCaption}
+\item[{char}]{rate}
+\end{DoxyParamCaption}
+)}\hypertarget{nrf24l01_8h_a62bbc3e318cd92552d65d9ce240c595c}{}\label{nrf24l01_8h_a62bbc3e318cd92552d65d9ce240c595c}
+Set data rate.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rate} & Rate to set transmitter to. Possible values are\+: 250 kbps\+: nrf24l01\+\_\+\+D\+R\+\_\+\+L\+OW 1 Mbps\+: nrf24l01\+\_\+\+D\+R\+\_\+\+M\+ED 2 Mbps\+: nrf24l01\+\_\+\+D\+R\+\_\+\+H\+I\+GH \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 201 of file nrf24l01.\+c.
+
+\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+tx\+\_\+mode@{nrf\+\_\+tx\+\_\+mode}}
+\index{nrf\+\_\+tx\+\_\+mode@{nrf\+\_\+tx\+\_\+mode}!nrf24l01.\+h@{nrf24l01.\+h}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+tx\+\_\+mode()}{nrf_tx_mode()}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+tx\+\_\+mode (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{nrf24l01_8h_af62822470d2e0b9e3de782d722b76730}{}\label{nrf24l01_8h_af62822470d2e0b9e3de782d722b76730}
+Clears P\+R\+I\+M\+\_\+\+RX in status register and CE to transition to TX mode state from standby-\/I state if there is data in the TX F\+I\+FO. 
+
+Definition at line 162 of file nrf24l01.\+c.
+
+\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+write\+\_\+payload@{nrf\+\_\+write\+\_\+payload}}
+\index{nrf\+\_\+write\+\_\+payload@{nrf\+\_\+write\+\_\+payload}!nrf24l01.\+h@{nrf24l01.\+h}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+write\+\_\+payload(char $\ast$data, char len)}{nrf_write_payload(char *data, char len)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+write\+\_\+payload (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{data, }
+\item[{char}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{nrf24l01_8h_a9786fb43141c287c235e37d9c8b6c5c6}{}\label{nrf24l01_8h_a9786fb43141c287c235e37d9c8b6c5c6}
+Write a payload to the TX F\+I\+FO.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Pointer to data to be written. \\
+\hline
+{\em len} & How many bytes of data to be written. (1-\/32bytes) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 106 of file nrf24l01.\+c.
+
+\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+write\+\_\+reg@{nrf\+\_\+write\+\_\+reg}}
+\index{nrf\+\_\+write\+\_\+reg@{nrf\+\_\+write\+\_\+reg}!nrf24l01.\+h@{nrf24l01.\+h}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+write\+\_\+reg(char reg, char $\ast$data, char len)}{nrf_write_reg(char reg, char *data, char len)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+write\+\_\+reg (
+\begin{DoxyParamCaption}
+\item[{char}]{reg, }
+\item[{char $\ast$}]{data, }
+\item[{char}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{nrf24l01_8h_a78df189d810ff071607f940bd4dc1d1e}{}\label{nrf24l01_8h_a78df189d810ff071607f940bd4dc1d1e}
+Write to a register from an array. Can be multiple bytes of data.
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg} & What register to read from. Use constants in \hyperlink{nrf24l01_8h}{nrf24l01.\+h} \\
+\hline
+{\em buff} & Pointer to array to write data from. L\+SB first. \\
+\hline
+{\em len} & How many bytes of data to be written. (1-\/5bytes) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 75 of file nrf24l01.\+c.
+
+\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+write\+\_\+reg\+\_\+byte@{nrf\+\_\+write\+\_\+reg\+\_\+byte}}
+\index{nrf\+\_\+write\+\_\+reg\+\_\+byte@{nrf\+\_\+write\+\_\+reg\+\_\+byte}!nrf24l01.\+h@{nrf24l01.\+h}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+write\+\_\+reg\+\_\+byte(char reg, char data)}{nrf_write_reg_byte(char reg, char data)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+write\+\_\+reg\+\_\+byte (
+\begin{DoxyParamCaption}
+\item[{char}]{reg, }
+\item[{char}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{nrf24l01_8h_a0b43364348632e13d98688e8d441d1ee}{}\label{nrf24l01_8h_a0b43364348632e13d98688e8d441d1ee}
+
+
+Write a single byte to a register. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg} & What register to write to. Use constants in \hyperlink{nrf24l01_8h}{nrf24l01.\+h} \\
+\hline
+{\em data} & What to write to the register \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 43 of file nrf24l01.\+c.
+

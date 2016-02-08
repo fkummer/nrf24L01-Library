@@ -1,6 +1,17 @@
 
-#define _SUPPRESS_PLIB_WARNING 1
-#include <plib.h>
+
+/**
+ * @file nrf24l01.h
+ * @author Douglas Katz and Frederick Kummer
+ * @date February 7 2016
+ * @brief Library for use of the nrf24l01+ radio module with a PIC32
+ *
+ *
+ */
+
+
+ #define _SUPPRESS_PLIB_WARNING 1
+ #include <plib.h>
 
 // PIN Setup
 // SCK -> SCK1 (pin 26)
@@ -234,7 +245,7 @@ char rf_spiwrite(unsigned char c);
 void init_SPI();
 
 /**
-   * Write a single byte to a register
+   * @brief Write a single byte to a register
    *
    * @param reg What register to write to.  Use constants in nrf24l01.h
    * @param data What to write to the register
