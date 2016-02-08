@@ -2,6 +2,19 @@
 #define _SUPPRESS_PLIB_WARNING 1
 #include <plib.h>
 
+// PIN Setup
+// SCK -> SCK1 (pin 26)
+// SDI -> MISO (RPA4) (pin 12)
+// SDO -> MOSI (RPA2) (pin 9)
+// IRQ -> extern interrupt 1 (RPB10) (pin 21)
+// CSN -> RPB9 (I/O) (pin 18)
+// CE -> RPB8 (I/O) (pin 17)
+
+#define SPI_CHANNEL 2 //SPI channel used
+#define SDI RPA4 //Pin used as MISO for SPI
+#define SDO RPA2 //Pin used as MOSI for SPI
+#define IRQ RPB10 //Pin used for external interrupts from radio
+
 #define _csn         LATBbits.LATB9
 #define TRIS_csn     TRISBbits.TRISB9
 
@@ -202,32 +215,6 @@
 
 // Send no data for when you read data from the radio
 #define nrf24l01_SEND_CLOCK             0x00
-
-// PIN Setup
-// SCK -> SCK1 (pin 26)
-// SDI -> MISO (RPB13) (pin 24)
-// SDO -> MOSI (RPB2) (pin 9)
-// IRQ -> extern interrupt 1 (RPB10) (pin 21)
-// CSN -> RPB7 (I/O) (pin 16)
-// CE -> RPB6 (I/O) (pin 15)
-
-#define SPI_CHANNEL 2//SPI channel used
-#define SDI RPA4 //Pin used as MISO for SPI
-#define SDO RPA2 //Pin used as MOSI for SPI
-#define IRQ RPB10 //Pin used for external interrupts from radio
-
-//static char status;
-//static char config;
-//static char buffer[120];
-//
-//volatile static char RX_payload[32];
-//static char payload_size;
-//
-//volatile static int received; // goes high when message is received
-//volatile static int sent; // goes high after radio finishes sending payload correctly
-//volatile static int error; // goes high when no acknowledge is received
-//
-//static int TX; // is it transmitter or receiver (0 is rx 1 is tx)
 
 char status;
 char config;

@@ -8,11 +8,12 @@
 // PIN Setup
 // SCK -> SCK2 (pin 26)
 // SDI -> MISO (RPA4) (pin 12)
-// SDO -> MOSI (RPB2) (pin 9)
+// SDO -> MOSI (RPA2) (pin 9)
 // IRQ -> extern interrupt 1 (RPB10) (pin 21)
 // CSN -> RPB9 (I/O) (pin 18)
 // CE -> RPB8 (I/O) (pin 17)
 // i/o names
+
 
 // frequency we're running at
 #define	SYS_FREQ 64000000
