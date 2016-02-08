@@ -492,36 +492,42 @@ void {\bfseries init\+\_\+\+S\+PI} ()\hypertarget{nrf24l01_8h_a1065be4c03eff55f8
 void \hyperlink{nrf24l01_8h_a0b43364348632e13d98688e8d441d1ee}{nrf\+\_\+write\+\_\+reg\+\_\+byte} (char reg, char data)
 \begin{DoxyCompactList}\small\item\em Write a single byte to a register. \end{DoxyCompactList}\item 
 char \hyperlink{nrf24l01_8h_a79578e07cb4af17f8e4475bbdfd6f581}{nrf\+\_\+read\+\_\+reg\+\_\+byte} (char reg)
-\item 
+\begin{DoxyCompactList}\small\item\em Read a single byte from a register. \end{DoxyCompactList}\item 
 void \hyperlink{nrf24l01_8h_afb423b6fa53a9b3f5d62c9a7b764767e}{nrf\+\_\+read\+\_\+reg} (char reg, char $\ast$buff, int len)
-\item 
+\begin{DoxyCompactList}\small\item\em Read a register and store the data in an array. Can be multiple bytes of data. \end{DoxyCompactList}\item 
 void \hyperlink{nrf24l01_8h_a78df189d810ff071607f940bd4dc1d1e}{nrf\+\_\+write\+\_\+reg} (char reg, char $\ast$data, char len)
-\item 
-void \hyperlink{nrf24l01_8h_a0dbdc466783e7a7463a5b062c5153845}{nrf\+\_\+flush\+\_\+tx} ()
-\item 
-void \hyperlink{nrf24l01_8h_a2202d7987490038eefb270445900189a}{nrf\+\_\+flush\+\_\+rx} ()
-\item 
-void \hyperlink{nrf24l01_8h_a9786fb43141c287c235e37d9c8b6c5c6}{nrf\+\_\+write\+\_\+payload} (char $\ast$data, char len)
-\item 
-void \hyperlink{nrf24l01_8h_aae3b4320f6f731a94b99236ca54e0ed3}{nrf\+\_\+read\+\_\+payload} (char $\ast$buff)
-\item 
-void \hyperlink{nrf24l01_8h_a0aff41d82f977ee13b061b9d6c58457a}{nrf\+\_\+pwrup} ()
-\item 
-void \hyperlink{nrf24l01_8h_ac113e8e3f58a1d82700fd4d0b8784110}{nrf\+\_\+pwrdown} ()
-\item 
-void \hyperlink{nrf24l01_8h_a55d293b99f7fb62d72dd3c3cd4c01757}{nrf\+\_\+rx\+\_\+mode} ()
-\item 
-void \hyperlink{nrf24l01_8h_af62822470d2e0b9e3de782d722b76730}{nrf\+\_\+tx\+\_\+mode} ()
-\item 
-void {\bfseries nrf\+\_\+standby\+\_\+mode} ()\hypertarget{nrf24l01_8h_a07d50febfacf92a11328846c0e6af62f}{}\label{nrf24l01_8h_a07d50febfacf92a11328846c0e6af62f}
+\begin{DoxyCompactList}\small\item\em Write to a register from an array. Can be multiple bytes of data. \end{DoxyCompactList}\item 
+void \hyperlink{nrf24l01_8h_a0dbdc466783e7a7463a5b062c5153845}{nrf\+\_\+flush\+\_\+tx} ()\hypertarget{nrf24l01_8h_a0dbdc466783e7a7463a5b062c5153845}{}\label{nrf24l01_8h_a0dbdc466783e7a7463a5b062c5153845}
 
-\item 
+\begin{DoxyCompactList}\small\item\em Flush the TX F\+I\+FO. \end{DoxyCompactList}\item 
+void \hyperlink{nrf24l01_8h_a2202d7987490038eefb270445900189a}{nrf\+\_\+flush\+\_\+rx} ()\hypertarget{nrf24l01_8h_a2202d7987490038eefb270445900189a}{}\label{nrf24l01_8h_a2202d7987490038eefb270445900189a}
+
+\begin{DoxyCompactList}\small\item\em Flush the RX F\+I\+FO. \end{DoxyCompactList}\item 
+void \hyperlink{nrf24l01_8h_a9786fb43141c287c235e37d9c8b6c5c6}{nrf\+\_\+write\+\_\+payload} (char $\ast$data, char len)
+\begin{DoxyCompactList}\small\item\em Write a payload to the TX F\+I\+FO. \end{DoxyCompactList}\item 
+void \hyperlink{nrf24l01_8h_aae3b4320f6f731a94b99236ca54e0ed3}{nrf\+\_\+read\+\_\+payload} (char $\ast$buff)
+\begin{DoxyCompactList}\small\item\em Read a payload from the RX F\+I\+FO. \end{DoxyCompactList}\item 
+void \hyperlink{nrf24l01_8h_a0aff41d82f977ee13b061b9d6c58457a}{nrf\+\_\+pwrup} ()\hypertarget{nrf24l01_8h_a0aff41d82f977ee13b061b9d6c58457a}{}\label{nrf24l01_8h_a0aff41d82f977ee13b061b9d6c58457a}
+
+\begin{DoxyCompactList}\small\item\em Sets the power up bit in the status register to leave the power down state. \end{DoxyCompactList}\item 
+void \hyperlink{nrf24l01_8h_ac113e8e3f58a1d82700fd4d0b8784110}{nrf\+\_\+pwrdown} ()\hypertarget{nrf24l01_8h_ac113e8e3f58a1d82700fd4d0b8784110}{}\label{nrf24l01_8h_ac113e8e3f58a1d82700fd4d0b8784110}
+
+\begin{DoxyCompactList}\small\item\em Clears the power up bit in the status register to enter the power down state. \end{DoxyCompactList}\item 
+void \hyperlink{nrf24l01_8h_a55d293b99f7fb62d72dd3c3cd4c01757}{nrf\+\_\+rx\+\_\+mode} ()\hypertarget{nrf24l01_8h_a55d293b99f7fb62d72dd3c3cd4c01757}{}\label{nrf24l01_8h_a55d293b99f7fb62d72dd3c3cd4c01757}
+
+\begin{DoxyCompactList}\small\item\em Sets P\+R\+I\+M\+\_\+\+RX in status register and sets CE to transition to RX mode state from standby-\/I state. \end{DoxyCompactList}\item 
+void \hyperlink{nrf24l01_8h_af62822470d2e0b9e3de782d722b76730}{nrf\+\_\+tx\+\_\+mode} ()\hypertarget{nrf24l01_8h_af62822470d2e0b9e3de782d722b76730}{}\label{nrf24l01_8h_af62822470d2e0b9e3de782d722b76730}
+
+\begin{DoxyCompactList}\small\item\em Clears P\+R\+I\+M\+\_\+\+RX in status register and CE to transition to TX mode state from standby-\/I state if there is data in the TX F\+I\+FO. \end{DoxyCompactList}\item 
+void \hyperlink{nrf24l01_8h_a07d50febfacf92a11328846c0e6af62f}{nrf\+\_\+standby\+\_\+mode} ()\hypertarget{nrf24l01_8h_a07d50febfacf92a11328846c0e6af62f}{}\label{nrf24l01_8h_a07d50febfacf92a11328846c0e6af62f}
+
+\begin{DoxyCompactList}\small\item\em Sets to standby mode. \end{DoxyCompactList}\item 
 void \hyperlink{nrf24l01_8h_ab6847a9be46161756478ac38a091a755}{nrf\+\_\+set\+\_\+transmit\+\_\+pwr} (char power)
-\item 
+\begin{DoxyCompactList}\small\item\em Set power of transmitter. \end{DoxyCompactList}\item 
 void \hyperlink{nrf24l01_8h_a62bbc3e318cd92552d65d9ce240c595c}{nrf\+\_\+set\+\_\+transmit\+\_\+rate} (char rate)
-\item 
+\begin{DoxyCompactList}\small\item\em Set data rate. \end{DoxyCompactList}\item 
 void \hyperlink{nrf24l01_8h_a67e52b7b8f6d4acae16e7f7d99951347}{nrf\+\_\+send\+\_\+payload} (char $\ast$data, int len)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Send a payload over the radio. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
@@ -566,50 +572,6 @@ February 7 2016
 
 
 \subsection{Function Documentation}
-\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+flush\+\_\+rx@{nrf\+\_\+flush\+\_\+rx}}
-\index{nrf\+\_\+flush\+\_\+rx@{nrf\+\_\+flush\+\_\+rx}!nrf24l01.\+h@{nrf24l01.\+h}}
-\subsubsection[{\texorpdfstring{nrf\+\_\+flush\+\_\+rx()}{nrf_flush_rx()}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+flush\+\_\+rx (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{nrf24l01_8h_a2202d7987490038eefb270445900189a}{}\label{nrf24l01_8h_a2202d7987490038eefb270445900189a}
-Flush the RX F\+I\+FO. 
-
-Definition at line 95 of file nrf24l01.\+c.
-
-\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+flush\+\_\+tx@{nrf\+\_\+flush\+\_\+tx}}
-\index{nrf\+\_\+flush\+\_\+tx@{nrf\+\_\+flush\+\_\+tx}!nrf24l01.\+h@{nrf24l01.\+h}}
-\subsubsection[{\texorpdfstring{nrf\+\_\+flush\+\_\+tx()}{nrf_flush_tx()}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+flush\+\_\+tx (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{nrf24l01_8h_a0dbdc466783e7a7463a5b062c5153845}{}\label{nrf24l01_8h_a0dbdc466783e7a7463a5b062c5153845}
-Flush the TX F\+I\+FO. 
-
-Definition at line 86 of file nrf24l01.\+c.
-
-\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+pwrdown@{nrf\+\_\+pwrdown}}
-\index{nrf\+\_\+pwrdown@{nrf\+\_\+pwrdown}!nrf24l01.\+h@{nrf24l01.\+h}}
-\subsubsection[{\texorpdfstring{nrf\+\_\+pwrdown()}{nrf_pwrdown()}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+pwrdown (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{nrf24l01_8h_ac113e8e3f58a1d82700fd4d0b8784110}{}\label{nrf24l01_8h_ac113e8e3f58a1d82700fd4d0b8784110}
-Clears the power up bit in the status register to enter the power down state. 
-
-Definition at line 138 of file nrf24l01.\+c.
-
-\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+pwrup@{nrf\+\_\+pwrup}}
-\index{nrf\+\_\+pwrup@{nrf\+\_\+pwrup}!nrf24l01.\+h@{nrf24l01.\+h}}
-\subsubsection[{\texorpdfstring{nrf\+\_\+pwrup()}{nrf_pwrup()}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+pwrup (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{nrf24l01_8h_a0aff41d82f977ee13b061b9d6c58457a}{}\label{nrf24l01_8h_a0aff41d82f977ee13b061b9d6c58457a}
-Sets the power up bit in the status register to leave the power down state. 
-
-Definition at line 130 of file nrf24l01.\+c.
-
 \index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+read\+\_\+payload@{nrf\+\_\+read\+\_\+payload}}
 \index{nrf\+\_\+read\+\_\+payload@{nrf\+\_\+read\+\_\+payload}!nrf24l01.\+h@{nrf24l01.\+h}}
 \subsubsection[{\texorpdfstring{nrf\+\_\+read\+\_\+payload(char $\ast$buff)}{nrf_read_payload(char *buff)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+read\+\_\+payload (
@@ -617,7 +579,9 @@ Definition at line 130 of file nrf24l01.\+c.
 \item[{char $\ast$}]{buff}
 \end{DoxyParamCaption}
 )}\hypertarget{nrf24l01_8h_aae3b4320f6f731a94b99236ca54e0ed3}{}\label{nrf24l01_8h_aae3b4320f6f731a94b99236ca54e0ed3}
-Read a payload from the RX F\+I\+FO.
+
+
+Read a payload from the RX F\+I\+FO. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -637,7 +601,9 @@ Definition at line 118 of file nrf24l01.\+c.
 \item[{int}]{len}
 \end{DoxyParamCaption}
 )}\hypertarget{nrf24l01_8h_afb423b6fa53a9b3f5d62c9a7b764767e}{}\label{nrf24l01_8h_afb423b6fa53a9b3f5d62c9a7b764767e}
-Read a register and store the data in an array. Can be multiple bytes of data.
+
+
+Read a register and store the data in an array. Can be multiple bytes of data. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -659,7 +625,9 @@ Definition at line 62 of file nrf24l01.\+c.
 \item[{char}]{reg}
 \end{DoxyParamCaption}
 )}\hypertarget{nrf24l01_8h_a79578e07cb4af17f8e4475bbdfd6f581}{}\label{nrf24l01_8h_a79578e07cb4af17f8e4475bbdfd6f581}
-Read a single byte from a register
+
+
+Read a single byte from a register. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -673,17 +641,6 @@ Data in the register.
 
 Definition at line 51 of file nrf24l01.\+c.
 
-\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+rx\+\_\+mode@{nrf\+\_\+rx\+\_\+mode}}
-\index{nrf\+\_\+rx\+\_\+mode@{nrf\+\_\+rx\+\_\+mode}!nrf24l01.\+h@{nrf24l01.\+h}}
-\subsubsection[{\texorpdfstring{nrf\+\_\+rx\+\_\+mode()}{nrf_rx_mode()}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+rx\+\_\+mode (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{nrf24l01_8h_a55d293b99f7fb62d72dd3c3cd4c01757}{}\label{nrf24l01_8h_a55d293b99f7fb62d72dd3c3cd4c01757}
-Sets P\+R\+I\+M\+\_\+\+RX in status register and sets CE to transition to RX mode state from standby-\/I state. 
-
-Definition at line 146 of file nrf24l01.\+c.
-
 \index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+send\+\_\+payload@{nrf\+\_\+send\+\_\+payload}}
 \index{nrf\+\_\+send\+\_\+payload@{nrf\+\_\+send\+\_\+payload}!nrf24l01.\+h@{nrf24l01.\+h}}
 \subsubsection[{\texorpdfstring{nrf\+\_\+send\+\_\+payload(char $\ast$data, int len)}{nrf_send_payload(char *data, int len)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+send\+\_\+payload (
@@ -692,9 +649,11 @@ Definition at line 146 of file nrf24l01.\+c.
 \item[{int}]{len}
 \end{DoxyParamCaption}
 )}\hypertarget{nrf24l01_8h_a67e52b7b8f6d4acae16e7f7d99951347}{}\label{nrf24l01_8h_a67e52b7b8f6d4acae16e7f7d99951347}
-Send a payload over the radio.
 
 
+Send a payload over the radio. 
+
+Sends out a specified payload (in auto acknowledge mode by default) use after powering up radio, and setting address or other settings 
 \begin{DoxyParams}{Parameters}
 {\em data} & Pointer to data to be sent. \\
 \hline
@@ -712,7 +671,9 @@ Definition at line 210 of file nrf24l01.\+c.
 \item[{char}]{power}
 \end{DoxyParamCaption}
 )}\hypertarget{nrf24l01_8h_ab6847a9be46161756478ac38a091a755}{}\label{nrf24l01_8h_ab6847a9be46161756478ac38a091a755}
-Set power of transmitter.
+
+
+Set power of transmitter. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -730,7 +691,9 @@ Definition at line 189 of file nrf24l01.\+c.
 \item[{char}]{rate}
 \end{DoxyParamCaption}
 )}\hypertarget{nrf24l01_8h_a62bbc3e318cd92552d65d9ce240c595c}{}\label{nrf24l01_8h_a62bbc3e318cd92552d65d9ce240c595c}
-Set data rate.
+
+
+Set data rate. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -741,17 +704,6 @@ Set data rate.
 
 Definition at line 201 of file nrf24l01.\+c.
 
-\index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+tx\+\_\+mode@{nrf\+\_\+tx\+\_\+mode}}
-\index{nrf\+\_\+tx\+\_\+mode@{nrf\+\_\+tx\+\_\+mode}!nrf24l01.\+h@{nrf24l01.\+h}}
-\subsubsection[{\texorpdfstring{nrf\+\_\+tx\+\_\+mode()}{nrf_tx_mode()}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+tx\+\_\+mode (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{nrf24l01_8h_af62822470d2e0b9e3de782d722b76730}{}\label{nrf24l01_8h_af62822470d2e0b9e3de782d722b76730}
-Clears P\+R\+I\+M\+\_\+\+RX in status register and CE to transition to TX mode state from standby-\/I state if there is data in the TX F\+I\+FO. 
-
-Definition at line 162 of file nrf24l01.\+c.
-
 \index{nrf24l01.\+h@{nrf24l01.\+h}!nrf\+\_\+write\+\_\+payload@{nrf\+\_\+write\+\_\+payload}}
 \index{nrf\+\_\+write\+\_\+payload@{nrf\+\_\+write\+\_\+payload}!nrf24l01.\+h@{nrf24l01.\+h}}
 \subsubsection[{\texorpdfstring{nrf\+\_\+write\+\_\+payload(char $\ast$data, char len)}{nrf_write_payload(char *data, char len)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+write\+\_\+payload (
@@ -760,7 +712,9 @@ Definition at line 162 of file nrf24l01.\+c.
 \item[{char}]{len}
 \end{DoxyParamCaption}
 )}\hypertarget{nrf24l01_8h_a9786fb43141c287c235e37d9c8b6c5c6}{}\label{nrf24l01_8h_a9786fb43141c287c235e37d9c8b6c5c6}
-Write a payload to the TX F\+I\+FO.
+
+
+Write a payload to the TX F\+I\+FO. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -782,7 +736,9 @@ Definition at line 106 of file nrf24l01.\+c.
 \item[{char}]{len}
 \end{DoxyParamCaption}
 )}\hypertarget{nrf24l01_8h_a78df189d810ff071607f940bd4dc1d1e}{}\label{nrf24l01_8h_a78df189d810ff071607f940bd4dc1d1e}
-Write to a register from an array. Can be multiple bytes of data.
+
+
+Write to a register from an array. Can be multiple bytes of data. 
 
 
 \begin{DoxyParams}{Parameters}

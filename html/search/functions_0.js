@@ -11,6 +11,7 @@ var searchData=
   ['nrf_5fsend_5fpayload',['nrf_send_payload',['../nrf24l01_8h.html#a67e52b7b8f6d4acae16e7f7d99951347',1,'nrf24l01.c']]],
   ['nrf_5fset_5ftransmit_5fpwr',['nrf_set_transmit_pwr',['../nrf24l01_8h.html#ab6847a9be46161756478ac38a091a755',1,'nrf24l01.c']]],
   ['nrf_5fset_5ftransmit_5frate',['nrf_set_transmit_rate',['../nrf24l01_8h.html#a62bbc3e318cd92552d65d9ce240c595c',1,'nrf24l01.c']]],
+  ['nrf_5fstandby_5fmode',['nrf_standby_mode',['../nrf24l01_8h.html#a07d50febfacf92a11328846c0e6af62f',1,'nrf24l01.c']]],
   ['nrf_5ftx_5fmode',['nrf_tx_mode',['../nrf24l01_8h.html#af62822470d2e0b9e3de782d722b76730',1,'nrf24l01.c']]],
   ['nrf_5fwrite_5fpayload',['nrf_write_payload',['../nrf24l01_8h.html#a9786fb43141c287c235e37d9c8b6c5c6',1,'nrf24l01.c']]],
   ['nrf_5fwrite_5freg',['nrf_write_reg',['../nrf24l01_8h.html#a78df189d810ff071607f940bd4dc1d1e',1,'nrf24l01.c']]],
