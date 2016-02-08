@@ -12,7 +12,7 @@
 // IRQ -> extern interrupt 1 (RPB10) (pin 21)
 // CSN -> RPB9 (I/O) (pin 18)
 // CE -> RPB8 (I/O) (pin 17)
-// i/o names 
+// i/o names
 
 // frequency we're running at
 #define	SYS_FREQ 64000000
@@ -26,15 +26,15 @@ char rf_spiwrite(unsigned char c){ // Transfer to SPI
 
 void init_SPI(){
     // Set up SPI2 to be active high, master, 8 bit mode, and ~4 Mhz CLK
-    SpiChnOpen(2, SPI_OPEN_MSTEN | SPI_OPEN_MODE8 | SPI_OPEN_ON | SPI_OPEN_CKE_REV, 16);
+    SpiChnOpen(SPI_CHANNEL, SPI_OPEN_MSTEN | SPI_OPEN_MODE8 | SPI_OPEN_ON | SPI_OPEN_CKE_REV, 16);
     // Set SDI2 to pin 12
-    PPSInput(3, SDI2, RPA4);
+    PPSInput(3, SDI2, SDI);
     // Set SDO2 to pin 9
-    PPSOutput(3, RPA2, SDO2);
+    PPSOutput(3, SDO, SDO2);
     // Set external interrupt 1 to pin 21
-    PPSInput(4, INT1, RPB10);
-    
-    
+    PPSInput(4, INT1, IRQ);
+
+
     ConfigINT1(EXT_INT_PRI_2 | FALLING_EDGE_INT | EXT_INT_ENABLE);
     EnableINT1;
 }
@@ -56,14 +56,14 @@ char nrf_read_reg_byte(char reg){
 
 // Read a register from the nrf24l01
 // reg is the array to read, len is the length of data expected to be received (1-5 bytes)
-// NOTE: only address 0 and 1 registers use 5 bytes all others use 1 byte 
+// NOTE: only address 0 and 1 registers use 5 bytes all others use 1 byte
 // NOTE: writing or reading payload is done using a specific command
 void nrf_read_reg(char reg, char * buff, int len){
     //char reg_read[5]; // register used for reading a single register
     int i = 0;
     _csn = 0; // begin transmission
     status = rf_spiwrite(nrf24l01_R_REGISTER | reg); // send command to read register
-    
+
     for(i=0;i<len;i++){
         buff[i] = rf_spiwrite(nrf24l01_SEND_CLOCK); // send clock pulse to continue receiving data
     }
@@ -86,7 +86,7 @@ void nrf_flush_tx(){
     _csn = 0;
     rf_spiwrite(nrf24l01_FLUSH_TX);
     _csn = 1;
-    
+
 }
 
 // flushes the rx FIFO
@@ -94,7 +94,7 @@ void nrf_flush_tx(){
 void nrf_flush_rx(){
     _csn = 0;
     rf_spiwrite(nrf24l01_FLUSH_RX);
-    _csn = 1;   
+    _csn = 1;
 }
 
 
@@ -110,7 +110,7 @@ void nrf_write_payload(char * data, char len){
         rf_spiwrite(data[i]); // write each char/byte to tx payload one at a time
     }
     _csn = 1; // end transmission
-    
+
 }
 
 // should read the payload into a buffer NOT TESTED YET
@@ -148,7 +148,7 @@ void nrf_rx_mode(){
 //    status |= nrf24l01_STATUS_TX_DS; // clear interrupt on radio
 //    status |= nrf24l01_STATUS_MAX_RT; // clear interrupt on radio
 //    nrf_write_reg(nrf24l01_STATUS, &status, 1);
-    
+
     nrf_read_reg(nrf24l01_CONFIG, &config, 1);
     config |= nrf24l01_CONFIG_PRIM_RX;
     nrf_write_reg(nrf24l01_CONFIG, &config, 1);
@@ -164,13 +164,13 @@ void nrf_tx_mode(){
 //    status |= nrf24l01_STATUS_TX_DS; // clear interrupt on radio
 //    status |= nrf24l01_STATUS_MAX_RT; // clear interrupt on radio
 //    nrf_write_reg(nrf24l01_STATUS, &status, 1);
-    
+
     nrf_read_reg(nrf24l01_CONFIG, &config, 1);
     config &= ~(nrf24l01_CONFIG_PRIM_RX);
     nrf_write_reg(nrf24l01_CONFIG, &config, 1);
     _ce = 1;
     delay_us(200); //Wait for transition to tx mode time
-    
+
 
 
 }
@@ -190,7 +190,7 @@ void nrf_set_transmit_pwr(char power){
     nrf_read_reg(nrf24l01_RF_SETUP, &setup, 1); // check value of setup register
     setup &= ~(nrf24l01_RF_SETUP_RF_PWR); // clear power bits in register
     setup |= power; // set power bits in register
-    nrf_write_reg(nrf24l01_RF_SETUP, &setup, 1);  
+    nrf_write_reg(nrf24l01_RF_SETUP, &setup, 1);
 }
 
 // sets the rf data rate, possible values and definitoins for them are
@@ -201,7 +201,7 @@ void nrf_set_transmit_rate(char rate){
     char setup; // check value of setup register
     setup &= 0xd7;  // clear data rate bits in register
     setup |= rate; // set data rate bits in register
-    nrf_write_reg(nrf24l01_RF_SETUP, &setup, 1); 
+    nrf_write_reg(nrf24l01_RF_SETUP, &setup, 1);
 }
 
 // Sends out a specified payload (in auto acknowledge mode by default)
@@ -217,7 +217,7 @@ void nrf_send_payload(char * data, int len){
     LATBbits.LATB3 = 0;
     sent = 0;
     //_ce = 0; // transition to standby II mode
-    
+
 }
 
 void __ISR(_EXTERNAL_1_VECTOR, ipl2) INT1Handler(void){
@@ -241,8 +241,7 @@ void __ISR(_EXTERNAL_1_VECTOR, ipl2) INT1Handler(void){
         error = 1; // signal main code that the payload was not received
         status |= nrf24l01_STATUS_MAX_RT; // clear interrupt on radio
     }
-    
+
     nrf_write_reg(nrf24l01_STATUS, &status, 1);
     mINT1ClearIntFlag();
 }
-

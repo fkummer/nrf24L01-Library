@@ -26,7 +26,7 @@
 #define nrf24l01_NOP			0xFF
 
 
-// Register definitions 
+// Register definitions
 #define nrf24l01_CONFIG			0x00
 #define nrf24l01_EN_AA			0x01
 #define nrf24l01_EN_RXADDR		0x02
@@ -211,6 +211,11 @@
 // CSN -> RPB7 (I/O) (pin 16)
 // CE -> RPB6 (I/O) (pin 15)
 
+#define SPI_CHANNEL 2//SPI channel used
+#define SDI RPA4 //Pin used as MISO for SPI
+#define SDO RPA2 //Pin used as MOSI for SPI
+#define IRQ RPB10 //Pin used for external interrupts from radio
+
 //static char status;
 //static char config;
 //static char buffer[120];
@@ -222,7 +227,7 @@
 //volatile static int sent; // goes high after radio finishes sending payload correctly
 //volatile static int error; // goes high when no acknowledge is received
 //
-//static int TX; // is it transmitter or receiver (0 is rx 1 is tx) 
+//static int TX; // is it transmitter or receiver (0 is rx 1 is tx)
 
 char status;
 char config;
@@ -235,7 +240,7 @@ volatile int received; // goes high when message is received
 volatile int sent; // goes high after radio finishes sending payload correctly
 volatile int error; // goes high when no acknowledge is received
 
-int TX; // is it transmitter or receiver (0 is rx 1 is tx) 
+int TX; // is it transmitter or receiver (0 is rx 1 is tx)
 
 char rf_spiwrite(unsigned char c);
 
@@ -286,7 +291,7 @@ void nrf_flush_tx();
 void nrf_flush_rx();
 
 /**
-   * Write a payload to the TX FIFO. 
+   * Write a payload to the TX FIFO.
    *
    * @param data Pointer to data to be written.
    * @param len How many bytes of data to be written. (1-32bytes)
@@ -294,7 +299,7 @@ void nrf_flush_rx();
 void nrf_write_payload(char * data, char len);
 
 /**
-   * Read a payload from the RX FIFO. 
+   * Read a payload from the RX FIFO.
    *
    * @param buff Pointer to array where data will be written.
    */
@@ -316,7 +321,7 @@ void nrf_pwrdown();
 void nrf_rx_mode();
 
 /**
-   * Clears PRIM_RX in status register and CE to transition to TX mode state from standby-I state if there is data in the TX FIFO.  
+   * Clears PRIM_RX in status register and CE to transition to TX mode state from standby-I state if there is data in the TX FIFO.
    */
 void nrf_tx_mode();
 
@@ -360,5 +365,3 @@ void nrf_set_transmit_rate(char rate);
    * @param len How many bytes of data to be sent. (1-32bytes)
    */
 void nrf_send_payload(char * data, int len);
-
-
