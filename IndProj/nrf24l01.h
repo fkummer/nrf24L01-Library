@@ -60,7 +60,7 @@
 #define nrf24l01_RF_SETUP		0x06
 #define nrf24l01_STATUS			0x07
 #define nrf24l01_OBSERVE_TX		0x08
-#define nrf24l01_CD				0x09
+#define nrf24l01_RPD            0x09
 #define nrf24l01_RX_ADDR_P0		0x0A
 #define nrf24l01_RX_ADDR_P1		0x0B
 #define nrf24l01_RX_ADDR_P2		0x0C
@@ -156,6 +156,7 @@
 #define nrf24l01_RF_CH_RESERVED	0x80
 
 //RF_SETUP register bitwise definitions
+#define nrf24l01_RD_SETUP_CONT_WAVE 0x80
 #define nrf24l01_RF_SETUP_RESERVED	0xE0
 #define nrf24l01_RF_SETUP_PLL_LOCK	0x10
 #define nrf24l01_RF_SETUP_RF_DR		0x08
@@ -254,119 +255,198 @@ char rf_spiwrite(unsigned char c);
 void init_SPI();
 
 /**
-   * @brief Write a single byte to a register
-   *
-   * @param reg What register to write to.  Use constants in nrf24l01.h
-   * @param data What to write to the register
-   */
+ * @brief Write a single byte to a register
+ *
+ * @param reg What register to write to.  Use constants in nrf24l01.h
+ * @param data What to write to the register
+ */
 void nrf_write_reg_byte(char reg, char data);
 
 /**
-   *@brief Read a single byte from a register
-   *
-   * @param reg What register to read from.  Use constants in nrf24l01.h
-   * @return Data in the register.
-   */
+ *@brief Read a single byte from a register
+ *
+ * @param reg What register to read from.  Use constants in nrf24l01.h
+ * @return Data in the register.
+ */
 char nrf_read_reg_byte(char reg);
 
 /**
-   *@brief Read a register and store the data in an array. Can be multiple bytes of data.
-   *
-   * @param reg What register to read from.  Use constants in nrf24l01.h
-   * @param buff Pointer to array to store data. LSB first.
-   * @param len How many bytes of data need to be read. 1 to 5 bytes.
-   */
+ *@brief Read a register and store the data in an array. Can be multiple bytes 
+ * of data.
+ *
+ * @param reg What register to read from.  Use constants in nrf24l01.h
+ * @param buff Pointer to array to store data. LSB first.
+ * @param len How many bytes of data need to be read. 1 to 5 bytes.
+ */
 void nrf_read_reg(char reg, char * buff, int len);
 
 /**
-   *@brief Write to a register from an array. Can be multiple bytes of data.
-   *
-   * @param reg What register to read from.  Use constants in nrf24l01.h
-   * @param buff Pointer to array to write data from. LSB first.
-   * @param len How many bytes of data to be written. (1-5bytes)
-   */
+ *@brief Write to a register from an array. Can be multiple bytes of data.
+ *
+ * @param reg What register to read from.  Use constants in nrf24l01.h
+ * @param buff Pointer to array to write data from. LSB first.
+ * @param len How many bytes of data to be written. (1-5bytes)
+ */
 void nrf_write_reg(char reg, char * data, char len);
 
 /**
-   * @brief Flush the TX FIFO.
-   */
+ * @brief Flush the TX FIFO.
+ */
 void nrf_flush_tx();
 
 /**
-   * @brief Flush the RX FIFO.
-   */
+ * @brief Flush the RX FIFO.
+ */
 void nrf_flush_rx();
 
 /**
-   * @brief Write a payload to the TX FIFO.
-   *
-   * @param data Pointer to data to be written.
-   * @param len How many bytes of data to be written. (1-32bytes)
-   */
+ * @brief Write a payload to the TX FIFO.
+ *
+ * @param data Pointer to data to be written.
+ * @param len How many bytes of data to be written. (1-32bytes)
+ */
 void nrf_write_payload(char * data, char len);
 
 /**
-   * @brief Read a payload from the RX FIFO.
-   *
-   * @param buff Pointer to array where data will be written.
-   */
+ * @brief Read a payload from the RX FIFO.
+ *
+ * @param buff Pointer to array where data will be written.
+ */
 void nrf_read_payload(char * buff);
 
 /**
-   * @brief Sets the power up bit in the status register to leave the power down state.
-   */
+ * @brief Sets the power up bit in the status register to leave the power down 
+ * state.
+ */
 void nrf_pwrup();
 
 /**
-   * @brief Clears the power up bit in the status register to enter the power down state.
-   */
+ * @brief Clears the power up bit in the status register to enter the power 
+ * down state.
+ */
 void nrf_pwrdown();
 
 /**
-   * @brief Sets PRIM_RX in status register and sets CE to transition to RX mode state from standby-I state.
-   */
+ * @brief Sets PRIM_RX in status register and sets CE to transition to RX mode 
+ * state from standby-I state.
+ */
 void nrf_rx_mode();
 
 /**
-   * @brief Clears PRIM_RX in status register and CE to transition to TX mode state from standby-I state if there is data in the TX FIFO.
-   */
+ * @brief Clears PRIM_RX in status register and CE to transition to TX mode 
+ * state from standby-I state if there is data in the TX FIFO.
+ */
 void nrf_tx_mode();
 
 /**
-   * @brief Sets to standby mode
-   */
+ * @brief Sets to standby mode
+ */
 void nrf_standby_mode();
 
 /**
-   * @brief Set power of transmitter.
-   *
-   * @param power Power level to set transmitter to.  Possible values are:
-   * 0dBm: nrf24l01_RF_SETUP_RF_PWR_0
-   *-6dBm: nrf24l01_RF_SETUP_RF_PWR_6
-   *-12dBm: nrf24l01_RF_SETUP_RF_PWR_12
-   *-18dBm: nrf24l01_RF_SETUP_RF_PWR_18
-   */
+ * @brief Set power of transmitter.
+ *
+ * @param power Power level to set transmitter to.  Possible values are:
+ * 0dBm: nrf24l01_RF_SETUP_RF_PWR_0
+ *-6dBm: nrf24l01_RF_SETUP_RF_PWR_6
+ *-12dBm: nrf24l01_RF_SETUP_RF_PWR_12
+ *-18dBm: nrf24l01_RF_SETUP_RF_PWR_18
+ */
 void nrf_set_transmit_pwr(char power);
 
 /**
-   * @brief Set data rate.
-   *
-   * @param rate Rate to set transmitter to.  Possible values are:
-   * 250 kbps: nrf24l01_DR_LOW
-   * 1 Mbps: nrf24l01_DR_MED
-   * 2 Mbps: nrf24l01_DR_HIGH
-   */
+ * @brief Set data rate.
+ *
+ * @param rate Rate to set transmitter to.  Possible values are:
+ * 250 kbps: nrf24l01_DR_LOW
+ * 1 Mbps: nrf24l01_DR_MED
+ * 2 Mbps: nrf24l01_DR_HIGH
+ */
 void nrf_set_transmit_rate(char rate);
 
 /**
-   * @brief Send a payload over the radio.
-   *
-   * Sends out a specified payload (in auto acknowledge mode by default)
-   * use after powering up radio, and setting address or other settings
-   * @param data Pointer to data to be sent.
-   * @param len How many bytes of data to be sent. (1-32bytes)
-   */
+ * @brief Set the auto retransmit delay.
+ * 
+ * Set how long the nrf24l01 should wait between retransmitting packets after
+ * not receiving an acknowledgement packet. Delay is defined as the end of one 
+ * transmission to the start of the next. The delay is set according to the 
+ * equation, delay = 250 + ard * 250 (us).
+ * 
+ * @param ard The auto retransmit delay
+ */
+void nrf_set_ard(char ard);
+
+/**
+ * @brief Set the auto retransmit count.
+ * 
+ * Set how many times the nrf24l01 should attempt to retransmit the packet after
+ * not receiving an acknowledgment packet.
+ * 
+ * @param arc How many times to try retransmitting.
+ */
+void nrf_set_arc(char arc);
+
+/**
+ * @brief Set the RF frequency the radio will operate at.
+ * 
+ * The nrf24l01 can operate at frequencies ranging from 2.400GHz to 2.525 GHz.
+ * At 250 kbps or 1 Mbps the radio occupies less than a 1MHz bandwidth. At 
+ * 2 Mbps the radio occupies less than a 2 MHz bandwidth. The frequency is set 
+ * according to the equation, frequency = 2400 + ch (MHz). The transmitter and 
+ * receiver must be set operate at the same frequency to communicate.
+ * 
+ * @param ch The center of the channel used by the nrf24l01
+ */
+void nrf_set_rf_ch(char ch);
+
+/**
+ * @brief Send a payload over the radio.
+ *
+ * Sends out a specified payload (in auto acknowledge mode by default)
+ * use after powering up radio, and setting address or other settings
+ * 
+ * @param data Pointer to data to be sent.
+ * @param len How many bytes of data to be sent. (1-32bytes)
+ */
 void nrf_send_payload(char * data, int len);
 
+/**
+ * @brief Set the address width of RX and TX pipes
+ * 
+ * Sets the address width of all pipes.  LSB of the address set in the
+ * RX_ADDR_PX or TX_ADDR registers are used as the address for the associated
+ * pipe.
+ * 
+ * @param width The address width in bytes(3-5 bytes)
+ */
+void nrf_set_address_width(char width);
 
+/**
+ * @brief Send a constant carrier wave out at specified power.
+ * 
+ * Send a continuous carrier wave for testing purposes. Wave can be stopped by
+ * calling nrf_stop_cont_wave.  
+ * 
+ * @param pwr Power level to set transmitter to.  Possible values are:
+ * 0dBm: nrf24l01_RF_SETUP_RF_PWR_0
+ *-6dBm: nrf24l01_RF_SETUP_RF_PWR_6
+ *-12dBm: nrf24l01_RF_SETUP_RF_PWR_12
+ *-18dBm: nrf24l01_RF_SETUP_RF_PWR_18
+ */
+void nrf_start_cont_wave(char pwr);
 
+/**
+ * @brief Stop sending the carrier wave.
+ */
+void nrf_stop_cont_wave();
+
+/**
+ * @brief Check the power of the signal the nrf42l01 is receiving
+ * 
+ * RX mode must be enables for at leat 170 us before measurements will be 
+ * accurate. 0 will be returned if power level is below -64dB and 1 will be 
+ * returned if power level is above -64dB.
+ * 
+ * @return 1 If power level is above -64dB.
+ */
+char nrf_recieved_pwr();
