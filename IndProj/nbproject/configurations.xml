@@ -22,6 +22,7 @@
       <itemPath>glcdfont.c</itemPath>
       <itemPath>nrf24l01.c</itemPath>
       <itemPath>basestation.c</itemPath>
+      <itemPath>receiver.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -199,6 +200,8 @@
         </C32CPP>
         <C32Global>
         </C32Global>
+      </item>
+      <item path="receiver.c" ex="true" overriding="false">
       </item>
     </conf>
   </confs>

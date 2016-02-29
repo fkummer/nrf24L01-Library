@@ -30,8 +30,6 @@ char receive;
 
 volatile int button_press = 0; // goes high after button was pressed
 
-char msg = 0;
-
 char retry_num = nrf24l01_SETUP_RETR_ARC_15 | nrf24l01_SETUP_RETR_ARD_1000;
 
 // sets up button on base station
@@ -91,14 +89,20 @@ void __ISR(_EXTERNAL_0_VECTOR, ipl2) INT0Interrupt() {
 
 static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt);
+    int j = 0;
     while (1) {
-        tft_fillScreen(ILI9340_BLACK);
-        tft_drawLine(0, 0, 120, 120, ILI9340_BLUE);
+        j+=10;
+//        tft_fillScreen(ILI9340_BLACK);
+        tft_drawLine(0, 0, 120, 120, j);
         tft_setCursor(0, 220);
         tft_setTextColor(ILI9340_YELLOW);
         tft_setTextSize(2);
         sprintf(buffer, "%s", "Testing...");
-        tft_writeString(buffer);
+        if(button_press == 1){
+            _LEDRED ^= 1;
+            button_press = 0;
+        }
+        delay_ms(200);
     }
     PT_END(pt);
 } // timer thread
@@ -112,6 +116,7 @@ void main(void) {
     buttonSetup();
     TRISAbits.TRISA0 = 0;
     LATAbits.LATA0 = 0;
+    _TRIS_LEDRED = 0;
     PT_INIT(&pt_radio);
 
     radioSetup();
@@ -128,5 +133,3 @@ void main(void) {
 } // main
 
 // === end  ======================================================
-
-
