@@ -75,6 +75,8 @@
 #define nrf24l01_RX_PW_P4		0x15
 #define nrf24l01_RX_PW_P5		0x16
 #define nrf24l01_FIFO_STATUS	0x17
+#define nrf24l01_DYNPD          0x1C
+#define nrf24l01_FEATURE        0x1D
 
 //CONFIG register bitwise definitions
 #define nrf24l01_CONFIG_RESERVED	0x80
@@ -450,3 +452,75 @@ void nrf_stop_cont_wave();
  * @return 1 If power level is above -64dB.
  */
 char nrf_recieved_pwr();
+
+/**
+ * @brief Enable auto-acknowledge for a pipe.
+ * 
+ * @param pipe Which pipe to enable autoack on. Pipes range from 0 to 5. 
+ */
+void nrf_en_aa(int pipe);
+
+/**
+ * @brief Disable auto-acknowledge for a pipe
+ * @param pipe Which pipe to disable autoack on. Pipes range from 0 to 5.
+ */
+void nrf_dis_aa(int pipe);
+
+/**
+ * @brief Enable a pipe to receive packets.
+ * 
+ * The nrf24l01+ contains six parallel pipes that can receive packets from six 
+ * different transmitters.  Each pipe must have a unique address.
+ * 
+ * @param pipe Which pipe to enable. Pipes range from 0 to 5.
+ */
+void nrf_en_rxaddr(int pipe);
+
+/**
+ * @brief Disable a pipe from receiving packets.
+ * 
+ * @param pipe Which pipe to disable. Pipes range from 0 to 5.
+ */
+void nrf_dis_rxaddr(int pipe);
+
+/**
+ * @brief Enable dynamic payload length for a pipe.
+ * 
+ * If dynamic payload length is enabled the amount of bytes in a packet does not
+ * need to be specified.  For this feature to work the transmitter must 
+ * have dynamic payload length enabled for pipe 0 and the receiver must have 
+ * dynamic payload length enabled for the pipe it will receive from this 
+ * transmitter on.  In addition auto acknowledge must be enabled for the two 
+ * pipes and EN_DPL must be set in the FEATURE REGISTER both of which are done 
+ * automatically.
+ * 
+ * @param pipe Which pipe to enable dynamic payload length on.
+ */
+void nrf_en_dpl(int pipe);
+
+/**
+ * @brief Disable dynamic payload length for a pipe.
+ * 
+ * If dynamic payload length is disabled the length of a packet must be set 
+ * using the nrf_set_pw function.
+ * 
+ * @param pipe Which pipe to disable dynamic payload length on.
+ */
+void nrf_dis_dpl(int pipe);
+
+/**
+ * @brief Enable dynamic auto-acknowledgements.
+ * 
+ * Enables sending payloads without using auto-acknowlegment without disabling 
+ * the auto-acknowledge setting on the transmitter or receiver.  The SENDNOACK
+ * function can then be used to do this.
+ */
+void nrf_en_dyn_ack();
+
+/**
+ * @brief Disable dynamic auto-acknowledgements.
+ * 
+ * Disables sending payloads without using auto-acknowlegment without disabling 
+ * the auto-acknowledge setting on the transmitter or receiver.
+ */
+void nrf_dis_dyn_ack();

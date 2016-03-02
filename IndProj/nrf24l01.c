@@ -234,7 +234,7 @@ void nrf_start_cont_wave(char pwr){
     nrf_tx_mode();
     nrf_write_reg_byte(nrf24l01_RF_SETUP, 
             nrf24l01_RF_SETUP_PLL_LOCK | nrf24l01_RD_SETUP_CONT_WAVE);
-    nrf_set_transmit_pwr(char pwr);
+    nrf_set_transmit_pwr(pwr);
     _ce = 1;   
 }
 
@@ -242,7 +242,7 @@ void nrf_stop_cont_wave(){
     _ce = 0;
     char reg;
     reg = nrf_read_reg_byte(nrf24l01_RF_SETUP);
-    reg &= ~(nrf24l01_RF_SETUP_PLL_LOCK | nrf24l01_RD_SETUP_CONT_WAVE)   
+    reg &= ~(nrf24l01_RF_SETUP_PLL_LOCK | nrf24l01_RD_SETUP_CONT_WAVE);  
     nrf_write_reg_byte(nrf24l01_RF_SETUP, reg);
     nrf_pwrdown();
 }
@@ -251,6 +251,85 @@ char nrf_recieved_pwr(){
     char pwr = 1;
     pwr &= nrf_read_reg_byte(nrf24l01_RPD);
     return pwr;
+}
+
+void nrf_en_aa(int pipe){
+    char num = 0x01;
+    num = num << pipe;
+    char reg = nrf_read_reg_byte(nrf24l01_EN_AA);
+    reg |= num;
+    // enable the pipe
+    nrf_en_rxaddr(pipe);
+    nrf_write_reg_byte(nrf24l01_EN_AA, reg);
+}
+
+void nrf_dis_aa(int pipe){
+    char num = 0x01;
+    num = num << pipe;
+    char reg = nrf_read_reg_byte(nrf24l01_EN_AA);
+    num = ~num;
+    reg &= num;
+    nrf_write_reg_byte(nrf24l01_EN_AA, reg);
+}
+
+void nrf_en_rxaddr(int pipe){
+    char num = 0x01;
+    num = num << pipe;
+    char reg = nrf_read_reg_byte(nrf24l01_EN_RXADDR);
+    reg |= num;
+    nrf_write_reg_byte(nrf24l01_EN_RXADDR, reg);
+}
+
+void nrf_dis_rxaddr(int pipe){
+    char num = 0x01;
+    num = num << pipe;
+    char reg = nrf_read_reg_byte(nrf24l01_EN_RXADDR);
+    num = ~num;
+    reg &= num;
+    nrf_write_reg_byte(nrf24l01_EN_RXADDR, reg);
+}
+
+void nrf_en_dpl(int pipe){
+    char num = 0x01;
+    num = num << pipe;
+    char reg = nrf_read_reg_byte(nrf24l01_DYNPD);
+    // set bit corresponding to pipe
+    reg |= num;
+    nrf_write_reg_byte(nrf24l01_DYNPD, reg);
+    // set EN_DPL in FEATURE register
+    reg = nrf_read_reg_byte(nrf24l01_FEATURE);
+    reg |= 0x04;
+    nrf_write_reg_byte(nrf24l01_FEATURE, reg);
+    // enable autoack for the pipe
+    nrf_en_aa(pipe);
+}
+
+void nrf_dis_dpl(int pipe){
+    char num = 0x01;
+    num = num << pipe;
+    char reg = nrf_read_reg_byte(nrf24l01_DYNPD);
+    // clear bit corresponding to pipe
+    num = ~num;
+    reg &= num;
+    nrf_write_reg_byte(nrf24l01_DYNPD, reg);
+    if(reg == 0x00){ // check if dpl has been disabled in all pipes
+        // clear EN_DPL in FEATURE register
+        reg = nrf_read_reg_byte(nrf24l01_FEATURE);
+        reg &= ~0x04;
+        nrf_write_reg_byte(nrf24l01_FEATURE, reg);
+    }
+}
+
+void nrf_en_dyn_ack(){
+    char reg = nrf_read_reg_byte(nrf24l01_FEATURE);
+    reg |= 0x01;
+    nrf_write_reg_byte(nrf24l01_FEATURE, reg);
+}
+
+void nrf_dis_dyn_ack(){
+    char reg = nrf_read_reg_byte(nrf24l01_FEATURE);
+    reg &= ~0x01;
+    nrf_write_reg_byte(nrf24l01_FEATURE, reg);
 }
 
 void __ISR(_EXTERNAL_1_VECTOR, ipl2) INT1Handler(void){
