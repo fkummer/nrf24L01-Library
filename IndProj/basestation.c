@@ -89,24 +89,32 @@ void __ISR(_EXTERNAL_0_VECTOR, ipl2) INT0Interrupt() {
 
 static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt);
-    int j = 0;
+    int toggle = 0;
     while (1) {
-        j+=10;
-//        tft_fillScreen(ILI9340_BLACK);
-        tft_drawLine(0, 0, 120, 120, j);
-        tft_setCursor(0, 220);
+        char reg;
+        reg = nrf_read_reg_byte(nrf24l01_RF_CH);
+        tft_setCursor(20, 20);
         tft_setTextColor(ILI9340_YELLOW);
         tft_setTextSize(2);
-        sprintf(buffer, "%s", "Testing...");
+        sprintf(buffer, "%02X", reg);
+        tft_writeString(buffer);
         if(button_press == 1){
-            _LEDRED ^= 1;
+            if(toggle == 0){
+                nrf_set_rf_ch(0x0F);
+                toggle = 1;
+                _LEDRED = 1;
+            }else{
+                nrf_set_rf_ch(0x00);
+                toggle = 0;
+                _LEDRED = 0;
+            }
+            tft_fillScreen(ILI9340_BLACK);
             button_press = 0;
         }
         delay_ms(200);
     }
     PT_END(pt);
 } // timer thread
-
 // === Main  ======================================================
 
 void main(void) {

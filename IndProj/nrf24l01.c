@@ -177,7 +177,7 @@ void nrf_standby_mode(){
     _ce = 0;
 }
 
-
+// TESTED
 // sets power of transmitter, possible values and definitions for them are
 //  0dBm: nrf24l01_RF_SETUP_RF_PWR_0
 // -6dBm: nrf24l01_RF_SETUP_RF_PWR_6
@@ -191,23 +191,39 @@ void nrf_set_transmit_pwr(char power){
     nrf_write_reg(nrf24l01_RF_SETUP, &setup, 1);  
 }
 
+// TESTED
 // sets the rf data rate, possible values and definitoins for them are
 // 250 kbps: nrf24l01_DR_LOW
 // 1 Mbps: nrf24l01_DR_MED
 // 2 Mbps: nrf24l01_DR_HIGH
 void nrf_set_transmit_rate(char rate){
     char setup; // check value of setup register
+    nrf_read_reg(nrf24l01_RF_SETUP, &setup, 1);
     setup &= 0xd7;  // clear data rate bits in register
     setup |= rate; // set data rate bits in register
     nrf_write_reg(nrf24l01_RF_SETUP, &setup, 1); 
 }
 
+// TESTED
 void nrf_set_ard(char ard){
-    nrf_write_reg_byte(nrf24l01_SETUP_RETR, ard);
+    char setup; // check value of setup register
+    nrf_read_reg(nrf24l01_SETUP_RETR, &setup, 1);
+    setup &= 0x0F;  // clear data rate bits in register
+    setup |= ard; // set data rate bits in register
+    nrf_write_reg(nrf24l01_SETUP_RETR, &setup, 1); 
+}
+
+// TESTED
+void nrf_set_arc(char arc){
+    char setup; // check value of setup register
+    nrf_read_reg(nrf24l01_SETUP_RETR, &setup, 1);
+    setup &= 0xF0;  // clear data rate bits in register
+    setup |= arc; // set data rate bits in register
+    nrf_write_reg(nrf24l01_SETUP_RETR, &setup, 1); 
 }
 
 void nrf_set_rf_ch(char ch){
-    nrf_write_reg_byte(nrf24l01_RF_CH, ch);
+    nrf_write_reg(nrf24l01_RF_CH, &ch, 1);
 }
 
 void nrf_set_address_width(char width){
