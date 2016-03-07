@@ -39,22 +39,6 @@ void init_SPI(){
     EnableINT1;
 }
 
-void nrf_write_reg_byte(char reg, char data){
-	_csn = 0; // begin transmission
-	status = rf_spiwrite(nrf24l01_W_REGISTER | reg); // send command to write reg
-	rf_spiwrite(data);
-	_csn = 1; // end transmission
-}
-
-
-char nrf_read_reg_byte(char reg){
-	_csn = 0;
-	status = rf_spiwrite(nrf24l01_R_REGISTER | reg); // send command to read register
-	return rf_spiwrite(nrf24l01_SEND_CLOCK); // send clock pulse to continue receiveing data
-	_csn = 1; // end transmission
-}
-
-
 // Read a register from the nrf24l01
 // reg is the array to read, len is the length of data expected to be received (1-5 bytes)
 // NOTE: only address 0 and 1 registers use 5 bytes all others use 1 byte 
@@ -222,12 +206,15 @@ void nrf_set_arc(char arc){
     nrf_write_reg(nrf24l01_SETUP_RETR, &setup, 1); 
 }
 
+// TESTED
 void nrf_set_rf_ch(char ch){
     nrf_write_reg(nrf24l01_RF_CH, &ch, 1);
 }
 
+// TESTED
 void nrf_set_address_width(char width){
-    nrf_write_reg_byte(nrf24l01_SETUP_AW, width - 2);
+    char setting = width - 2;
+    nrf_write_reg(nrf24l01_SETUP_AW, &setting, 1);
 }
 
 // Sends out a specified payload (in auto acknowledge mode by default)
@@ -248,8 +235,8 @@ void nrf_send_payload(char * data, int len){
 void nrf_start_cont_wave(char pwr){
     nrf_pwrup();
     nrf_tx_mode();
-    nrf_write_reg_byte(nrf24l01_RF_SETUP, 
-            nrf24l01_RF_SETUP_PLL_LOCK | nrf24l01_RD_SETUP_CONT_WAVE);
+    char setting = nrf24l01_RF_SETUP_PLL_LOCK | nrf24l01_RD_SETUP_CONT_WAVE;
+    nrf_write_reg(nrf24l01_RF_SETUP, &setting, 1);
     nrf_set_transmit_pwr(pwr);
     _ce = 1;   
 }
@@ -257,65 +244,71 @@ void nrf_start_cont_wave(char pwr){
 void nrf_stop_cont_wave(){
     _ce = 0;
     char reg;
-    reg = nrf_read_reg_byte(nrf24l01_RF_SETUP);
+    nrf_read_reg(nrf24l01_RF_SETUP, &reg, 1);
     reg &= ~(nrf24l01_RF_SETUP_PLL_LOCK | nrf24l01_RD_SETUP_CONT_WAVE);  
-    nrf_write_reg_byte(nrf24l01_RF_SETUP, reg);
+    nrf_write_reg(nrf24l01_RF_SETUP, &reg, 1);
     nrf_pwrdown();
 }
 
 char nrf_recieved_pwr(){
-    char pwr = 1;
-    pwr &= nrf_read_reg_byte(nrf24l01_RPD);
+    char pwr;
+    nrf_read_reg(nrf24l01_RPD, &pwr, 1);
+    pwr &= 0x01;
     return pwr;
 }
 
 void nrf_en_aa(int pipe){
     char num = 0x01;
     num = num << pipe;
-    char reg = nrf_read_reg_byte(nrf24l01_EN_AA);
+    char reg;
+    nrf_read_reg(nrf24l01_EN_AA, &reg, 1);
     reg |= num;
     // enable the pipe
     nrf_en_rxaddr(pipe);
-    nrf_write_reg_byte(nrf24l01_EN_AA, reg);
+    nrf_write_reg(nrf24l01_EN_AA, &reg, 1);
 }
 
 void nrf_dis_aa(int pipe){
     char num = 0x01;
     num = num << pipe;
-    char reg = nrf_read_reg_byte(nrf24l01_EN_AA);
+    char reg;
+    nrf_read_reg(nrf24l01_EN_AA, &reg, 1);
     num = ~num;
     reg &= num;
-    nrf_write_reg_byte(nrf24l01_EN_AA, reg);
+    nrf_write_reg(nrf24l01_EN_AA, &reg, 1);
 }
 
 void nrf_en_rxaddr(int pipe){
     char num = 0x01;
     num = num << pipe;
-    char reg = nrf_read_reg_byte(nrf24l01_EN_RXADDR);
+    char reg;
+    nrf_read_reg(nrf24l01_EN_RXADDR, &reg, 1);
     reg |= num;
-    nrf_write_reg_byte(nrf24l01_EN_RXADDR, reg);
+    nrf_write_reg(nrf24l01_EN_RXADDR, &reg, 1);
 }
 
 void nrf_dis_rxaddr(int pipe){
     char num = 0x01;
     num = num << pipe;
-    char reg = nrf_read_reg_byte(nrf24l01_EN_RXADDR);
+    char reg;
+    nrf_read_reg(nrf24l01_EN_RXADDR, &reg, 1);
     num = ~num;
     reg &= num;
-    nrf_write_reg_byte(nrf24l01_EN_RXADDR, reg);
+    nrf_write_reg(nrf24l01_EN_RXADDR, &reg, 1);
 }
 
 void nrf_en_dpl(int pipe){
     char num = 0x01;
     num = num << pipe;
-    char reg = nrf_read_reg_byte(nrf24l01_DYNPD);
+    char reg;
+    nrf_read_reg(nrf24l01_DYNPD, &reg, 1);
     // set bit corresponding to pipe
     reg |= num;
-    nrf_write_reg_byte(nrf24l01_DYNPD, reg);
+    nrf_write_reg(nrf24l01_DYNPD, &reg, 1);
     // set EN_DPL in FEATURE register
-    reg = nrf_read_reg_byte(nrf24l01_FEATURE);
+    nrf_read_reg(nrf24l01_FEATURE, &reg, 1);
     reg |= 0x04;
-    nrf_write_reg_byte(nrf24l01_FEATURE, reg);
+    nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
     // enable autoack for the pipe
     nrf_en_aa(pipe);
 }
@@ -323,29 +316,32 @@ void nrf_en_dpl(int pipe){
 void nrf_dis_dpl(int pipe){
     char num = 0x01;
     num = num << pipe;
-    char reg = nrf_read_reg_byte(nrf24l01_DYNPD);
+    char reg;
+    nrf_read_reg(nrf24l01_DYNPD, &reg, 1);
     // clear bit corresponding to pipe
     num = ~num;
     reg &= num;
-    nrf_write_reg_byte(nrf24l01_DYNPD, reg);
+    nrf_write_reg(nrf24l01_DYNPD, &reg, 1);
     if(reg == 0x00){ // check if dpl has been disabled in all pipes
         // clear EN_DPL in FEATURE register
-        reg = nrf_read_reg_byte(nrf24l01_FEATURE);
+        nrf_read_reg(nrf24l01_FEATURE, &reg, 1);
         reg &= ~0x04;
-        nrf_write_reg_byte(nrf24l01_FEATURE, reg);
+        nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
     }
 }
 
 void nrf_en_dyn_ack(){
-    char reg = nrf_read_reg_byte(nrf24l01_FEATURE);
+    char reg;
+    nrf_read_reg(nrf24l01_FEATURE, &reg, 1);
     reg |= 0x01;
-    nrf_write_reg_byte(nrf24l01_FEATURE, reg);
+    nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
 }
 
 void nrf_dis_dyn_ack(){
-    char reg = nrf_read_reg_byte(nrf24l01_FEATURE);
+    char reg;
+    nrf_read_reg(nrf24l01_FEATURE, &reg, 1);
     reg &= ~0x01;
-    nrf_write_reg_byte(nrf24l01_FEATURE, reg);
+    nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
 }
 
 void __ISR(_EXTERNAL_1_VECTOR, ipl2) INT1Handler(void){

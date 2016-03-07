@@ -233,7 +233,6 @@
 char status;
 char config;
 char buffer[120];
-
 volatile char RX_payload[32];
 char payload_size;
 
@@ -255,22 +254,6 @@ char rf_spiwrite(unsigned char c);
  * @brief Set up SPI and interrupt for radio.
  */
 void init_SPI();
-
-/**
- * @brief Write a single byte to a register
- *
- * @param reg What register to write to.  Use constants in nrf24l01.h
- * @param data What to write to the register
- */
-void nrf_write_reg_byte(char reg, char data);
-
-/**
- *@brief Read a single byte from a register
- *
- * @param reg What register to read from.  Use constants in nrf24l01.h
- * @return Data in the register.
- */
-char nrf_read_reg_byte(char reg);
 
 /**
  *@brief Read a register and store the data in an array. Can be multiple bytes 
@@ -355,6 +338,7 @@ void nrf_standby_mode();
  *-18dBm: nrf24l01_RF_SETUP_RF_PWR_18
  */
 void nrf_set_transmit_pwr(char power);
+
 
 /**
  * @brief Set data rate.

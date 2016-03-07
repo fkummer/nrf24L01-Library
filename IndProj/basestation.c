@@ -89,10 +89,10 @@ void __ISR(_EXTERNAL_0_VECTOR, ipl2) INT0Interrupt() {
 
 static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt);
-    int toggle = 0;
+    static int toggle = 0;
+    static char reg;
     while (1) {
-        char reg;
-        reg = nrf_read_reg_byte(nrf24l01_RF_CH);
+        nrf_read_reg(nrf24l01_RF_CH, &reg, 1);
         tft_setCursor(20, 20);
         tft_setTextColor(ILI9340_YELLOW);
         tft_setTextSize(2);
@@ -100,11 +100,11 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
         tft_writeString(buffer);
         if(button_press == 1){
             if(toggle == 0){
-                nrf_set_rf_ch(0x0F);
+                nrf_set_rf_ch(nrf24l01_SETUP_RETR_ARC_15);
                 toggle = 1;
                 _LEDRED = 1;
             }else{
-                nrf_set_rf_ch(0x00);
+                nrf_set_rf_ch(nrf24l01_SETUP_RETR_ARC_14);
                 toggle = 0;
                 _LEDRED = 0;
             }
@@ -115,17 +115,17 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
     }
     PT_END(pt);
 } // timer thread
-// === Main  ======================================================
+ //=== Main  ======================================================
 
 void main(void) {
     INTEnableSystemMultiVectoredInt();
     //reset();
-    PT_setup();
+    //PT_setup();
     buttonSetup();
     TRISAbits.TRISA0 = 0;
     LATAbits.LATA0 = 0;
     _TRIS_LEDRED = 0;
-    PT_INIT(&pt_radio);
+    //PT_INIT(&pt_radio);
 
     radioSetup();
     
@@ -135,7 +135,35 @@ void main(void) {
     //240x320 vertical display
     tft_setRotation(0); // Use tft_setRotation(1) for 320x240
     
+//    static int toggle = 0;
+//    static char  reg;
+//    while (0) {
+//        reg = nrf_read_reg_byte(nrf24l01_RF_CH);
+//        tft_setCursor(20, 20);
+//        tft_setTextColor(ILI9340_YELLOW);
+//        tft_setTextSize(2);
+//        sprintf(buffer, "%02X", reg);
+//        tft_writeString(buffer);
+//        if(button_press == 1){
+//            if(toggle == 0){
+//                nrf_set_rf_ch(nrf24l01_SETUP_RETR_ARC_15);
+//                toggle = 1;
+//                _LEDRED = 1;
+//            }else{
+//                nrf_set_rf_ch(nrf24l01_SETUP_RETR_ARC_14);
+//                toggle = 0;
+//                _LEDRED = 0;
+//            }
+//            tft_fillScreen(ILI9340_BLACK);
+//            button_press = 0;
+//        }
+//        delay_ms(200);
+//    }
+    
+
+    
     while (1) {
+        
         PT_SCHEDULE(protothread_radio(&pt_radio));
     }
 } // main
