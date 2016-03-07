@@ -232,15 +232,19 @@ void nrf_send_payload(char * data, int len){
     //_ce = 0; // transition to standby II mode
 }
 
+// TESTED
 void nrf_start_cont_wave(char pwr){
     nrf_pwrup();
     nrf_tx_mode();
-    char setting = nrf24l01_RF_SETUP_PLL_LOCK | nrf24l01_RD_SETUP_CONT_WAVE;
+    char setting;
+    nrf_read_reg(nrf24l01_RF_SETUP, &setting, 1);
+    setting |= nrf24l01_RF_SETUP_PLL_LOCK | nrf24l01_RD_SETUP_CONT_WAVE;
     nrf_write_reg(nrf24l01_RF_SETUP, &setting, 1);
     nrf_set_transmit_pwr(pwr);
     _ce = 1;   
 }
 
+// TESTED
 void nrf_stop_cont_wave(){
     _ce = 0;
     char reg;
@@ -257,6 +261,7 @@ char nrf_recieved_pwr(){
     return pwr;
 }
 
+// TESTED
 void nrf_en_aa(int pipe){
     char num = 0x01;
     num = num << pipe;
@@ -268,6 +273,7 @@ void nrf_en_aa(int pipe){
     nrf_write_reg(nrf24l01_EN_AA, &reg, 1);
 }
 
+// TESTED
 void nrf_dis_aa(int pipe){
     char num = 0x01;
     num = num << pipe;
@@ -278,6 +284,7 @@ void nrf_dis_aa(int pipe){
     nrf_write_reg(nrf24l01_EN_AA, &reg, 1);
 }
 
+// TESTED
 void nrf_en_rxaddr(int pipe){
     char num = 0x01;
     num = num << pipe;
@@ -287,6 +294,7 @@ void nrf_en_rxaddr(int pipe){
     nrf_write_reg(nrf24l01_EN_RXADDR, &reg, 1);
 }
 
+// TESTED
 void nrf_dis_rxaddr(int pipe){
     char num = 0x01;
     num = num << pipe;
@@ -297,6 +305,7 @@ void nrf_dis_rxaddr(int pipe){
     nrf_write_reg(nrf24l01_EN_RXADDR, &reg, 1);
 }
 
+// TESTED
 void nrf_en_dpl(int pipe){
     char num = 0x01;
     num = num << pipe;
@@ -313,6 +322,7 @@ void nrf_en_dpl(int pipe){
     nrf_en_aa(pipe);
 }
 
+// TESTED
 void nrf_dis_dpl(int pipe){
     char num = 0x01;
     num = num << pipe;
@@ -330,6 +340,7 @@ void nrf_dis_dpl(int pipe){
     }
 }
 
+// TESTED
 void nrf_en_dyn_ack(){
     char reg;
     nrf_read_reg(nrf24l01_FEATURE, &reg, 1);
@@ -337,6 +348,7 @@ void nrf_en_dyn_ack(){
     nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
 }
 
+// TESTED
 void nrf_dis_dyn_ack(){
     char reg;
     nrf_read_reg(nrf24l01_FEATURE, &reg, 1);

@@ -91,20 +91,23 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt);
     static int toggle = 0;
     static char reg;
+    nrf_set_transmit_rate(nrf24l01_DR_LOW);
     while (1) {
-        nrf_read_reg(nrf24l01_RF_CH, &reg, 1);
+        nrf_read_reg(nrf24l01_RPD, &reg, 1);
+        
         tft_setCursor(20, 20);
         tft_setTextColor(ILI9340_YELLOW);
         tft_setTextSize(2);
         sprintf(buffer, "%02X", reg);
         tft_writeString(buffer);
+        
         if(button_press == 1){
             if(toggle == 0){
-                nrf_set_rf_ch(nrf24l01_SETUP_RETR_ARC_15);
+                nrf_start_cont_wave(nrf24l01_RF_SETUP_RF_PWR_12);
                 toggle = 1;
                 _LEDRED = 1;
             }else{
-                nrf_set_rf_ch(nrf24l01_SETUP_RETR_ARC_14);
+                nrf_stop_cont_wave();
                 toggle = 0;
                 _LEDRED = 0;
             }

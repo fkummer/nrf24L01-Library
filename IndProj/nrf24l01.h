@@ -445,7 +445,8 @@ char nrf_recieved_pwr();
 void nrf_en_aa(int pipe);
 
 /**
- * @brief Disable auto-acknowledge for a pipe
+ * @brief Disable auto-acknowledge for a pipe.
+ * 
  * @param pipe Which pipe to disable autoack on. Pipes range from 0 to 5.
  */
 void nrf_dis_aa(int pipe);
@@ -475,7 +476,7 @@ void nrf_dis_rxaddr(int pipe);
  * have dynamic payload length enabled for pipe 0 and the receiver must have 
  * dynamic payload length enabled for the pipe it will receive from this 
  * transmitter on.  In addition auto acknowledge must be enabled for the two 
- * pipes and EN_DPL must be set in the FEATURE REGISTER both of which are done 
+ * pipes and EN_DPL must be set in the FEATURE register both of which are done 
  * automatically.
  * 
  * @param pipe Which pipe to enable dynamic payload length on.
