@@ -90,31 +90,39 @@ void __ISR(_EXTERNAL_0_VECTOR, ipl2) INT0Interrupt() {
 static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt);
     static int toggle = 0;
-    static char reg;
-    nrf_set_transmit_rate(nrf24l01_DR_LOW);
+    char reg[5];
+    int test = 1;
+    nrf_set_address_width(5);
     while (1) {
-        nrf_read_reg(nrf24l01_RPD, &reg, 1);
-        
-        tft_setCursor(20, 20);
-        tft_setTextColor(ILI9340_YELLOW);
-        tft_setTextSize(2);
-        sprintf(buffer, "%02X", reg);
-        tft_writeString(buffer);
-        
+        test =  nrf_set_rx_addr(1, 0x12129A, 3);
+        nrf_read_reg(nrf24l01_RX_ADDR_P1, &reg, 5);
+        int i;
+        for(i=0;i<5;i++){
+            tft_setCursor(20, 20+20*i);
+            tft_setTextColor(ILI9340_YELLOW);
+            tft_setTextSize(2);
+            sprintf(buffer, "%02X", reg[i]);
+            tft_writeString(buffer);
+        }
+        nrf_read_reg(nrf24l01_RX_ADDR_P2, &reg, 1);
+        tft_setCursor(20, 140);
+            tft_setTextColor(ILI9340_YELLOW);
+            tft_setTextSize(2);
+            sprintf(buffer, "%d", test);
+            tft_writeString(buffer);
         if(button_press == 1){
             if(toggle == 0){
-                nrf_start_cont_wave(nrf24l01_RF_SETUP_RF_PWR_12);
                 toggle = 1;
                 _LEDRED = 1;
             }else{
-                nrf_stop_cont_wave();
                 toggle = 0;
                 _LEDRED = 0;
             }
             tft_fillScreen(ILI9340_BLACK);
             button_press = 0;
         }
-        delay_ms(200);
+        delay_ms(2000);
+        tft_fillScreen(ILI9340_BLACK);
     }
     PT_END(pt);
 } // timer thread
@@ -137,34 +145,7 @@ void main(void) {
     tft_fillScreen(ILI9340_BLACK);
     //240x320 vertical display
     tft_setRotation(0); // Use tft_setRotation(1) for 320x240
-    
-//    static int toggle = 0;
-//    static char  reg;
-//    while (0) {
-//        reg = nrf_read_reg_byte(nrf24l01_RF_CH);
-//        tft_setCursor(20, 20);
-//        tft_setTextColor(ILI9340_YELLOW);
-//        tft_setTextSize(2);
-//        sprintf(buffer, "%02X", reg);
-//        tft_writeString(buffer);
-//        if(button_press == 1){
-//            if(toggle == 0){
-//                nrf_set_rf_ch(nrf24l01_SETUP_RETR_ARC_15);
-//                toggle = 1;
-//                _LEDRED = 1;
-//            }else{
-//                nrf_set_rf_ch(nrf24l01_SETUP_RETR_ARC_14);
-//                toggle = 0;
-//                _LEDRED = 0;
-//            }
-//            tft_fillScreen(ILI9340_BLACK);
-//            button_press = 0;
-//        }
-//        delay_ms(200);
-//    }
-    
-
-    
+   
     while (1) {
         
         PT_SCHEDULE(protothread_radio(&pt_radio));

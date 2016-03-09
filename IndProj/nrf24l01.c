@@ -2,6 +2,7 @@
 // serial stuff
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "nrf24l01.h"
 
 
@@ -217,6 +218,39 @@ void nrf_set_address_width(char width){
     nrf_write_reg(nrf24l01_SETUP_AW, &setting, 1);
 }
 
+
+
+char * parse_addr(uint64_t address){
+    static char addr[5];
+    int i = 0;
+    for(i = 0; i < 5;i++){
+        addr[i] = (char)((address >> i*8) & 0xFF);
+    }
+    return &addr;
+}
+
+int nrf_set_rx_addr(int pipe, uint64_t address, int len){
+    char width;
+    nrf_read_reg(nrf24l01_SETUP_AW, &width, 1);
+    width = width + 2;
+    char * addr = parse_addr(address);
+    
+    if(pipe == 0 || pipe == 1){
+        if(len != width){//Must equal preset address width
+            return 0;
+        }
+        
+    }else{
+        if(len != 1){
+            return 0;//For pipes 2,3,4,5 can only set last byte
+        }
+    }
+    
+    nrf_write_reg(nrf24l01_RX_ADDR_P0+pipe, addr, len);
+    return 1;
+    
+    
+}
 // Sends out a specified payload (in auto acknowledge mode by default)
 // use after powering up radio, and setting address or other settings
 void nrf_send_payload(char * data, int len){
@@ -254,7 +288,8 @@ void nrf_stop_cont_wave(){
     nrf_pwrdown();
 }
 
-char nrf_recieved_pwr(){
+//TESTED
+char nrf_received_pwr(){
     char pwr;
     nrf_read_reg(nrf24l01_RPD, &pwr, 1);
     pwr &= 0x01;

@@ -12,7 +12,7 @@
 
  #define _SUPPRESS_PLIB_WARNING 1
  #include <plib.h>
-
+ #include "inttypes.h"
 // PIN Setup
 // SCK -> SCK1 (pin 26)
 // SDI -> MISO (RPA4) (pin 12)
@@ -435,7 +435,7 @@ void nrf_stop_cont_wave();
  * 
  * @return 1 If power level is above -64dB.
  */
-char nrf_recieved_pwr();
+char nrf_received_pwr();
 
 /**
  * @brief Enable auto-acknowledge for a pipe.
@@ -509,3 +509,28 @@ void nrf_en_dyn_ack();
  * the auto-acknowledge setting on the transmitter or receiver.
  */
 void nrf_dis_dyn_ack();
+
+
+
+/**
+ * @brief Set the address of a pipe.
+ * 
+ * The nrf24l01 has six pipes to receive on.  Pipes have addresses
+ * that are 3-5 bytes long.  Pipes 0 and 1 can have all 5 bytes of their 
+ * addresses changed.  The other four pipes can only have the LSB of their 
+ * address changed.  The four MSBs of the other four pipes are the MSBs of the 
+ * address of pipe 1.  The address width must be set using nrf_set_address_width
+ * before calling this function.  If the address width set does not match the
+ * length specified in this function 0 will be returned and the address will not
+ * be written.  0 will also be returned if length is not set to 1 when writing
+ * to pipes 2-5.  
+ * 
+ * @param pipe The pipe whose address will be set. Pipes range from 0-5.
+ * @param address Address pipe will be set to.
+ * @param len How many bytes long the address is. Length ranges from 0-5 bytes.
+ * @return Returns 1 if address was written correctly.  Returns 0 if address was
+ * written incorrectly.  If 0 is returned address was not written.
+ */
+int nrf_set_rx_addr(int pipe, uint64_t address, int len);
+
+char * parse_addr(uint64_t address);

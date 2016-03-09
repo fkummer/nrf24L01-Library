@@ -88,8 +88,18 @@ void __ISR(_EXTERNAL_0_VECTOR, ipl2) INT0Interrupt() {
 
 static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt);
+    nrf_pwrup();
+    nrf_rx_mode();
+    char pwr;
     while (1) {
-        
+        pwr = nrf_received_pwr();
+        tft_setCursor(20, 20);
+        tft_setTextColor(ILI9340_MAGENTA);
+        tft_setTextSize(2);
+        sprintf(buffer, "%02X", pwr);
+        tft_writeString(buffer);
+        delay_ms(1000);
+        tft_fillScreen(ILI9340_BLACK);
     }
     PT_END(pt);
 } // timer thread
