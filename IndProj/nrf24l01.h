@@ -230,11 +230,20 @@
 // Send no data for when you read data from the radio
 #define nrf24l01_SEND_CLOCK             0x00
 
+// State Definitions
+#define PWR_DOWN 0
+#define STANDBY_1 1
+#define RX_MODE 2
+#define TX_MODE 3
+
+
 char status;
 char config;
 char buffer[120];
 volatile char RX_payload[32];
 char payload_size;
+
+int state = PWR_DOWN;
 
 volatile int received; // goes high when message is received
 volatile int sent; // goes high after radio finishes sending payload correctly
@@ -318,21 +327,29 @@ void nrf_pwrup();
 void nrf_pwrdown();
 
 /**
- * @brief Sets PRIM_RX in status register and sets CE to transition to RX mode 
- * state from standby-I state.
+ * @brief Put the radio in the power down state.
  */
-void nrf_rx_mode();
+void nrf_state_pwr_down();
 
 /**
- * @brief Clears PRIM_RX in status register and CE to transition to TX mode 
- * state from standby-I state if there is data in the TX FIFO.
+ * @brief Put the radio in the standby 1 state.
  */
-void nrf_tx_mode();
+void nrf_state_standby_1();
 
 /**
- * @brief Sets to standby mode
+ * @brief Put the radio in the rx mode state.
  */
-void nrf_standby_mode();
+void nrf_state_rx_mode();
+
+/**
+ * @brief Set the PRIM_RX bit in the CONFIG register.
+ */
+void nrf_set_prim_rx();
+
+/**
+ * @brief Clear the PRIM_RX bit in the CONFIG register.
+ */
+void nrf_clear_prim_rx();
 
 /**
  * @brief Set power of transmitter.
@@ -411,7 +428,7 @@ char nrf_received_pipe_num();
  * @param data Pointer to data to be sent.
  * @param len How many bytes of data to be sent. (1-32bytes)
  */
-void nrf_send_payload(char * data, int len);
+//void nrf_send_payload(char * data, int len);
 
 /**
  * @brief Set the address width of RX and TX pipes
@@ -436,7 +453,7 @@ void nrf_set_address_width(char width);
  *-12dBm: nrf24l01_RF_SETUP_RF_PWR_12
  *-18dBm: nrf24l01_RF_SETUP_RF_PWR_18
  */
-void nrf_start_cont_wave(char pwr);
+//void nrf_start_cont_wave(char pwr);
 
 /**
  * @brief Stop sending the carrier wave.

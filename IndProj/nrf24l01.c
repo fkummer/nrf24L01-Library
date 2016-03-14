@@ -135,39 +135,88 @@ void nrf_pwrdown(){
     _ce = 0;
 }
 
-//Transitions to rx mode from standby mode
-void nrf_rx_mode(){
-//    nrf_read_reg(nrf24l01_STATUS, &status, 1); // read the status register
-//    status |= nrf24l01_STATUS_RX_DR; // clear interrupt on radio
-//    status |= nrf24l01_STATUS_TX_DS; // clear interrupt on radio
-//    status |= nrf24l01_STATUS_MAX_RT; // clear interrupt on radio
-//    nrf_write_reg(nrf24l01_STATUS, &status, 1);
-    
+void nrf_state_pwr_down(){
+    switch(state){
+        case PWR_DOWN :
+            break;
+        case STANDBY_1 :
+            nrf_pwrdown();
+            break;
+        case RX_MODE :
+            _ce = 0;
+            nrf_pwrdown();
+            break;
+        case TX_MODE :
+            _ce = 0;
+            nrf_pwrdown();
+            break;
+        default :
+            _ce = 0;
+            nrf_pwrdown();      
+    }
+    state = PWR_DOWN;
+}
+
+void nrf_state_standby_1(){
+    switch(state){
+        case PWR_DOWN :
+            nrf_pwrup();
+            break;
+        case STANDBY_1 :
+            break;
+        case RX_MODE :
+            _ce = 0;
+            break;
+        case TX_MODE :
+            _ce = 0;
+            break;
+        default :
+            _ce = 0;
+            nrf_pwrup();      
+    }
+    state = STANDBY_1;
+}
+
+void nrf_state_rx_mode(){
+    switch(state){
+        case PWR_DOWN :
+            nrf_state_standby_1();
+            nrf_set_prim_rx();
+            _ce = 1;
+            delay_us(130);
+            break;
+        case STANDBY_1 :
+            nrf_set_prim_rx();
+            _ce = 1;
+            delay_us(130);
+            break;
+        case RX_MODE :
+            break;
+        case TX_MODE :
+            nrf_state_standby_1();
+            nrf_set_prim_rx();
+            _ce = 1;
+            delay_us(130);
+            break;
+        default :
+            nrf_state_standby_1();
+            nrf_set_prim_rx();
+            _ce = 1;
+            delay_us(130);     
+    }
+    state = RX_MODE;
+}
+
+void nrf_set_prim_rx(){
     nrf_read_reg(nrf24l01_CONFIG, &config, 1);
     config |= nrf24l01_CONFIG_PRIM_RX;
     nrf_write_reg(nrf24l01_CONFIG, &config, 1);
-    _ce = 1;
-    delay_us(200); //Wait for transition to rx mode time
-
 }
 
-//Transitions to tx mode from standby mode
-void nrf_tx_mode(){
-//    nrf_read_reg(nrf24l01_STATUS, &status, 1); // read the status register
-//    status |= nrf24l01_STATUS_RX_DR; // clear interrupt on radio
-//    status |= nrf24l01_STATUS_TX_DS; // clear interrupt on radio
-//    status |= nrf24l01_STATUS_MAX_RT; // clear interrupt on radio
-//    nrf_write_reg(nrf24l01_STATUS, &status, 1);
-    
+void nrf_clear_prim_rx(){
     nrf_read_reg(nrf24l01_CONFIG, &config, 1);
     config &= ~(nrf24l01_CONFIG_PRIM_RX);
     nrf_write_reg(nrf24l01_CONFIG, &config, 1);
-    _ce = 1;
-    delay_us(200); //Wait for transition to tx mode time
-}
-
-void nrf_standby_mode(){
-    _ce = 0;
 }
 
 // TESTED
@@ -268,32 +317,32 @@ void nrf_set_tx_addr(uint64_t address){
     nrf_write_reg(nrf24l01_TX_ADDR, &addr, 5);
 }
 
-// Sends out a specified payload (in auto acknowledge mode by default)
-// use after powering up radio, and setting address or other settings
-void nrf_send_payload(char * data, int len){
-    nrf_flush_tx(); // clear the TX FIFO so for a new transmission
-    nrf_write_payload(data, len);
-    nrf_tx_mode();
-    while(!(sent)){ // wait until data sent interrupt triggers
-        TRISBbits.TRISB3 = 0;
-        LATBbits.LATB3 = 1;
-    }
-    LATBbits.LATB3 = 0;
-    sent = 0;
-    //_ce = 0; // transition to standby II mode
-}
-
-// TESTED
-void nrf_start_cont_wave(char pwr){
-    nrf_pwrup();
-    nrf_tx_mode();
-    char setting;
-    nrf_read_reg(nrf24l01_RF_SETUP, &setting, 1);
-    setting |= nrf24l01_RF_SETUP_PLL_LOCK | nrf24l01_RD_SETUP_CONT_WAVE;
-    nrf_write_reg(nrf24l01_RF_SETUP, &setting, 1);
-    nrf_set_transmit_pwr(pwr);
-    _ce = 1;   
-}
+//// Sends out a specified payload (in auto acknowledge mode by default)
+//// use after powering up radio, and setting address or other settings
+//void nrf_send_payload(char * data, int len){
+//    nrf_flush_tx(); // clear the TX FIFO so for a new transmission
+//    nrf_write_payload(data, len);
+//    nrf_tx_mode();
+//    while(!(sent)){ // wait until data sent interrupt triggers
+//        TRISBbits.TRISB3 = 0;
+//        LATBbits.LATB3 = 1;
+//    }
+//    LATBbits.LATB3 = 0;
+//    sent = 0;
+//    //_ce = 0; // transition to standby II mode
+//}
+//
+//// TESTED
+//void nrf_start_cont_wave(char pwr){
+//    nrf_pwrup();
+//    nrf_tx_mode();
+//    char setting;
+//    nrf_read_reg(nrf24l01_RF_SETUP, &setting, 1);
+//    setting |= nrf24l01_RF_SETUP_PLL_LOCK | nrf24l01_RD_SETUP_CONT_WAVE;
+//    nrf_write_reg(nrf24l01_RF_SETUP, &setting, 1);
+//    nrf_set_transmit_pwr(pwr);
+//    _ce = 1;   
+//}
 
 // TESTED
 void nrf_stop_cont_wave(){
@@ -462,6 +511,7 @@ void nrf_reset(){
     nrf_write_reg(nrf24l01_DYNPD, &reg, 1);
     reg = 0x00;
     nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
+    state = PWR_DOWN;
 }
 
 void __ISR(_EXTERNAL_1_VECTOR, ipl2) INT1Handler(void){
