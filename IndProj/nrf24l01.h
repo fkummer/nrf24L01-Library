@@ -256,6 +256,12 @@ char rf_spiwrite(unsigned char c);
 void init_SPI();
 
 /**
+ * @brief Sets up the radio, spi, and interrupts.  Also resets all radio 
+ * registers to their default values.
+ */
+void nrf_setup();
+
+/**
  *@brief Read a register and store the data in an array. Can be multiple bytes 
  * of data.
  *
@@ -386,6 +392,17 @@ void nrf_set_arc(char arc);
 void nrf_set_rf_ch(char ch);
 
 /**
+ * @brief Returns the pipe data is available in.
+ * 
+ * Before reading the payload out of the FIFO this function checks which pipe
+ * the data was received in.  If 0b111 is returned the FIFO is empty and no data
+ * was received.
+ * 
+ * @return Pipe data is available in
+ */
+char nrf_received_pipe_num();
+
+/**
  * @brief Send a payload over the radio.
  *
  * Sends out a specified payload (in auto acknowledge mode by default)
@@ -469,6 +486,19 @@ void nrf_en_rxaddr(int pipe);
 void nrf_dis_rxaddr(int pipe);
 
 /**
+ * @brief Set the width received static payloads should be.
+ * 
+ * When using static payload widths the width of packets must be explicitly set.
+ * The receiver's width must be set to the size of the payloads being 
+ * transmitted. Use this function to set the width on the receiver.
+ * 
+ * @param width Width to set pipe to. 1-32 bytes.
+ * 
+ * @param pipe Which pipe to set the payload width of.
+ */
+void nrf_set_pw(char width, int pipe);
+
+/**
  * @brief Enable dynamic payload length for a pipe.
  * 
  * If dynamic payload length is enabled the amount of bytes in a packet does not
@@ -533,4 +563,32 @@ void nrf_dis_dyn_ack();
  */
 int nrf_set_rx_addr(int pipe, uint64_t address, int len);
 
+/**
+ * @brief Set the address for transmitting.
+ * 
+ * The address of the transmitter should match the address of the receiver or
+ * packets will not be received.  If auto acknowledge is enabled rx pipe 0 on 
+ * the transmitter must be set to the same address as the tx address set in this 
+ * function.
+ * 
+ * @param address Address to set. 5 bytes.
+ */
+void nrf_set_tx_addr(uint64_t address);
+
 char * parse_addr(uint64_t address);
+
+/**
+ * @brief Enables acknowledge packets to carry payloads.
+ */
+void nrf_en_ack_pay();
+
+/**
+ * @brief Disables acknowledge packets to carry payloads.
+ */
+void nrf_dis_ack_pay();
+
+/**
+ * @brief Resets all registers to their default values as listed on the 
+ * datasheet.
+ */
+void nrf_reset();

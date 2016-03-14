@@ -32,12 +32,20 @@ void init_SPI(){
     PPSInput(3, SDI2, RPA4);
     // Set SDO2 to pin 9
     PPSOutput(3, RPA2, SDO2);
+    
+
+}
+
+void nrf_setup(){
+    init_SPI();
+    
     // Set external interrupt 1 to pin 21
     PPSInput(4, INT1, RPB10);
     
-    
     ConfigINT1(EXT_INT_PRI_2 | FALLING_EDGE_INT | EXT_INT_ENABLE);
     EnableINT1;
+    
+    nrf_reset();
 }
 
 // Read a register from the nrf24l01
@@ -212,14 +220,18 @@ void nrf_set_rf_ch(char ch){
     nrf_write_reg(nrf24l01_RF_CH, &ch, 1);
 }
 
+char nrf_received_pipe_num(){
+    nrf_read_reg(nrf24l01_STATUS, &status, 1);
+    return status & 0x0E;
+}
+
 // TESTED
 void nrf_set_address_width(char width){
     char setting = width - 2;
     nrf_write_reg(nrf24l01_SETUP_AW, &setting, 1);
 }
 
-
-
+// TESTED
 char * parse_addr(uint64_t address){
     static char addr[5];
     int i = 0;
@@ -229,6 +241,7 @@ char * parse_addr(uint64_t address){
     return &addr;
 }
 
+// TESTED
 int nrf_set_rx_addr(int pipe, uint64_t address, int len){
     char width;
     nrf_read_reg(nrf24l01_SETUP_AW, &width, 1);
@@ -248,9 +261,13 @@ int nrf_set_rx_addr(int pipe, uint64_t address, int len){
     
     nrf_write_reg(nrf24l01_RX_ADDR_P0+pipe, addr, len);
     return 1;
-    
-    
 }
+
+void nrf_set_tx_addr(uint64_t address){
+    char * addr = parse_addr(address);
+    nrf_write_reg(nrf24l01_TX_ADDR, &addr, 5);
+}
+
 // Sends out a specified payload (in auto acknowledge mode by default)
 // use after powering up radio, and setting address or other settings
 void nrf_send_payload(char * data, int len){
@@ -340,6 +357,10 @@ void nrf_dis_rxaddr(int pipe){
     nrf_write_reg(nrf24l01_EN_RXADDR, &reg, 1);
 }
 
+void nrf_set_pw(char width, int pipe){
+   nrf_write_reg(nrf24l01_RX_PW_P0 + pipe, &width, 1);
+}
+
 // TESTED
 void nrf_en_dpl(int pipe){
     char num = 0x01;
@@ -388,6 +409,58 @@ void nrf_dis_dyn_ack(){
     char reg;
     nrf_read_reg(nrf24l01_FEATURE, &reg, 1);
     reg &= ~0x01;
+    nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
+}
+
+void nrf_en_ack_pay(){
+    char reg;
+    nrf_read_reg(nrf24l01_FEATURE, &reg, 1);
+    reg |= 0x02;
+    nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
+}
+
+void nrf_dis_ack_pay(){
+    char reg;
+    nrf_read_reg(nrf24l01_FEATURE, &reg, 1);
+    reg &= ~0x02;
+    nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
+}
+
+void nrf_reset(){
+    char reg = 0x08;
+    nrf_write_reg(nrf24l01_CONFIG, &reg, 1);
+    reg = 0x3F;
+    nrf_write_reg(nrf24l01_EN_AA, &reg, 1);
+    reg = 0x03;
+    nrf_write_reg(nrf24l01_SETUP_AW, &reg, 1);
+    reg = 0x03;
+    nrf_write_reg(nrf24l01_EN_RXADDR, &reg, 1);
+    reg = 0x03;
+    nrf_write_reg(nrf24l01_SETUP_RETR, &reg, 1);
+    reg = 0x02;
+    nrf_write_reg(nrf24l01_RF_CH, &reg, 1);
+    reg = 0x0E;
+    nrf_write_reg(nrf24l01_RF_SETUP, &reg, 1);
+    reg = 0x70;
+    nrf_write_reg(nrf24l01_STATUS, &reg, 1);
+    reg = 0x00;
+    nrf_write_reg(nrf24l01_OBSERVE_TX, &reg, 1);
+    nrf_set_rx_addr(0, 0xE7E7E7E7E7, 5);
+    nrf_set_rx_addr(1, 0xC2C2C2C2C2, 5);
+    nrf_set_rx_addr(2, 0xC3, 1);
+    nrf_set_rx_addr(3, 0xC4, 1);
+    nrf_set_rx_addr(4, 0xC5, 1);
+    nrf_set_rx_addr(5, 0xC6, 1);
+    nrf_set_tx_addr(0xE7E7E7E7E7);
+    nrf_set_pw(0, 0);
+    nrf_set_pw(0, 1);
+    nrf_set_pw(0, 2);
+    nrf_set_pw(0, 3);
+    nrf_set_pw(0, 4);
+    nrf_set_pw(0, 5);
+    reg = 0x00;
+    nrf_write_reg(nrf24l01_DYNPD, &reg, 1);
+    reg = 0x00;
     nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
 }
 
