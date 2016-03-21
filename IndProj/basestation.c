@@ -41,37 +41,6 @@ void buttonSetup() {
     EnableINT0;
 }
 
-void radioSetup() {
-    TX = 1;
-    send = 0xBB;
-
-    // Set outputs to CE and CSN
-    TRIS_csn = 0;
-    TRIS_ce = 0;
-
-    init_SPI();
-
-    // write the 5 byte address to pipe 1
-    nrf_pwrup(); //Go to standby
-
-    // set the payload width to 1 bytes
-    payload_size = 1;
-    nrf_write_reg(nrf24l01_RX_PW_P0, &payload_size, 1);
-    nrf_write_reg(nrf24l01_RX_PW_P1, &payload_size, 1);
-    nrf_write_reg(nrf24l01_RX_PW_P2, &payload_size, 1);
-    nrf_write_reg(nrf24l01_RX_PW_P3, &payload_size, 1);
-    nrf_write_reg(nrf24l01_RX_PW_P4, &payload_size, 1);
-    nrf_write_reg(nrf24l01_RX_PW_P5, &payload_size, 1);
-    //nrf_write_reg(nrf24l01_SETUP_RETR, &retry_num, 1);
-
-    char autoack = nrf24l01_EN_AA_ENAA_NONE;
-    nrf_write_reg(nrf24l01_EN_AA, &autoack, 1);
-    char disable_retry = nrf24l01_SETUP_RETR_ARC_0;
-    nrf_write_reg(nrf24l01_SETUP_RETR, &disable_retry, 1);
-    nrf_flush_rx();
-
-}
-
 // button was pressed
 void __ISR(_EXTERNAL_0_VECTOR, ipl2) INT0Interrupt() {
     int count; // debounce counter
@@ -90,30 +59,42 @@ void __ISR(_EXTERNAL_0_VECTOR, ipl2) INT0Interrupt() {
 static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt);
     static int toggle = 0;
-    char reg[5];
-    int test = 1;
-    nrf_set_address_width(5);
+    //char reg[5];
+    char payload = 0xaa;
+    int test = 2;
+    //nrf_set_address_width(5);
     while (1) {
-        test =  nrf_set_rx_addr(1, 0x12129A, 3);
-        nrf_read_reg(nrf24l01_RX_ADDR_P1, &reg, 5);
-        int i;
-        for(i=0;i<5;i++){
-            tft_setCursor(20, 20+20*i);
-            tft_setTextColor(ILI9340_YELLOW);
-            tft_setTextSize(2);
-            sprintf(buffer, "%02X", reg[i]);
-            tft_writeString(buffer);
-        }
-        nrf_read_reg(nrf24l01_RX_ADDR_P2, &reg, 1);
-        tft_setCursor(20, 140);
+//        test =  nrf_set_rx_addr(1, 0x12129A, 3);
+//        nrf_read_reg(nrf24l01_RX_ADDR_P1, &reg, 5);        
+//        int i;
+//        for(i=0;i<5;i++){
+//            tft_setCursor(20, 20+20*i);
+//            tft_setTextColor(ILI9340_YELLOW);
+//            tft_setTextSize(2);
+//            sprintf(buffer, "%02X", reg[i]);
+//            tft_writeString(buffer);
+//        }
+//        nrf_read_reg(nrf24l01_RX_ADDR_P2, &reg, 1);
+//        tft_setCursor(20, 140);
+//            tft_setTextColor(ILI9340_YELLOW);
+//            tft_setTextSize(2);
+//            sprintf(buffer, "%d", test);
+//            tft_writeString(buffer);
+        
+            tft_setCursor(20, 140);
             tft_setTextColor(ILI9340_YELLOW);
             tft_setTextSize(2);
             sprintf(buffer, "%d", test);
             tft_writeString(buffer);
+        
         if(button_press == 1){
             if(toggle == 0){
                 toggle = 1;
                 _LEDRED = 1;
+                test = nrf_send_payload(&payload,1);
+                sent = 0;
+                error = 0;
+                payload++;
             }else{
                 toggle = 0;
                 _LEDRED = 0;
@@ -137,9 +118,6 @@ void main(void) {
     LATAbits.LATA0 = 0;
     _TRIS_LEDRED = 0;
     //PT_INIT(&pt_radio);
-
-    radioSetup();
-    
     tft_init_hw();
     tft_begin();
     tft_fillScreen(ILI9340_BLACK);

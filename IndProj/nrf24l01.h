@@ -605,6 +605,13 @@ void nrf_en_ack_pay();
 void nrf_dis_ack_pay();
 
 /**
+ * 
+ * @param data
+ * @param len
+ */
+int nrf_send_payload(char * data, char len);
+
+/**
  * @brief Resets all registers to their default values as listed on the 
  * datasheet.
  */

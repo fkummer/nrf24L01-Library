@@ -98,6 +98,8 @@ void nrf_flush_rx(){
 // NOT TESTED YET
 void nrf_write_payload(char * data, char len){
     int i = 0;
+    
+    //Write packet to TX FIFO before pulsing
     _csn = 0; // begin transmission
     status = rf_spiwrite(nrf24l01_W_TX_PAYLOAD); // send the command to write the payload
     for(i=0;i<len;i++){
@@ -146,10 +148,6 @@ void nrf_state_pwr_down(){
             _ce = 0;
             nrf_pwrdown();
             break;
-        case TX_MODE :
-            _ce = 0;
-            nrf_pwrdown();
-            break;
         default :
             _ce = 0;
             nrf_pwrdown();      
@@ -165,9 +163,6 @@ void nrf_state_standby_1(){
         case STANDBY_1 :
             break;
         case RX_MODE :
-            _ce = 0;
-            break;
-        case TX_MODE :
             _ce = 0;
             break;
         default :
@@ -191,12 +186,6 @@ void nrf_state_rx_mode(){
             delay_us(130);
             break;
         case RX_MODE :
-            break;
-        case TX_MODE :
-            nrf_state_standby_1();
-            nrf_set_prim_rx();
-            _ce = 1;
-            delay_us(130);
             break;
         default :
             nrf_state_standby_1();
@@ -332,17 +321,16 @@ void nrf_set_tx_addr(uint64_t address){
 //    //_ce = 0; // transition to standby II mode
 //}
 //
-//// TESTED
-//void nrf_start_cont_wave(char pwr){
-//    nrf_pwrup();
-//    nrf_tx_mode();
-//    char setting;
-//    nrf_read_reg(nrf24l01_RF_SETUP, &setting, 1);
-//    setting |= nrf24l01_RF_SETUP_PLL_LOCK | nrf24l01_RD_SETUP_CONT_WAVE;
-//    nrf_write_reg(nrf24l01_RF_SETUP, &setting, 1);
-//    nrf_set_transmit_pwr(pwr);
-//    _ce = 1;   
-//}
+
+void nrf_start_cont_wave(char pwr){
+    nrf_state_standby_1();
+    char setting;
+    nrf_read_reg(nrf24l01_RF_SETUP, &setting, 1);
+    setting |= nrf24l01_RF_SETUP_PLL_LOCK | nrf24l01_RD_SETUP_CONT_WAVE;
+    nrf_write_reg(nrf24l01_RF_SETUP, &setting, 1);
+    nrf_set_transmit_pwr(pwr);
+    _ce = 1;   
+}
 
 // TESTED
 void nrf_stop_cont_wave(){
@@ -475,6 +463,26 @@ void nrf_dis_ack_pay(){
     nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
 }
 
+//Send a payload, with no checking for whether it was successfully received or not
+//Does not provide reliable data transfer, but makes it possible to push out more packets
+//and to have greater application level control over packet timing.
+int nrf_send_payload_nonblock(char * data, char len){
+    nrf_write_payload(data, len);//Send payload to FIFO
+    nrf_state_standby_1();//Transition to standby 1 state to operate in a known state
+    nrf_clear_prim_rx();
+    
+    _ce = 1;//Pulse the line to begin the transition to TX
+    delay_us(15);
+    _ce = 0;
+    
+    delay_us(130);//RX Settling Time
+    
+    //while(!sent || !error);
+ 
+    //if(sent) return 1;
+    //else return 0;
+}
+
 void nrf_reset(){
     char reg = 0x08;
     nrf_write_reg(nrf24l01_CONFIG, &reg, 1);
@@ -523,7 +531,6 @@ void __ISR(_EXTERNAL_1_VECTOR, ipl2) INT1Handler(void){
         nrf_read_payload(&RX_payload);
         received = 1; // signal main code that payload was received
         status |= nrf24l01_STATUS_RX_DR; // clear interrupt on radio
-        nrf_flush_rx();
     }
         // if data sent or if acknowledge received when auto ack enabled
     else if (status & nrf24l01_STATUS_TX_DS) {

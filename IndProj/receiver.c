@@ -29,8 +29,6 @@ char receive;
 
 volatile int button_press = 0; // goes high after button was pressed
 
-char retry_num = nrf24l01_SETUP_RETR_ARC_15 | nrf24l01_SETUP_RETR_ARD_1000;
-
 // sets up button on base station
 // button uses external interrupt 0 on pin 16
 
@@ -38,37 +36,6 @@ void buttonSetup() {
     TRISBbits.TRISB7 = 1; // set pin 16 as interrupt
     ConfigINT0(EXT_INT_ENABLE | RISING_EDGE_INT | EXT_INT_PRI_2);
     EnableINT0;
-}
-
-void radioSetup() {
-    TX = 1;
-    send = 0xBB;
-
-    // Set outputs to CE and CSN
-    TRIS_csn = 0;
-    TRIS_ce = 0;
-
-    init_SPI();
-
-    // write the 5 byte address to pipe 1
-    nrf_pwrup(); //Go to standby
-
-    // set the payload width to 1 bytes
-    payload_size = 1;
-    nrf_write_reg(nrf24l01_RX_PW_P0, &payload_size, 1);
-    nrf_write_reg(nrf24l01_RX_PW_P1, &payload_size, 1);
-    nrf_write_reg(nrf24l01_RX_PW_P2, &payload_size, 1);
-    nrf_write_reg(nrf24l01_RX_PW_P3, &payload_size, 1);
-    nrf_write_reg(nrf24l01_RX_PW_P4, &payload_size, 1);
-    nrf_write_reg(nrf24l01_RX_PW_P5, &payload_size, 1);
-    //nrf_write_reg(nrf24l01_SETUP_RETR, &retry_num, 1);
-
-    char autoack = nrf24l01_EN_AA_ENAA_NONE;
-    nrf_write_reg(nrf24l01_EN_AA, &autoack, 1);
-    char disable_retry = nrf24l01_SETUP_RETR_ARC_0;
-    nrf_write_reg(nrf24l01_SETUP_RETR, &disable_retry, 1);
-    nrf_flush_rx();
-
 }
 
 // button was pressed
@@ -88,18 +55,26 @@ void __ISR(_EXTERNAL_0_VECTOR, ipl2) INT0Interrupt() {
 
 static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt);
-    nrf_pwrup();
-    nrf_rx_mode();
     char pwr;
+    char payload = 0;
+    nrf_state_rx_mode();
     while (1) {
-        pwr = nrf_received_pwr();
-        tft_setCursor(20, 20);
-        tft_setTextColor(ILI9340_MAGENTA);
-        tft_setTextSize(2);
-        sprintf(buffer, "%02X", pwr);
-        tft_writeString(buffer);
-        delay_ms(1000);
+        while(!received){
+            tft_setCursor(20, 20);
+            tft_setTextColor(ILI9340_YELLOW);
+            tft_setTextSize(2);
+            sprintf(buffer, "%s", "Waiting for payload...");
+            tft_writeString(buffer);
+        }
+        _LEDRED = 1;
         tft_fillScreen(ILI9340_BLACK);
+        nrf_read_payload(&payload);
+        tft_setCursor(20, 400);
+        tft_setTextColor(ILI9340_GREEN);
+        tft_setTextSize(2);
+        sprintf(buffer, "%02X", payload);
+        tft_writeString(buffer);
+        
     }
     PT_END(pt);
 } // timer thread
@@ -116,7 +91,7 @@ void main(void) {
     _TRIS_LEDRED = 0;
     PT_INIT(&pt_radio);
 
-    radioSetup();
+    nrf_setup();
     
     tft_init_hw();
     tft_begin();
