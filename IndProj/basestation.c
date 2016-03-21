@@ -146,8 +146,7 @@ void main(void) {
     //240x320 vertical display
     tft_setRotation(0); // Use tft_setRotation(1) for 320x240
    
-    while (1) {
-        
+    while (1) {    
         PT_SCHEDULE(protothread_radio(&pt_radio));
     }
 } // main

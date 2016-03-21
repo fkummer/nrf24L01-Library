@@ -243,7 +243,7 @@ char buffer[120];
 volatile char RX_payload[32];
 char payload_size;
 
-int state = PWR_DOWN;
+int state;
 
 volatile int received; // goes high when message is received
 volatile int sent; // goes high after radio finishes sending payload correctly
