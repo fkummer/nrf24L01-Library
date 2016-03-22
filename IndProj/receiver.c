@@ -53,6 +53,16 @@ void __ISR(_EXTERNAL_0_VECTOR, ipl2) INT0Interrupt() {
     mINT0ClearIntFlag();
 }
 
+void radioSetup() {
+    nrf_setup();
+    nrf_set_rf_ch(0x01);
+    nrf_dis_aa(0);
+    nrf_set_pw(1, 0);
+    nrf_set_address_width(5);
+    nrf_set_rx_addr(0, 0xAABBCCDDEE, 5);
+    nrf_set_tx_addr(0xAABBCCDDEE);
+}
+
 static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt);
     char pwr;
@@ -66,10 +76,11 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
             sprintf(buffer, "%s", "Waiting for payload...");
             tft_writeString(buffer);
         }
+        received = 0;
         _LEDRED = 1;
         tft_fillScreen(ILI9340_BLACK);
-        nrf_read_payload(&payload);
-        tft_setCursor(20, 400);
+        payload = RX_payload[0];
+        tft_setCursor(20, 40);
         tft_setTextColor(ILI9340_GREEN);
         tft_setTextSize(2);
         sprintf(buffer, "%02X", payload);
@@ -90,8 +101,7 @@ void main(void) {
     LATAbits.LATA0 = 0;
     _TRIS_LEDRED = 0;
     PT_INIT(&pt_radio);
-
-    nrf_setup();
+    radioSetup();
     
     tft_init_hw();
     tft_begin();

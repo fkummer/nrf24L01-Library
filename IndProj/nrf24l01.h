@@ -616,3 +616,5 @@ int nrf_send_payload(char * data, char len);
  * datasheet.
  */
 void nrf_reset();
+
+int nrf_send_payload_nonblock(char * data, char len);

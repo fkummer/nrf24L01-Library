@@ -467,16 +467,17 @@ void nrf_dis_ack_pay(){
 //Does not provide reliable data transfer, but makes it possible to push out more packets
 //and to have greater application level control over packet timing.
 int nrf_send_payload_nonblock(char * data, char len){
+    nrf_flush_tx();
     nrf_write_payload(data, len);//Send payload to FIFO
     nrf_state_standby_1();//Transition to standby 1 state to operate in a known state
     nrf_clear_prim_rx();
     
     _ce = 1;//Pulse the line to begin the transition to TX
     delay_us(15);
-    _ce = 0;
+    _ce = 0;    
     
     delay_us(130);//RX Settling Time
-    
+    return 1;
     //while(!sent || !error);
  
     //if(sent) return 1;
@@ -519,22 +520,22 @@ void nrf_reset(){
     nrf_write_reg(nrf24l01_DYNPD, &reg, 1);
     reg = 0x00;
     nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
+    nrf_flush_tx();
+    nrf_flush_rx();
     state = PWR_DOWN;
 }
 
 void __ISR(_EXTERNAL_1_VECTOR, ipl2) INT1Handler(void){
-    //_LEDRED = 1;
+    _LEDRED = 1;
     nrf_read_reg(nrf24l01_STATUS, &status, 1); // read the status register
     // check which type of interrupt occurred
-
     if (status & nrf24l01_STATUS_RX_DR) { // if data received
         nrf_read_payload(&RX_payload);
         received = 1; // signal main code that payload was received
         status |= nrf24l01_STATUS_RX_DR; // clear interrupt on radio
     }
         // if data sent or if acknowledge received when auto ack enabled
-    else if (status & nrf24l01_STATUS_TX_DS) {
-        //_LEDYELLOW = 1;
+    else if (status & nrf24l01_STATUS_TX_DS) {    
         sent = 1; // signal main code that payload was sent
         status |= nrf24l01_STATUS_TX_DS; // clear interrupt on radio
     } else { // maximum number of retransmit attempts occurred
