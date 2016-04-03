@@ -120,7 +120,7 @@
 #define ILI9340_YELLOW  0xFFE0
 #define ILI9340_WHITE   0xFFFF
 
-#define PBCLK 64000000 // peripheral bus clock
+#define PBCLK 40000000 // peripheral bus clock
 #define SPI_freq    20000000
 
 #define tabspace 4 // number of spaces for a tab

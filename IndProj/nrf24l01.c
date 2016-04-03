@@ -92,6 +92,28 @@ void nrf_flush_rx(){
 }
 
 
+int nrf_empty_tx_fifo(){
+    char reg;
+    nrf_read_reg(nrf24l01_FIFO_STATUS, &reg, 1);
+    char empty = reg & nrf24l01_FIFO_STATUS_TX_EMPTY;
+    if(empty == nrf24l01_FIFO_STATUS_TX_EMPTY){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+int nrf_full_tx_fifo(){
+    char reg;
+    nrf_read_reg(nrf24l01_FIFO_STATUS, &reg, 1);
+    char full = reg & nrf24l01_FIFO_STATUS_TX_FULL;
+    if(full == nrf24l01_FIFO_STATUS_TX_FULL){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
 // Write a payload to be sent over the radio
 // data: array of chars to be sent (1-32 chars/bytes)
 // len: amount of chars in array/bytes to be sent
@@ -469,11 +491,12 @@ void nrf_dis_ack_pay(){
 int nrf_send_payload_nonblock(char * data, char len){
     nrf_flush_tx();
     nrf_write_payload(data, len);//Send payload to FIFO
+    //_LEDGREEN = nrf_empty_tx_fifo();
     nrf_state_standby_1();//Transition to standby 1 state to operate in a known state
     nrf_clear_prim_rx();
     
     _ce = 1;//Pulse the line to begin the transition to TX
-    delay_us(15);
+    delay_us(100);
     _ce = 0;    
     
     delay_us(130);//RX Settling Time
@@ -483,6 +506,7 @@ int nrf_send_payload_nonblock(char * data, char len){
     //if(sent) return 1;
     //else return 0;
 }
+
 
 void nrf_reset(){
     char reg = 0x08;
@@ -526,32 +550,25 @@ void nrf_reset(){
 }
 
 void __ISR(_EXTERNAL_1_VECTOR, ipl2) INT1Handler(void){
-    if(sent){
-        sent = 0;
-        _LEDRED = 1;
-    }else{
-        sent = 1;
-        _LEDRED = 0;
-    }
    
+    //_LEDRED = 1;
     
-    
-//    nrf_read_reg(nrf24l01_STATUS, &status, 1); // read the status register
-//    // check which type of interrupt occurred
-//    if (status & nrf24l01_STATUS_RX_DR) { // if data received
-//        nrf_read_payload(&RX_payload);
-//        received = 1; // signal main code that payload was received
-//        status |= nrf24l01_STATUS_RX_DR; // clear interrupt on radio
-//    }
-//        // if data sent or if acknowledge received when auto ack enabled
-//    else if (status & nrf24l01_STATUS_TX_DS) {    
-//        sent = 1; // signal main code that payload was sent
-//        status |= nrf24l01_STATUS_TX_DS; // clear interrupt on radio
-//    } else { // maximum number of retransmit attempts occurred
-//        //_LEDRED = 1;
-//        error = 1; // signal main code that the payload was not received
-//        status |= nrf24l01_STATUS_MAX_RT; // clear interrupt on radio
-//    }
+    nrf_read_reg(nrf24l01_STATUS, &status, 1); // read the status register
+    // check which type of interrupt occurred
+    if (status & nrf24l01_STATUS_RX_DR) { // if data received
+        nrf_read_payload(&RX_payload);
+        received = 1; // signal main code that payload was received
+        status |= nrf24l01_STATUS_RX_DR; // clear interrupt on radio
+    }
+        // if data sent or if acknowledge received when auto ack enabled
+    else if (status & nrf24l01_STATUS_TX_DS) {    
+        sent = 1; // signal main code that payload was sent
+        status |= nrf24l01_STATUS_TX_DS; // clear interrupt on radio
+    } else { // maximum number of retransmit attempts occurred
+        //_LEDRED = 1;
+        error = 1; // signal main code that the payload was not received
+        status |= nrf24l01_STATUS_MAX_RT; // clear interrupt on radio
+    }
     
     nrf_write_reg(nrf24l01_STATUS, &status, 1);
     mINT1ClearIntFlag();
