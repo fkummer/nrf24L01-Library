@@ -54,14 +54,15 @@ void radioSetup() {
 // button was pressed
 
 void __ISR(_EXTERNAL_0_VECTOR, ipl2) INT0Interrupt() {
+    
     int count; // debounce counter
     while (mPORTBReadBits(BIT_7)) {
         count++;
-        //        if (count > 750) {
-        //        }
+  
     }
-    if (count > 700) { // debounce button
+    if (count > 50000) { // debounce button
         button_press = 1;
+        _LEDGREEN ^= 1;
     }
     count = 0;
     mINT0ClearIntFlag();
@@ -74,41 +75,39 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
     static char payload = 0xaa;
     nrf_state_standby_1();
     
-    while(1);
-    
-//    while (1) {
-//        tft_setCursor(20, 140);
-//        tft_setTextColor(ILI9340_YELLOW);
-//        tft_setTextSize(2);
-//        sprintf(buffer, "%X", payload);
-//        tft_writeString(buffer);
-//        nrf_write_payload(&payload, 1);//Send payload to FIFO
-//        nrf_clear_prim_rx();
-//        _ce = 1;//Pulse the line to begin the transition to TX
-//        delay_us(50);
-//        _ce = 0;   
-//        delay_us(130);//RX Settling Time
-//        //nrf_send_payload_nonblock(&payload, 1);
-//        payload++;
-//        
-//        if (button_press == 1) {
-//            if (toggle == 0) {
-//                toggle = 1;
-//                _LEDYELLOW = 1;
-//                //_LEDRED = 1;
-//                nrf_send_payload_nonblock(&payload, 1);
-//                payload++;
-//            } else {
-//                toggle = 0;
-//                _LEDYELLOW = 0;
-//                //_LEDRED = 0;
-//            }
-//            tft_fillScreen(ILI9340_BLACK);
-//            button_press = 0;
-//        }
-//        delay_ms(2000);
-//        tft_fillScreen(ILI9340_BLACK);
-//    }
+    while (1) {
+        //tft_setCursor(20, 140);
+        //tft_setTextColor(ILI9340_YELLOW);
+        //tft_setTextSize(2);
+        //sprintf(buffer, "%X", payload);
+        //tft_writeString(buffer);
+        //nrf_write_payload(&payload, 1);//Send payload to FIFO
+        //nrf_clear_prim_rx();
+        //_ce = 1;//Pulse the line to begin the transition to TX
+       // delay_us(50);
+        //_ce = 0;   
+        //delay_us(130);//RX Settling Time
+        //nrf_send_payload_nonblock(&payload, 1);
+        //payload++;
+        
+        if (button_press == 1) {
+            if (toggle == 0) {
+                toggle = 1;
+                _LEDYELLOW = 1;
+                //_LEDRED = 1;
+                nrf_send_payload_nonblock(&payload, 1);
+                payload++;
+            } else {
+                toggle = 0;
+                _LEDYELLOW = 0;
+                //_LEDRED = 0;
+            }
+            tft_fillScreen(ILI9340_BLACK);
+            button_press = 0;
+        }
+        delay_ms(2000);
+        tft_fillScreen(ILI9340_BLACK);
+    }
     
     
     PT_END(pt);
@@ -120,10 +119,9 @@ void main(void) {
     //reset();
     PT_setup();
     buttonSetup();
-    TRISAbits.TRISA0 = 0;
-    LATAbits.LATA0 = 0;
     _TRIS_LEDRED = 0;
     _TRIS_LEDYELLOW = 0;
+    _TRIS_LEDGREEN = 0;
     PT_INIT(&pt_radio);
     tft_init_hw();
     tft_begin();

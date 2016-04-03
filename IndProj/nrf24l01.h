@@ -35,8 +35,11 @@
 #define _LEDRED        LATAbits.LATA0
 #define _TRIS_LEDRED   TRISAbits.TRISA0
 
-#define _LEDYELLOW        LATBbits.LATB0
-#define _TRIS_LEDYELLOW   TRISBbits.TRISB0
+#define _LEDYELLOW        LATBbits.LATB5
+#define _TRIS_LEDYELLOW   TRISBbits.TRISB5
+
+#define _LEDGREEN        LATBbits.LATB3
+#define _TRIS_LEDGREEN   TRISBbits.TRISB3
 
 // SPI Commands
 #define nrf24l01_R_REGISTER		0x00
