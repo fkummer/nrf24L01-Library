@@ -526,23 +526,32 @@ void nrf_reset(){
 }
 
 void __ISR(_EXTERNAL_1_VECTOR, ipl2) INT1Handler(void){
-    _LEDRED = 1;
-    nrf_read_reg(nrf24l01_STATUS, &status, 1); // read the status register
-    // check which type of interrupt occurred
-    if (status & nrf24l01_STATUS_RX_DR) { // if data received
-        nrf_read_payload(&RX_payload);
-        received = 1; // signal main code that payload was received
-        status |= nrf24l01_STATUS_RX_DR; // clear interrupt on radio
+    if(sent){
+        sent = 0;
+        _LEDRED = 1;
+    }else{
+        sent = 1;
+        _LEDRED = 0;
     }
-        // if data sent or if acknowledge received when auto ack enabled
-    else if (status & nrf24l01_STATUS_TX_DS) {    
-        sent = 1; // signal main code that payload was sent
-        status |= nrf24l01_STATUS_TX_DS; // clear interrupt on radio
-    } else { // maximum number of retransmit attempts occurred
-        //_LEDRED = 1;
-        error = 1; // signal main code that the payload was not received
-        status |= nrf24l01_STATUS_MAX_RT; // clear interrupt on radio
-    }
+   
+    
+    
+//    nrf_read_reg(nrf24l01_STATUS, &status, 1); // read the status register
+//    // check which type of interrupt occurred
+//    if (status & nrf24l01_STATUS_RX_DR) { // if data received
+//        nrf_read_payload(&RX_payload);
+//        received = 1; // signal main code that payload was received
+//        status |= nrf24l01_STATUS_RX_DR; // clear interrupt on radio
+//    }
+//        // if data sent or if acknowledge received when auto ack enabled
+//    else if (status & nrf24l01_STATUS_TX_DS) {    
+//        sent = 1; // signal main code that payload was sent
+//        status |= nrf24l01_STATUS_TX_DS; // clear interrupt on radio
+//    } else { // maximum number of retransmit attempts occurred
+//        //_LEDRED = 1;
+//        error = 1; // signal main code that the payload was not received
+//        status |= nrf24l01_STATUS_MAX_RT; // clear interrupt on radio
+//    }
     
     nrf_write_reg(nrf24l01_STATUS, &status, 1);
     mINT1ClearIntFlag();

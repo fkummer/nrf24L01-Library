@@ -72,23 +72,25 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
     static int toggle = 0;
     //char reg[5];
     static char payload = 0xaa;
-    while (1) {
-        tft_setCursor(20, 140);
-        tft_setTextColor(ILI9340_YELLOW);
-        tft_setTextSize(2);
-        sprintf(buffer, "%X", payload);
-        tft_writeString(buffer);
-        nrf_pwrdown();
-        nrf_pwrup();
-        nrf_write_payload(&payload, 1);//Send payload to FIFO
-        nrf_clear_prim_rx();
-        _ce = 1;//Pulse the line to begin the transition to TX
-        delay_us(50);
-        _ce = 0;   
-        
-        delay_us(130);//RX Settling Time
-        //nrf_send_payload_nonblock(&payload, 1);
-        payload++;
+    nrf_state_standby_1();
+    
+    while(1);
+    
+//    while (1) {
+//        tft_setCursor(20, 140);
+//        tft_setTextColor(ILI9340_YELLOW);
+//        tft_setTextSize(2);
+//        sprintf(buffer, "%X", payload);
+//        tft_writeString(buffer);
+//        nrf_write_payload(&payload, 1);//Send payload to FIFO
+//        nrf_clear_prim_rx();
+//        _ce = 1;//Pulse the line to begin the transition to TX
+//        delay_us(50);
+//        _ce = 0;   
+//        delay_us(130);//RX Settling Time
+//        //nrf_send_payload_nonblock(&payload, 1);
+//        payload++;
+//        
 //        if (button_press == 1) {
 //            if (toggle == 0) {
 //                toggle = 1;
@@ -104,9 +106,11 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
 //            tft_fillScreen(ILI9340_BLACK);
 //            button_press = 0;
 //        }
-        delay_ms(2000);
-        tft_fillScreen(ILI9340_BLACK);
-    }
+//        delay_ms(2000);
+//        tft_fillScreen(ILI9340_BLACK);
+//    }
+    
+    
     PT_END(pt);
 } // timer thread
 //=== Main  ======================================================
