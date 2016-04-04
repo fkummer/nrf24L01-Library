@@ -50,7 +50,7 @@ void radioSetup() {
     nrf_set_arc(0x00);//NEW ADDITION, disables retransmits
     nrf_set_rf_ch(0x01);
     nrf_dis_aa(0);
-    nrf_set_pw(1, 0);
+    nrf_set_pw(2, 0);
     nrf_set_address_width(5);
     nrf_set_rx_addr(0, 0xAABBCCDDEE, 5); //SOMETHING WRONG WITH ADDRESSES
     nrf_set_tx_addr(0xAABBCCDDEE);
@@ -76,20 +76,22 @@ void __ISR(_EXTERNAL_0_VECTOR, ipl2) INT0Interrupt() {
 static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt);
     static int toggle = 0;
-    static char payload = 0xaa;
+    static char payload[2];
+    payload[0] = 0xaa;
+    payload[1] = 0xbb;
     //nrf_state_standby_1();
     //_LEDGREEN = nrf_empty_tx_fifo();
     while (1) {
-        tft_setCursor(20, 140);
         tft_setTextColor(ILI9340_YELLOW);
         tft_setTextSize(2);
         
-        //nrf_read_reg(nrf24l01_FIFO_STATUS, &reg, 1);
-        sprintf(buffer, "%02X", payload);
-        //sprintf(buffer, "TRANSMITTING VIRUS...");
-
+        tft_setCursor(20, 140);
+        sprintf(buffer, "%02X", payload[0]);
         tft_writeString(buffer);
- ;
+        
+        tft_setCursor(20, 160);
+        sprintf(buffer, "%02X", payload[1]);
+        tft_writeString(buffer);
         
         
 //        _LEDGREEN = nrf_empty_tx_fifo();
@@ -99,10 +101,11 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
                 toggle = 1;
                 _LEDYELLOW = 1;
                 //_LEDRED = 1;
-                nrf_send_payload_nonblock(&payload, 1);
+                nrf_send_payload_nonblock(&payload, 2);
                 //nrf_write_payload(&payload, 1);//Send payload to FIFO
                  
-                payload++;
+                payload[0]++;
+                payload[1]++;
             } else {
                 toggle = 0;
                 _LEDYELLOW = 0;

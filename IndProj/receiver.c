@@ -60,7 +60,7 @@ void radioSetup() {
     nrf_set_arc(0x00);//NEW ADDITION
     nrf_set_rf_ch(0x01);
     nrf_dis_aa(0);
-    nrf_set_pw(1, 0);
+    nrf_set_pw(2, 0);
     nrf_set_address_width(5);
     nrf_set_rx_addr(0, 0xAABBCCDDEE, 5);
     nrf_set_tx_addr(0xAABBCCDDEE);
@@ -90,19 +90,7 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
         tft_writeString(buffer);
         
         tft_setCursor(20, 60);
-        sprintf(buffer, "%02X", RX_payload[31]);
-        tft_writeString(buffer);
-        
-        tft_setCursor(20, 80);
-        sprintf(buffer, "%02X", RX_payload[30]);
-        tft_writeString(buffer);
-        
-        tft_setCursor(20, 100);
-        sprintf(buffer, "%02X", RX_payload[29]);
-        tft_writeString(buffer);
-        
-        tft_setCursor(20, 120);
-        sprintf(buffer, "%02X", RX_payload[28]);
+        sprintf(buffer, "%02X", RX_payload[1]);
         tft_writeString(buffer);
         
     }

@@ -421,7 +421,7 @@ void nrf_dis_rxaddr(int pipe){
 }
 
 void nrf_set_pw(char width, int pipe){
-   payload_size = 1;
+   payload_size = width;
    nrf_write_reg(nrf24l01_RX_PW_P0 + pipe, &width, 1);
 }
 
