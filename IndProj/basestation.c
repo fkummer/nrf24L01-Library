@@ -49,8 +49,9 @@ void radioSetup() {
     TRIS_ce = 0;
     nrf_set_arc(0x0A);//NEW ADDITION, disables retransmits
     nrf_set_rf_ch(0x01);
-    nrf_dis_aa(0);
-    nrf_set_pw(32, 0);
+    nrf_en_aa(0);
+    nrf_en_dpl(0);
+    //nrf_set_pw(32, 0);
     nrf_set_address_width(5);
     nrf_set_rx_addr(0, 0xAABBCCDDEE, 5); //SOMETHING WRONG WITH ADDRESSES
     nrf_set_tx_addr(0xAABBCCDDEE);

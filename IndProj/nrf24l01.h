@@ -32,19 +32,20 @@
 #define _ce         LATBbits.LATB8
 #define TRIS_ce     TRISBbits.TRISB8
 
-#define _LEDRED        LATAbits.LATA0
-#define _TRIS_LEDRED   TRISAbits.TRISA0
+#define _LEDGREEN        LATAbits.LATA0
+#define _TRIS_LEDGREEN   TRISAbits.TRISA0
 
-#define _LEDYELLOW        LATBbits.LATB5
-#define _TRIS_LEDYELLOW   TRISBbits.TRISB5
+#define _LEDYELLOW        LATAbits.LATA3
+#define _TRIS_LEDYELLOW   TRISAbits.TRISA3
 
-#define _LEDGREEN        LATBbits.LATB3
-#define _TRIS_LEDGREEN   TRISBbits.TRISB3
+#define _LEDRED        LATBbits.LATB4
+#define _TRIS_LEDRED   TRISBbits.TRISB4
 
 // SPI Commands
 #define nrf24l01_R_REGISTER		0x00
 #define nrf24l01_W_REGISTER		0x20
 #define nrf24l01_R_REGISTER_WID 0x61
+#define nrf24l01_R_RX_PL_WID    0x60
 #define nrf24l01_R_RX_PAYLOAD	0x61
 #define nrf24l01_W_TX_PAYLOAD	0xA0
 #define nrf24l01_FLUSH_TX		0xE1
@@ -301,6 +302,17 @@ void nrf_flush_tx();
  * @brief Flush the RX FIFO.
  */
 void nrf_flush_rx();
+
+/**
+ * @brief Get the width of the top payload in the RX FIFO.
+ * 
+ * This function is only meant for use with dynamic payload lengths.  It must be
+ * called before reading the payload because the payload is removed from the 
+ * FIFO when reading.
+ * 
+ * @return The width of the payload in bytes.
+ */
+int nrf_get_payload_width();
 
 /**
  * @brief Write a payload to the TX FIFO.

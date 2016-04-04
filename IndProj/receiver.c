@@ -59,8 +59,9 @@ void radioSetup() {
     TRIS_ce = 0;
     nrf_set_arc(0x0A);//NEW ADDITION
     nrf_set_rf_ch(0x01);
-    nrf_dis_aa(0);
-    nrf_set_pw(32, 0);
+    nrf_en_aa(0);
+    nrf_en_dpl(0);
+    //nrf_set_pw(32, 0);
     nrf_set_address_width(5);
     nrf_set_rx_addr(0, 0xAABBCCDDEE, 5);
     nrf_set_tx_addr(0xAABBCCDDEE);
@@ -92,13 +93,6 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
             sprintf(buffer, "%02X", RX_payload[i]);
             tft_writeString(buffer);
         }
-//        sprintf(buffer, "%02X", payload);
-//        tft_writeString(buffer);
-//        
-//        tft_setCursor(20, 60);
-//        sprintf(buffer, "%02X", RX_payload[1]);
-//        tft_writeString(buffer);
-        
     }
     PT_END(pt);
 } // timer thread

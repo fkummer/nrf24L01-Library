@@ -119,6 +119,15 @@ int nrf_full_tx_fifo(){
     }
 }
 
+int nrf_get_payload_width(){
+    char width;
+    _csn = 0;
+    status = rf_spiwrite(nrf24l01_R_RX_PL_WID);
+    width = rf_spiwrite(nrf24l01_SEND_CLOCK);
+    _csn = 1;
+    return width;
+}
+
 // Write a payload to be sent over the radio
 // data: array of chars to be sent (1-32 chars/bytes)
 // len: amount of chars in array/bytes to be sent
@@ -141,13 +150,28 @@ void nrf_write_payload(char * data, char len){
 //PAYLOAD SIZE IN FOR LOOP MUST BE ADJUSTEDF
 // should read the payload into a buffer NOT TESTED YET
 void nrf_read_payload(char * buff){
-    _csn = 0; // begin transmission
-    status = rf_spiwrite(nrf24l01_R_RX_PAYLOAD); // send command to read payload
-    int i;
-    for(i=0;i<payload_size;i++){
-        buff[i] = rf_spiwrite(nrf24l01_SEND_CLOCK);
+    char dpl;
+    char length;
+    nrf_read_reg(nrf24l01_FEATURE, &dpl, 1);
+    // check if dynamic payload lengths are enabled
+    if(dpl & 0x04){
+        length = nrf_get_payload_width();
+        _csn = 0; // begin transmission
+        status = rf_spiwrite(nrf24l01_R_RX_PAYLOAD); // send command to read payload
+        int i;
+        for(i=0;i<length;i++){
+            buff[i] = rf_spiwrite(nrf24l01_SEND_CLOCK);
+        }
+        _csn = 1; // end transmission
+    }else{
+        _csn = 0; // begin transmission
+        status = rf_spiwrite(nrf24l01_R_RX_PAYLOAD); // send command to read payload
+        int i;
+        for(i=0;i<payload_size;i++){
+            buff[i] = rf_spiwrite(nrf24l01_SEND_CLOCK);
+        }
+        _csn = 1; // end transmission
     }
-    _csn = 1; // end transmission
 
 }
 
@@ -331,11 +355,13 @@ int nrf_set_rx_addr(int pipe, uint64_t address, int len){
     return 1;
 }
 
+// TESTED
 void nrf_set_tx_addr(uint64_t address){
     char * addr = parse_addr(address);
     nrf_write_reg(nrf24l01_TX_ADDR, addr, 5);
 }
 
+// TESTED
 void nrf_start_cont_wave(char pwr){
     nrf_state_standby_1();
     char setting;
@@ -408,6 +434,7 @@ void nrf_dis_rxaddr(int pipe){
     nrf_write_reg(nrf24l01_EN_RXADDR, &reg, 1);
 }
 
+// TESTED
 void nrf_set_pw(char width, int pipe){
    payload_size = width;
    nrf_write_reg(nrf24l01_RX_PW_P0 + pipe, &width, 1);
@@ -464,6 +491,7 @@ void nrf_dis_dyn_ack(){
     nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
 }
 
+// TESTED
 void nrf_en_ack_pay(){
     char reg;
     nrf_read_reg(nrf24l01_FEATURE, &reg, 1);
@@ -471,6 +499,7 @@ void nrf_en_ack_pay(){
     nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
 }
 
+// TESTED
 void nrf_dis_ack_pay(){
     char reg;
     nrf_read_reg(nrf24l01_FEATURE, &reg, 1);
@@ -478,6 +507,7 @@ void nrf_dis_ack_pay(){
     nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
 }
 
+// TESTED
 //Send a payload, with no checking for whether it was successfully received or not
 //Does not provide reliable data transfer, but makes it possible to push out more packets
 //and to have greater application level control over packet timing.
@@ -499,6 +529,7 @@ int nrf_send_payload_nonblock(char * data, char len){
     else return 0;
 }
 
+// TESTED
 // send a payload with auto ack. Returns 1 if packet was received correctly
 int nrf_send_payload(char * data, char len){
     nrf_flush_tx();
