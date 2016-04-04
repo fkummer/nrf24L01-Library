@@ -67,7 +67,7 @@ void __ISR(_EXTERNAL_0_VECTOR, ipl2) INT0Interrupt() {
     }
     if (count > 50000) { // debounce button
         button_press = 1;
-        //_LEDGREEN ^= 1;
+
     }
     count = 0;
     mINT0ClearIntFlag();
@@ -79,8 +79,7 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
     static char payload[2];
     payload[0] = 0xaa;
     payload[1] = 0xbb;
-    //nrf_state_standby_1();
-    //_LEDGREEN = nrf_empty_tx_fifo();
+
     while (1) {
         tft_setTextColor(ILI9340_YELLOW);
         tft_setTextSize(2);
@@ -93,23 +92,19 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
         sprintf(buffer, "%02X", payload[1]);
         tft_writeString(buffer);
         
-        
-//        _LEDGREEN = nrf_empty_tx_fifo();
-//        _LEDRED = nrf_full_tx_fifo();
         if (button_press == 1) {
             if (toggle == 0) {
                 toggle = 1;
                 _LEDYELLOW = 1;
-                //_LEDRED = 1;
+             
                 nrf_send_payload_nonblock(&payload, 2);
-                //nrf_write_payload(&payload, 1);//Send payload to FIFO
+           
                  
                 payload[0]++;
                 payload[1]++;
             } else {
                 toggle = 0;
                 _LEDYELLOW = 0;
-                //_LEDRED = 0;
             }
             tft_fillScreen(ILI9340_BLACK);
             button_press = 0;
