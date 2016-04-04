@@ -46,6 +46,10 @@ void nrf_setup(){
     
     ConfigINT1(EXT_INT_PRI_2 | FALLING_EDGE_INT | EXT_INT_ENABLE);
     EnableINT1;
+    
+    TRIS_csn = 0;
+    TRIS_ce = 0;
+    
     nrf_reset();
 }
 
@@ -332,22 +336,6 @@ void nrf_set_tx_addr(uint64_t address){
     nrf_write_reg(nrf24l01_TX_ADDR, addr, 5);
 }
 
-//// Sends out a specified payload (in auto acknowledge mode by default)
-//// use after powering up radio, and setting address or other settings
-//void nrf_send_payload(char * data, int len){
-//    nrf_flush_tx(); // clear the TX FIFO so for a new transmission
-//    nrf_write_payload(data, len);
-//    nrf_tx_mode();
-//    while(!(sent)){ // wait until data sent interrupt triggers
-//        TRISBbits.TRISB3 = 0;
-//        LATBbits.LATB3 = 1;
-//    }
-//    LATBbits.LATB3 = 0;
-//    sent = 0;
-//    //_ce = 0; // transition to standby II mode
-//}
-//
-
 void nrf_start_cont_wave(char pwr){
     nrf_state_standby_1();
     char setting;
@@ -505,13 +493,30 @@ int nrf_send_payload_nonblock(char * data, char len){
     _ce = 0;    
     
     delay_us(130);//RX Settling Time
-    return 1;
     //while(!sent || !error);
  
-    //if(sent) return 1;
-    //else return 0;
+    if(sent) return 1;
+    else return 0;
 }
 
+// send a payload with auto ack. Returns 1 if packet was received correctly
+int nrf_send_payload(char * data, char len){
+    nrf_flush_tx();
+    nrf_write_payload(data,len);
+    nrf_state_standby_1();
+    nrf_clear_prim_rx();
+    _ce = 1;
+    while(!sent && !error){
+        _LEDGREEN = error;
+    };
+    _ce = 0;
+    if(sent){
+        sent = 0;
+        return 1;
+    }
+    error = 0;
+    return 0;
+}
 
 void nrf_reset(){
     char reg = 0x08;
@@ -555,7 +560,7 @@ void nrf_reset(){
 }
 
 void __ISR(_EXTERNAL_1_VECTOR, ipl2) INT1Handler(void){
-    _LEDRED ^= 1;
+    //_LEDGREEN ^= 1;
     
     nrf_read_reg(nrf24l01_STATUS, &status, 1); // read the status register
     // check which type of interrupt occurred

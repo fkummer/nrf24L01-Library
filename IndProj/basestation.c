@@ -47,10 +47,10 @@ void radioSetup() {
     nrf_setup();
     TRIS_csn = 0;
     TRIS_ce = 0;
-    nrf_set_arc(0x00);//NEW ADDITION, disables retransmits
+    nrf_set_arc(0x0A);//NEW ADDITION, disables retransmits
     nrf_set_rf_ch(0x01);
     nrf_dis_aa(0);
-    nrf_set_pw(2, 0);
+    nrf_set_pw(32, 0);
     nrf_set_address_width(5);
     nrf_set_rx_addr(0, 0xAABBCCDDEE, 5); //SOMETHING WRONG WITH ADDRESSES
     nrf_set_tx_addr(0xAABBCCDDEE);
@@ -76,32 +76,32 @@ void __ISR(_EXTERNAL_0_VECTOR, ipl2) INT0Interrupt() {
 static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt);
     static int toggle = 0;
-    static char payload[2];
-    payload[0] = 0xaa;
-    payload[1] = 0xbb;
-
+    static char payload[32];
+    int i;
+    for(i=0;i<32;i++){
+        payload[i] = i;
+    }
+    int succSend = 0;
     while (1) {
-        tft_setTextColor(ILI9340_YELLOW);
+        tft_setTextColor(ILI9340_GREEN);
         tft_setTextSize(2);
-        
-        tft_setCursor(20, 140);
-        sprintf(buffer, "%02X", payload[0]);
+        tft_setCursor(20, 0);
+        sprintf(buffer, "%d", succSend);
         tft_writeString(buffer);
-        
-        tft_setCursor(20, 160);
-        sprintf(buffer, "%02X", payload[1]);
-        tft_writeString(buffer);
-        
+        tft_setTextColor(ILI9340_YELLOW);
+        for(i=0;i<32;i++){
+            tft_setCursor(20, 20 + 20*i);
+            sprintf(buffer, "%02X", payload[i]);
+            tft_writeString(buffer);
+        }
         if (button_press == 1) {
             if (toggle == 0) {
                 toggle = 1;
                 _LEDYELLOW = 1;
-             
-                nrf_send_payload_nonblock(&payload, 2);
-           
-                 
-                payload[0]++;
-                payload[1]++;
+                succSend = nrf_send_payload_nonblock(&payload, 32);
+                for(i=0;i<32;i++){
+                    payload[i]++;
+                }
             } else {
                 toggle = 0;
                 _LEDYELLOW = 0;

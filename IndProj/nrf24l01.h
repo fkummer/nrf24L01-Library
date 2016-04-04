@@ -620,4 +620,21 @@ int nrf_send_payload(char * data, char len);
  */
 void nrf_reset();
 
+/**
+ * @brief Send a payload without using auto-acknowledge.
+ * 
+ * @param data The payload to be sent
+ * @param len The length of the payload in bytes.
+ * @return 1 if payload was successfully sent 0 if not.
+ */
 int nrf_send_payload_nonblock(char * data, char len);
+
+/**
+ * @brief Send a payload with auto-acknowledge enabled.
+ * 
+ * @param data The payload to be sent.
+ * @param len The length of the payload in bytes
+ * @return 1 if payload was successfully sent and acknowledged 0 if payload was
+ * not acknowledged.
+ */
+int nrf_send_payload(char * data, char len);

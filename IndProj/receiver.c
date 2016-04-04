@@ -57,10 +57,10 @@ void radioSetup() {
     nrf_setup();
     TRIS_csn = 0;
     TRIS_ce = 0;
-    nrf_set_arc(0x00);//NEW ADDITION
+    nrf_set_arc(0x0A);//NEW ADDITION
     nrf_set_rf_ch(0x01);
     nrf_dis_aa(0);
-    nrf_set_pw(2, 0);
+    nrf_set_pw(32, 0);
     nrf_set_address_width(5);
     nrf_set_rx_addr(0, 0xAABBCCDDEE, 5);
     nrf_set_tx_addr(0xAABBCCDDEE);
@@ -73,7 +73,7 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
     nrf_state_rx_mode();
     while (1) {
         while(!received){
-            tft_setCursor(20, 20);
+            tft_setCursor(20, 0);
             tft_setTextColor(ILI9340_YELLOW);
             tft_setTextSize(2);
             sprintf(buffer, "%s", "Waiting for payload...");
@@ -82,16 +82,22 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
         received = 0;
         _LEDRED = 1;
         tft_fillScreen(ILI9340_BLACK);
-        payload = RX_payload[0];
-        tft_setCursor(20, 40);
+        //payload = RX_payload[0];
+        //tft_setCursor(20, 40);
         tft_setTextColor(ILI9340_GREEN);
         tft_setTextSize(2);
-        sprintf(buffer, "%02X", payload);
-        tft_writeString(buffer);
-        
-        tft_setCursor(20, 60);
-        sprintf(buffer, "%02X", RX_payload[1]);
-        tft_writeString(buffer);
+        int i;
+        for(i=0;i<32;i++){
+            tft_setCursor(20, 20+20*i);
+            sprintf(buffer, "%02X", RX_payload[i]);
+            tft_writeString(buffer);
+        }
+//        sprintf(buffer, "%02X", payload);
+//        tft_writeString(buffer);
+//        
+//        tft_setCursor(20, 60);
+//        sprintf(buffer, "%02X", RX_payload[1]);
+//        tft_writeString(buffer);
         
     }
     PT_END(pt);
