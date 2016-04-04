@@ -18,6 +18,8 @@
 // frequency we're running at
 #define	SYS_FREQ 64000000
 
+
+
 char rf_spiwrite(unsigned char c){ // Transfer to SPI
     while (TxBufFullSPI2());
     WriteSPI2(c);
@@ -130,12 +132,15 @@ void nrf_write_payload(char * data, char len){
     
 }
 
+//!!!!!!!!!WARNING!!!!
+//THIS FUNCTION MUST BE CHANGED
+//PAYLOAD SIZE IN FOR LOOP MUST BE ADJUSTEDF
 // should read the payload into a buffer NOT TESTED YET
 void nrf_read_payload(char * buff){
     _csn = 0; // begin transmission
     status = rf_spiwrite(nrf24l01_R_RX_PAYLOAD); // send command to read payload
     int i;
-    for(i=0;i<1;i++){
+    for(i=0;i<payload_size;i++){
         buff[i] = rf_spiwrite(nrf24l01_SEND_CLOCK);
     }
     _csn = 1; // end transmission
@@ -416,6 +421,7 @@ void nrf_dis_rxaddr(int pipe){
 }
 
 void nrf_set_pw(char width, int pipe){
+   payload_size = 1;
    nrf_write_reg(nrf24l01_RX_PW_P0 + pipe, &width, 1);
 }
 
