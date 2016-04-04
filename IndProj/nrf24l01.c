@@ -329,7 +329,7 @@ int nrf_set_rx_addr(int pipe, uint64_t address, int len){
 
 void nrf_set_tx_addr(uint64_t address){
     char * addr = parse_addr(address);
-    nrf_write_reg(nrf24l01_TX_ADDR, &addr, 5);
+    nrf_write_reg(nrf24l01_TX_ADDR, addr, 5);
 }
 
 //// Sends out a specified payload (in auto acknowledge mode by default)

@@ -62,8 +62,8 @@ void radioSetup() {
     nrf_dis_aa(0);
     nrf_set_pw(1, 0);
 //    nrf_set_address_width(5);
-//    nrf_set_rx_addr(0, 0xAABBCCDDEE, 5);
-//    nrf_set_tx_addr(0xAABBCCDDEE);
+    nrf_set_rx_addr(0, 0xAABBCCDDEE, 5);
+    nrf_set_tx_addr(0xAABBCCDDEE);
 }
 
 static PT_THREAD(protothread_radio(struct pt *pt)) {
