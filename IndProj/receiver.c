@@ -55,12 +55,15 @@ void __ISR(_EXTERNAL_0_VECTOR, ipl2) INT0Interrupt() {
 
 void radioSetup() {
     nrf_setup();
+    TRIS_csn = 0;
+    TRIS_ce = 0;
+    nrf_set_arc(0x00);//NEW ADDITION
     nrf_set_rf_ch(0x01);
     nrf_dis_aa(0);
     nrf_set_pw(1, 0);
-    nrf_set_address_width(5);
-    nrf_set_rx_addr(0, 0xAABBCCDDEE, 5);
-    nrf_set_tx_addr(0xAABBCCDDEE);
+//    nrf_set_address_width(5);
+//    nrf_set_rx_addr(0, 0xAABBCCDDEE, 5);
+//    nrf_set_tx_addr(0xAABBCCDDEE);
 }
 
 static PT_THREAD(protothread_radio(struct pt *pt)) {
@@ -86,6 +89,22 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
         sprintf(buffer, "%02X", payload);
         tft_writeString(buffer);
         
+        tft_setCursor(20, 60);
+        sprintf(buffer, "%02X", RX_payload[31]);
+        tft_writeString(buffer);
+        
+        tft_setCursor(20, 80);
+        sprintf(buffer, "%02X", RX_payload[30]);
+        tft_writeString(buffer);
+        
+        tft_setCursor(20, 100);
+        sprintf(buffer, "%02X", RX_payload[29]);
+        tft_writeString(buffer);
+        
+        tft_setCursor(20, 120);
+        sprintf(buffer, "%02X", RX_payload[28]);
+        tft_writeString(buffer);
+        
     }
     PT_END(pt);
 } // timer thread
@@ -100,6 +119,7 @@ void main(void) {
     TRISAbits.TRISA0 = 0;
     LATAbits.LATA0 = 0;
     _TRIS_LEDRED = 0;
+    _LEDRED = 1;
     PT_INIT(&pt_radio);
     radioSetup();
     

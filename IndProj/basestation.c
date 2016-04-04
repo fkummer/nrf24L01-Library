@@ -51,9 +51,9 @@ void radioSetup() {
     nrf_set_rf_ch(0x01);
     nrf_dis_aa(0);
     nrf_set_pw(1, 0);
-    nrf_set_address_width(5);
-    nrf_set_rx_addr(0, 0xAABBCCDDEE, 5);
-    nrf_set_tx_addr(0xAABBCCDDEE);
+//    nrf_set_address_width(5);
+//    nrf_set_rx_addr(0, 0xAABBCCDDEE, 5); //SOMETHING WRONG WITH ADDRESSES
+//    nrf_set_tx_addr(0xAABBCCDDEE);
 }
 
 // button was pressed
@@ -76,7 +76,6 @@ void __ISR(_EXTERNAL_0_VECTOR, ipl2) INT0Interrupt() {
 static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt);
     static int toggle = 0;
-    //char reg[5];
     static char payload = 0xaa;
     //nrf_state_standby_1();
     //_LEDGREEN = nrf_empty_tx_fifo();
@@ -85,39 +84,33 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
         tft_setTextColor(ILI9340_YELLOW);
         tft_setTextSize(2);
         
-        nrf_read_reg(nrf24l01_FIFO_STATUS, &reg, 1);
-        sprintf(buffer, "%02X", reg);
-        //sprintf(buffer, "HELLO");
+        //nrf_read_reg(nrf24l01_FIFO_STATUS, &reg, 1);
+        sprintf(buffer, "%02X", payload);
+        //sprintf(buffer, "TRANSMITTING VIRUS...");
+
         tft_writeString(buffer);
-        //nrf_write_payload(&payload, 1);//Send payload to FIFO
-        //nrf_clear_prim_rx();
-        //_ce = 1;//Pulse the line to begin the transition to TX
-       // delay_us(50);
-        //_ce = 0;   
-        //delay_us(130);//RX Settling Time
-        //nrf_send_payload_nonblock(&payload, 1);
-        //payload++;
+ ;
         
         
 //        _LEDGREEN = nrf_empty_tx_fifo();
 //        _LEDRED = nrf_full_tx_fifo();
-//        if (button_press == 1) {
-//            if (toggle == 0) {
-//                toggle = 1;
-//                _LEDYELLOW = 1;
-//                //_LEDRED = 1;
-//                //nrf_send_payload_nonblock(&payload, 1);
-//                 nrf_write_payload(&payload, 1);//Send payload to FIFO
-//                 
-//                payload++;
-//            } else {
-//                toggle = 0;
-//                _LEDYELLOW = 0;
-//                //_LEDRED = 0;
-//            }
-//            tft_fillScreen(ILI9340_BLACK);
-//            button_press = 0;
-//        }
+        if (button_press == 1) {
+            if (toggle == 0) {
+                toggle = 1;
+                _LEDYELLOW = 1;
+                //_LEDRED = 1;
+                nrf_send_payload_nonblock(&payload, 1);
+                //nrf_write_payload(&payload, 1);//Send payload to FIFO
+                 
+                payload++;
+            } else {
+                toggle = 0;
+                _LEDYELLOW = 0;
+                //_LEDRED = 0;
+            }
+            tft_fillScreen(ILI9340_BLACK);
+            button_press = 0;
+        }
         delay_ms(2000);
         tft_fillScreen(ILI9340_BLACK);
     }

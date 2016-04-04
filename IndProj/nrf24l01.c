@@ -135,7 +135,7 @@ void nrf_read_payload(char * buff){
     _csn = 0; // begin transmission
     status = rf_spiwrite(nrf24l01_R_RX_PAYLOAD); // send command to read payload
     int i;
-    for(i=0;i<payload_size;i++){
+    for(i=0;i<1;i++){
         buff[i] = rf_spiwrite(nrf24l01_SEND_CLOCK);
     }
     _csn = 1; // end transmission
@@ -549,8 +549,7 @@ void nrf_reset(){
 }
 
 void __ISR(_EXTERNAL_1_VECTOR, ipl2) INT1Handler(void){
-   
-    //_LEDRED = 1;
+    _LEDRED ^= 1;
     
     nrf_read_reg(nrf24l01_STATUS, &status, 1); // read the status register
     // check which type of interrupt occurred
