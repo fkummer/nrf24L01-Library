@@ -45,6 +45,8 @@ void buttonSetup() {
 
 void radioSetup() {
     nrf_setup();
+    TRIS_csn = 0;
+    TRIS_ce = 0;
     nrf_set_arc(0x00);//NEW ADDITION
     nrf_set_rf_ch(0x01);
     nrf_dis_aa(0);
@@ -84,7 +86,7 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
         tft_setTextSize(2);
         
         nrf_read_reg(nrf24l01_FIFO_STATUS, &reg, 1);
-        sprintf(buffer, "%X", reg);
+        sprintf(buffer, "%02X", reg);
         //sprintf(buffer, "HELLO");
         tft_writeString(buffer);
         //nrf_write_payload(&payload, 1);//Send payload to FIFO
@@ -126,10 +128,13 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
 //=== Main  ======================================================
 
 void main(void) {
+   
+    
     INTEnableSystemMultiVectoredInt();
     //reset();
     PT_setup();
     buttonSetup();
+    radioSetup();
     _TRIS_LEDRED = 0;
     _TRIS_LEDYELLOW = 0;
     _TRIS_LEDGREEN = 0;
@@ -140,8 +145,9 @@ void main(void) {
     //240x320 vertical display
     tft_setRotation(0); // Use tft_setRotation(1) for 320x240
 
-    radioSetup();
+    
     mINT1ClearIntFlag();
+   
     while (1) {
         PT_SCHEDULE(protothread_radio(&pt_radio));
     }

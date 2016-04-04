@@ -44,7 +44,6 @@ void nrf_setup(){
     
     ConfigINT1(EXT_INT_PRI_2 | FALLING_EDGE_INT | EXT_INT_ENABLE);
     EnableINT1;
-    
     nrf_reset();
 }
 
