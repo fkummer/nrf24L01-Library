@@ -59,9 +59,9 @@ void radioSetup() {
     TRIS_ce = 0;
     nrf_set_arc(0x0A);//NEW ADDITION
     nrf_set_rf_ch(0x01);
-    nrf_en_aa(0);
-    nrf_en_dpl(0);
-    //nrf_set_pw(32, 0);
+    nrf_dis_aa(0);
+    nrf_dis_dpl(0);
+    nrf_set_pw(15, 0);
     nrf_set_address_width(5);
     nrf_set_rx_addr(0, 0xAABBCCDDEE, 5);
     nrf_set_tx_addr(0xAABBCCDDEE);
@@ -69,9 +69,11 @@ void radioSetup() {
 
 static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt);
-    char pwr;
+    char width = 0;
     char payload = 0;
+    static int flag = 0;
     nrf_state_rx_mode();
+    nrf_flush_rx();
     while (1) {
         while(!received){
             tft_setCursor(20, 0);
@@ -81,18 +83,34 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
             tft_writeString(buffer);
         }
         received = 0;
-        _LEDRED = 1;
+        _LEDRED ^= 1;
+        width = payload_size;
         tft_fillScreen(ILI9340_BLACK);
+        tft_setTextColor(ILI9340_BLUE);
+        tft_setCursor(100, 0);
+        sprintf(buffer, "%d", width);
+        tft_writeString(buffer);
+        tft_setTextSize(2);
         //payload = RX_payload[0];
         //tft_setCursor(20, 40);
         tft_setTextColor(ILI9340_GREEN);
         tft_setTextSize(2);
-        int i;
-        for(i=0;i<32;i++){
-            tft_setCursor(20, 20+20*i);
-            sprintf(buffer, "%02X", RX_payload[i]);
-            tft_writeString(buffer);
+        if(1){
+            int i;
+            for(i=0;i<15;i++){
+                tft_setCursor(20, 20+20*i);
+                sprintf(buffer, "%02X", RX_payload[i]);
+                tft_writeString(buffer);
+            }
+        }else{
+            int i;
+            for(i=0;i<10;i++){
+                tft_setCursor(80, 20+20*i);
+                sprintf(buffer, "%02X", RX_payload[i]);
+                tft_writeString(buffer);
+            }
         }
+        flag = !flag;
     }
     PT_END(pt);
 } // timer thread
@@ -104,10 +122,12 @@ void main(void) {
     //reset();
     PT_setup();
     buttonSetup();
-    TRISAbits.TRISA0 = 0;
-    LATAbits.LATA0 = 0;
     _TRIS_LEDRED = 0;
-    _LEDRED = 1;
+    _TRIS_LEDYELLOW = 0;
+    _TRIS_LEDGREEN = 0;
+    _LEDRED = 0;
+    _LEDYELLOW = 0;
+    _LEDGREEN = 0;
     PT_INIT(&pt_radio);
     radioSetup();
     

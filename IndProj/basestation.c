@@ -49,9 +49,9 @@ void radioSetup() {
     TRIS_ce = 0;
     nrf_set_arc(0x0A);//NEW ADDITION, disables retransmits
     nrf_set_rf_ch(0x01);
-    nrf_en_aa(0);
-    nrf_en_dpl(0);
-    //nrf_set_pw(32, 0);
+    nrf_dis_aa(0);
+    nrf_dis_dpl(0);
+    nrf_set_pw(15, 0);
     nrf_set_address_width(5);
     nrf_set_rx_addr(0, 0xAABBCCDDEE, 5); //SOMETHING WRONG WITH ADDRESSES
     nrf_set_tx_addr(0xAABBCCDDEE);
@@ -77,10 +77,15 @@ void __ISR(_EXTERNAL_0_VECTOR, ipl2) INT0Interrupt() {
 static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt);
     static int toggle = 0;
-    static char payload[32];
+    static int flag = 0;
+    static char payload[15];
+    static char payload2[10];
     int i;
-    for(i=0;i<32;i++){
+    for(i=0;i<15;i++){
         payload[i] = i;
+    }
+    for(i=0;i<10;i++){
+        payload2[i] = 10-i;
     }
     int succSend = 0;
     while (1) {
@@ -90,19 +95,34 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
         sprintf(buffer, "%d", succSend);
         tft_writeString(buffer);
         tft_setTextColor(ILI9340_YELLOW);
-        for(i=0;i<32;i++){
+        for(i=0;i<15;i++){
             tft_setCursor(20, 20 + 20*i);
             sprintf(buffer, "%02X", payload[i]);
+            tft_writeString(buffer);
+        }
+        for(i=0;i<10;i++){
+            tft_setCursor(80, 20 + 20*i);
+            sprintf(buffer, "%02X", payload2[i]);
             tft_writeString(buffer);
         }
         if (button_press == 1) {
             if (toggle == 0) {
                 toggle = 1;
                 _LEDYELLOW = 1;
-                succSend = nrf_send_payload_nonblock(&payload, 32);
-                for(i=0;i<32;i++){
-                    payload[i]++;
+                if(1){
+                    succSend = nrf_send_payload_nonblock(&payload, 15);
+                    for(i=0;i<15;i++){
+                        payload[i]++;
+                    }
+                    
                 }
+                else{
+                    succSend = nrf_send_payload(&payload2, 10);
+                    for(i=0;i<10;i++){
+                        payload2[i]++;
+                    }
+                }
+                flag = !flag;
             } else {
                 toggle = 0;
                 _LEDYELLOW = 0;
@@ -123,13 +143,15 @@ void main(void) {
    
     
     INTEnableSystemMultiVectoredInt();
-    //reset();
     PT_setup();
     buttonSetup();
     radioSetup();
     _TRIS_LEDRED = 0;
     _TRIS_LEDYELLOW = 0;
     _TRIS_LEDGREEN = 0;
+    _LEDRED = 0;
+    _LEDYELLOW = 0;
+    _LEDGREEN = 0;
     PT_INIT(&pt_radio);
     tft_init_hw();
     tft_begin();

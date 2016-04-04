@@ -149,29 +149,40 @@ void nrf_write_payload(char * data, char len){
 //THIS FUNCTION MUST BE CHANGED
 //PAYLOAD SIZE IN FOR LOOP MUST BE ADJUSTEDF
 // should read the payload into a buffer NOT TESTED YET
+//void nrf_read_payload(char * buff){
+//    char dpl;
+//    char length;
+//    nrf_read_reg(nrf24l01_FEATURE, &dpl, 1);
+//    // check if dynamic payload lengths are enabled
+//    if(dpl & 0x04){
+//        length = nrf_get_payload_width();
+//        _csn = 0; // begin transmission
+//        status = rf_spiwrite(nrf24l01_R_RX_PAYLOAD); // send command to read payload
+//        int i;
+//        for(i=0;i<length;i++){
+//            buff[i] = rf_spiwrite(nrf24l01_SEND_CLOCK);
+//        }
+//        _csn = 1; // end transmission
+//    }else{
+//        _csn = 0; // begin transmission
+//        status = rf_spiwrite(nrf24l01_R_RX_PAYLOAD); // send command to read payload
+//        int i;
+//        for(i=0;i<payload_size;i++){
+//            buff[i] = rf_spiwrite(nrf24l01_SEND_CLOCK);
+//        }
+//        _csn = 1; // end transmission
+//    }
+//
+//}
+
 void nrf_read_payload(char * buff){
-    char dpl;
-    char length;
-    nrf_read_reg(nrf24l01_FEATURE, &dpl, 1);
-    // check if dynamic payload lengths are enabled
-    if(dpl & 0x04){
-        length = nrf_get_payload_width();
-        _csn = 0; // begin transmission
-        status = rf_spiwrite(nrf24l01_R_RX_PAYLOAD); // send command to read payload
-        int i;
-        for(i=0;i<length;i++){
-            buff[i] = rf_spiwrite(nrf24l01_SEND_CLOCK);
-        }
-        _csn = 1; // end transmission
-    }else{
-        _csn = 0; // begin transmission
-        status = rf_spiwrite(nrf24l01_R_RX_PAYLOAD); // send command to read payload
-        int i;
-        for(i=0;i<payload_size;i++){
-            buff[i] = rf_spiwrite(nrf24l01_SEND_CLOCK);
-        }
-        _csn = 1; // end transmission
+    _csn = 0; // begin transmission
+    status = rf_spiwrite(nrf24l01_R_RX_PAYLOAD); // send command to read payload
+    int i;
+    for(i=0;i<payload_size;i++){
+        buff[i] = rf_spiwrite(nrf24l01_SEND_CLOCK);
     }
+    _csn = 1; // end transmission
 
 }
 
@@ -537,9 +548,7 @@ int nrf_send_payload(char * data, char len){
     nrf_state_standby_1();
     nrf_clear_prim_rx();
     _ce = 1;
-    while(!sent && !error){
-        _LEDGREEN = error;
-    };
+    while(!sent && !error);
     _ce = 0;
     if(sent){
         sent = 0;
@@ -591,8 +600,6 @@ void nrf_reset(){
 }
 
 void __ISR(_EXTERNAL_1_VECTOR, ipl2) INT1Handler(void){
-    //_LEDGREEN ^= 1;
-    
     nrf_read_reg(nrf24l01_STATUS, &status, 1); // read the status register
     // check which type of interrupt occurred
     if (status & nrf24l01_STATUS_RX_DR) { // if data received

@@ -255,7 +255,7 @@
         <property key="programoptions.usehighvoltageonmclr" value="false"/>
         <property key="programoptions.uselvpprogramming" value="false"/>
       </PKOBSKDEPlatformTool>
-      <item path="basestation.c" ex="false" overriding="false">
+      <item path="basestation.c" ex="true" overriding="false">
         <C32>
         </C32>
         <C32-AR>
@@ -269,7 +269,7 @@
         <C32Global>
         </C32Global>
       </item>
-      <item path="receiver.c" ex="true" overriding="false">
+      <item path="receiver.c" ex="false" overriding="false">
         <C32>
         </C32>
         <C32-AR>
