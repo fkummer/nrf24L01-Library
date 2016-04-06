@@ -49,7 +49,7 @@ void radioSetup() {
     TRIS_ce = 0;
     nrf_set_arc(0x0A);//NEW ADDITION, disables retransmits
     nrf_set_rf_ch(0x01);
-    nrf_dis_aa(0);
+    nrf_en_aa(0);
     nrf_dis_dpl(0);
     nrf_set_pw(15, 0);
     nrf_set_address_width(5);
@@ -108,7 +108,7 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
         if (button_press == 1) {
             _LEDYELLOW = 1;
             if (1) {
-                succSend = nrf_send_payload_nonblock(&payload, 15);
+                succSend = nrf_send_payload(&payload, 15);
                 for (i = 0; i < 15; i++) {
                     payload[i]++;
                 }

@@ -59,7 +59,7 @@ void radioSetup() {
     TRIS_ce = 0;
     nrf_set_arc(0x0A);//NEW ADDITION
     nrf_set_rf_ch(0x01);
-    nrf_dis_aa(0);
+    nrf_en_aa(0);
     nrf_dis_dpl(0);
     nrf_set_pw(15, 0);
     nrf_set_address_width(5);
@@ -87,7 +87,7 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
         width = payload_size;
         tft_fillScreen(ILI9340_BLACK);
         tft_setTextColor(ILI9340_BLUE);
-        tft_setCursor(100, 0);
+        tft_setCursor(100, 20);
         sprintf(buffer, "%d", width);
         tft_writeString(buffer);
         tft_setTextSize(2);
@@ -104,8 +104,8 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
             }
         }else{
             int i;
-            for(i=0;i<10;i++){
-                tft_setCursor(80, 20+20*i);
+            for(i=0;i<15;i++){
+                tft_setCursor(20, 20+20*i);
                 sprintf(buffer, "%02X", RX_payload[i]);
                 tft_writeString(buffer);
             }
