@@ -118,6 +118,7 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
 // === Main  ======================================================
 
 void main(void) {
+    delay_ms(200);
     INTEnableSystemMultiVectoredInt();
     //reset();
     PT_setup();

@@ -106,27 +106,21 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
             tft_writeString(buffer);
         }
         if (button_press == 1) {
-            if (toggle == 0) {
-                toggle = 1;
-                _LEDYELLOW = 1;
-                if(1){
-                    succSend = nrf_send_payload_nonblock(&payload, 15);
-                    for(i=0;i<15;i++){
-                        payload[i]++;
-                    }
-                    
+            _LEDYELLOW = 1;
+            if (1) {
+                succSend = nrf_send_payload_nonblock(&payload, 15);
+                for (i = 0; i < 15; i++) {
+                    payload[i]++;
                 }
-                else{
-                    succSend = nrf_send_payload(&payload2, 10);
-                    for(i=0;i<10;i++){
-                        payload2[i]++;
-                    }
-                }
-                flag = !flag;
+
             } else {
-                toggle = 0;
-                _LEDYELLOW = 0;
+                succSend = nrf_send_payload(&payload2, 10);
+                for (i = 0; i < 10; i++) {
+                    payload2[i]++;
+                }
             }
+            flag = !flag;
+
             tft_fillScreen(ILI9340_BLACK);
             button_press = 0;
         }
@@ -140,8 +134,7 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
 //=== Main  ======================================================
 
 void main(void) {
-   
-    
+    delay_ms(200);
     INTEnableSystemMultiVectoredInt();
     PT_setup();
     buttonSetup();
