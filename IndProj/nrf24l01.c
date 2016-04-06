@@ -39,8 +39,8 @@ void init_SPI(){
 }
 
 void nrf_setup(){
-    init_SPI();
-    
+    delay_ms(200);
+    init_SPI();   
     // Set external interrupt 1 to pin 21
     PPSInput(4, INT1, RPB10);
     
@@ -557,6 +557,7 @@ int nrf_send_payload(char * data, char len){
     error = 0;
     return 0;
 }
+
 
 void nrf_reset(){
     char reg = 0x08;

@@ -607,6 +607,7 @@ int nrf_set_rx_addr(int pipe, uint64_t address, int len);
  */
 void nrf_set_tx_addr(uint64_t address);
 
+//Helper function for parsing addresses into a buffer
 char * parse_addr(uint64_t address);
 
 /**
