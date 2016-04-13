@@ -246,6 +246,8 @@ char config;
 char buffer[120];
 volatile char RX_payload[32];
 char payload_size;
+int pipe_no; // pipe most recent payload was received from
+int width; // width of most recent payload in bytes
 
 int state;
 
@@ -328,6 +330,20 @@ void nrf_write_payload(char * data, char len);
  * @param buff Pointer to array where data will be written.
  */
 void nrf_read_payload(char * buff);
+
+/**
+ * @brief Get the number of the pipe the most recent payload was received on.
+ * 
+ * @return The number of the pipe the most recent payload was received on.
+ */
+int nrf_get_pipe();
+
+/**
+ * @brief Get the width of the most recently received payload.
+ * 
+ * @return Width of the payload in bytes.
+ */
+int nrf_get_payload_width();
 
 /**
  * @brief Sets the power up bit in the status register to leave the power down 

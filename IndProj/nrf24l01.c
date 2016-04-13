@@ -119,6 +119,7 @@ int nrf_full_tx_fifo(){
     }
 }
 
+// This is meant for library use
 int nrf_get_payload_width(){
     char width;
     _csn = 0;
@@ -134,7 +135,6 @@ int nrf_get_payload_width(){
 // NOT TESTED YET
 void nrf_write_payload(char * data, char len){
     int i = 0;
-    
     //Write packet to TX FIFO before pulsing
     _csn = 0; // begin transmission
     status = rf_spiwrite(nrf24l01_W_TX_PAYLOAD); // send the command to write the payload
@@ -151,15 +151,19 @@ void nrf_write_payload(char * data, char len){
 // should read the payload into a buffer NOT TESTED YET
 void nrf_read_payload(char * buff){
     char dpl;
-    char length;
+    
+    // get the pipe the payload was received on
+    nrf_read_reg(nrf24l01_STATUS, &status, 1);
+    pipe_no = (status & 0x0E) >> 1;
+    
     nrf_read_reg(nrf24l01_FEATURE, &dpl, 1);
     // check if dynamic payload lengths are enabled
     if(dpl & 0x04){
-        length = nrf_get_payload_width();
+        width = nrf_get_payload_width();
         _csn = 0; // begin transmission
         status = rf_spiwrite(nrf24l01_R_RX_PAYLOAD); // send command to read payload
         int i;
-        for(i=0;i<length;i++){
+        for(i=0;i<width;i++){
             buff[i] = rf_spiwrite(nrf24l01_SEND_CLOCK);
         }
         _csn = 1; // end transmission
@@ -175,16 +179,14 @@ void nrf_read_payload(char * buff){
 
 }
 
-//void nrf_read_payload(char * buff){
-//    _csn = 0; // begin transmission
-//    status = rf_spiwrite(nrf24l01_R_RX_PAYLOAD); // send command to read payload
-//    int i;
-//    for(i=0;i<payload_size;i++){
-//        buff[i] = rf_spiwrite(nrf24l01_SEND_CLOCK);
-//    }
-//    _csn = 1; // end transmission
-//
-//}
+int nrf_get_pipe(){
+    return pipe_no;
+}
+
+// This is meant for user use
+int nrf_get_width(){
+    return width;
+}
 
 //Sets the power up bit and waits for the startup time, putting the radio in Standby-I mode
 void nrf_pwrup(){
@@ -604,6 +606,8 @@ void __ISR(_EXTERNAL_1_VECTOR, ipl2) INT1Handler(void){
     nrf_read_reg(nrf24l01_STATUS, &status, 1); // read the status register
     // check which type of interrupt occurred
     if (status & nrf24l01_STATUS_RX_DR) { // if data received
+        nrf_read_reg(nrf24l01_STATUS, &status, 1);
+        pipe_no = status & 0x0E;
         nrf_read_payload(&RX_payload);
         received = 1; // signal main code that payload was received
         status |= nrf24l01_STATUS_RX_DR; // clear interrupt on radio

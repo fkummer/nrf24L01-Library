@@ -59,11 +59,14 @@ void radioSetup() {
     TRIS_ce = 0;
     nrf_set_arc(0x0A);//NEW ADDITION
     nrf_set_rf_ch(0x01);
-    nrf_en_aa(0);
-    nrf_dis_dpl(0);
-    nrf_set_pw(15, 0);
+    nrf_en_aa(1);
+    nrf_en_dpl(1);
+    nrf_en_aa(4);
+    nrf_en_dpl(4);
+    nrf_set_pw(15, 1);
     nrf_set_address_width(5);
-    nrf_set_rx_addr(0, 0xAABBCCDDEE, 5);
+    nrf_set_rx_addr(1, 0xAABBCCDDFF, 5);
+    nrf_set_rx_addr(4, 0xEE, 1);
     nrf_set_tx_addr(0xAABBCCDDEE);
 }
 
@@ -86,9 +89,6 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
         _LEDRED ^= 1;
         width = payload_size;
         tft_fillScreen(ILI9340_BLACK);
-        tft_setTextColor(ILI9340_BLUE);
-        tft_setCursor(100, 20);
-        sprintf(buffer, "%d", width);
         tft_writeString(buffer);
         tft_setTextSize(2);
         //payload = RX_payload[0];
@@ -100,6 +100,16 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
             for(i=0;i<15;i++){
                 tft_setCursor(20, 20+20*i);
                 sprintf(buffer, "%02X", RX_payload[i]);
+                tft_writeString(buffer);
+                
+                tft_setTextColor(ILI9340_GREEN);
+                tft_setCursor(100, 20);
+                sprintf(buffer, "%d", nrf_get_pipe());
+                tft_writeString(buffer);
+                
+                tft_setTextColor(ILI9340_RED);
+                tft_setCursor(100, 40);
+                sprintf(buffer, "%d", nrf_get_width());
                 tft_writeString(buffer);
             }
         }else{
