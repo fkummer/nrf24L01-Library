@@ -179,10 +179,21 @@ void nrf_read_payload(char * buff){
 
 }
 
+// TESTED
+int nrf_payload_available(){
+    int temp = received;
+    if(received){
+        received = 0;
+    }
+    return temp;
+}
+
+// TESTED
 int nrf_get_pipe(){
     return pipe_no;
 }
 
+// TESTED
 // This is meant for user use
 int nrf_get_width(){
     return width;

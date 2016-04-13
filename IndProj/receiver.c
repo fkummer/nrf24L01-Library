@@ -78,14 +78,13 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
     nrf_state_rx_mode();
     nrf_flush_rx();
     while (1) {
-        while(!received){
+        while(!nrf_payload_available()){
             tft_setCursor(20, 0);
             tft_setTextColor(ILI9340_YELLOW);
             tft_setTextSize(2);
             sprintf(buffer, "%s", "Waiting for payload...");
             tft_writeString(buffer);
         }
-        received = 0;
         _LEDRED ^= 1;
         width = payload_size;
         tft_fillScreen(ILI9340_BLACK);

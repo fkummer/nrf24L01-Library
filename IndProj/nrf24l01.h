@@ -332,6 +332,13 @@ void nrf_write_payload(char * data, char len);
 void nrf_read_payload(char * buff);
 
 /**
+ * @brief Checks if a payload was received and clears the flag signaling so.
+ * 
+ * @return 1 if a payload was received and is available to be read, 0 if not.
+ */
+int nrf_payload_available();
+
+/**
  * @brief Get the number of the pipe the most recent payload was received on.
  * 
  * @return The number of the pipe the most recent payload was received on.
