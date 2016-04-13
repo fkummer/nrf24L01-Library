@@ -72,8 +72,8 @@ void radioSetup() {
 
 static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt);
-    char width = 0;
-    char payload = 0;
+    int width;
+    char payload[15];
     static int flag = 0;
     nrf_state_rx_mode();
     nrf_flush_rx();
@@ -86,7 +86,8 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
             tft_writeString(buffer);
         }
         _LEDRED ^= 1;
-        width = payload_size;
+        width = nrf_get_width();
+        nrf_get_payload(&payload, nrf_get_width());
         tft_fillScreen(ILI9340_BLACK);
         tft_writeString(buffer);
         tft_setTextSize(2);
@@ -98,7 +99,7 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
             int i;
             for(i=0;i<15;i++){
                 tft_setCursor(20, 20+20*i);
-                sprintf(buffer, "%02X", RX_payload[i]);
+                sprintf(buffer, "%02X", payload[i]);
                 tft_writeString(buffer);
                 
                 tft_setTextColor(ILI9340_GREEN);
@@ -115,7 +116,7 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
             int i;
             for(i=0;i<15;i++){
                 tft_setCursor(20, 20+20*i);
-                sprintf(buffer, "%02X", RX_payload[i]);
+                sprintf(buffer, "%02X", payload[i]);
                 tft_writeString(buffer);
             }
         }

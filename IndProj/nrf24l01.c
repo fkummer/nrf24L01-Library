@@ -34,8 +34,6 @@ void init_SPI(){
     PPSInput(3, SDI2, RPA4);
     // Set SDO2 to pin 9
     PPSOutput(3, RPA2, SDO2);
-    
-
 }
 
 void nrf_setup(){
@@ -177,6 +175,13 @@ void nrf_read_payload(char * buff){
         _csn = 1; // end transmission
     }
 
+}
+
+void nrf_get_payload(char * buff, char len){
+    int i;
+    for(i=0;i<len;i++){
+        buff[i]=RX_payload[i];
+    }
 }
 
 // TESTED
@@ -617,8 +622,6 @@ void __ISR(_EXTERNAL_1_VECTOR, ipl2) INT1Handler(void){
     nrf_read_reg(nrf24l01_STATUS, &status, 1); // read the status register
     // check which type of interrupt occurred
     if (status & nrf24l01_STATUS_RX_DR) { // if data received
-        nrf_read_reg(nrf24l01_STATUS, &status, 1);
-        pipe_no = status & 0x0E;
         nrf_read_payload(&RX_payload);
         received = 1; // signal main code that payload was received
         status |= nrf24l01_STATUS_RX_DR; // clear interrupt on radio

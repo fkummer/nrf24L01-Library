@@ -241,21 +241,21 @@
 #define TX_MODE 3
 
 
-char status;
-char config;
-char buffer[120];
-volatile char RX_payload[32];
-char payload_size;
-int pipe_no; // pipe most recent payload was received from
-int width; // width of most recent payload in bytes
+static char status;
+static char config; // Should we remove this?
+static char buffer[120]; // Should we remove this?
+static volatile char RX_payload[32];
+static char payload_size; // static payload size in bytes
+static int pipe_no; // pipe most recent payload was received from
+static int width; // width of most recent dynamic length payload in bytes
 
-int state;
+static int state;
 
-volatile int received; // goes high when message is received
-volatile int sent; // goes high after radio finishes sending payload correctly
-volatile int error; // goes high when no acknowledge is received
+static volatile int received; // goes high when message is received
+static volatile int sent; // goes high after radio finishes sending payload correctly
+static volatile int error; // goes high when no acknowledge is received
 
-int TX; // is it transmitter or receiver (0 is rx 1 is tx)
+int TX; // is it transmitter or receiver (0 is rx 1 is tx) // Should we remove this?
 
 /**
  * @brief Transfer and receive a byte over SPI
@@ -332,6 +332,17 @@ void nrf_write_payload(char * data, char len);
 void nrf_read_payload(char * buff);
 
 /**
+ * @brief Read a received payload.
+ * 
+ * Read a payload into an array.  If dynamic payload length is enabled the
+ * length of the payload can be found using nrf_get_width.
+ * 
+ * @param buff Array to read the payload into.
+ * @param len Length of the payload to be read.
+ */
+void nrf_get_payload(char * buff, char len);
+
+/**
  * @brief Checks if a payload was received and clears the flag signaling so.
  * 
  * @return 1 if a payload was received and is available to be read, 0 if not.
@@ -350,7 +361,7 @@ int nrf_get_pipe();
  * 
  * @return Width of the payload in bytes.
  */
-int nrf_get_payload_width();
+int nrf_get_width();
 
 /**
  * @brief Sets the power up bit in the status register to leave the power down 
