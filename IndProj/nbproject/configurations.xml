@@ -23,6 +23,7 @@
       <itemPath>nrf24l01.c</itemPath>
       <itemPath>basestation.c</itemPath>
       <itemPath>receiver.c</itemPath>
+      <itemPath>Counter.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -269,7 +270,7 @@
         <C32Global>
         </C32Global>
       </item>
-      <item path="receiver.c" ex="false" overriding="false">
+      <item path="receiver.c" ex="true" overriding="false">
         <C32>
         </C32>
         <C32-AR>

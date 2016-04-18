@@ -1,5 +1,5 @@
-build/default/production/receiver.o:  \
-receiver.c  \
+build/default/production/Counter.o:  \
+Counter.c  \
 config.h  \
 tft_gfx.h  \
  tft_master.h  \
