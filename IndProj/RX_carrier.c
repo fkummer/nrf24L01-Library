@@ -37,9 +37,6 @@ void radioSetup() {
     nrf_setup(); // initializing function
     
     nrf_set_rf_ch(0x01); // freq = 2.401 GHz
-    
-    // set up addresses
-    nrf_set_address_width(5);
 }
 
 void main(void) {
