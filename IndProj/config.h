@@ -11,6 +11,15 @@
 // serial stuff
 #include <stdio.h>
 
+#define _LEDGREEN        LATAbits.LATA0
+#define _TRIS_LEDGREEN   TRISAbits.TRISA0
+
+#define _LEDYELLOW        LATAbits.LATA3
+#define _TRIS_LEDYELLOW   TRISAbits.TRISA3
+
+#define _LEDRED        LATBbits.LATB4
+#define _TRIS_LEDRED   TRISBbits.TRISB4
+
 /*
 #pragma config FNOSC = FRCPLL, POSCMOD = OFF
 #pragma config FPLLIDIV = DIV_2, FPLLMUL = MUL_20

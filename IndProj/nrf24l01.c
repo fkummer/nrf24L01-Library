@@ -5,16 +5,6 @@
 
 #include "nrf24l01.h"
 
-
-// PIN Setup
-// SCK -> SCK2 (pin 26)
-// SDI -> MISO (RPA4) (pin 12)
-// SDO -> MOSI (RPB2) (pin 9)
-// IRQ -> extern interrupt 1 (RPB10) (pin 21)
-// CSN -> RPB9 (I/O) (pin 18)
-// CE -> RPB8 (I/O) (pin 17)
-// i/o names 
-
 // frequency we're running at
 #define	SYS_FREQ 64000000
 
@@ -117,7 +107,7 @@ void nrf_flush_tx(){
 }
 
 // flushes the rx FIFO
-// NOTE: do not use while sending acknowledge
+// NOTE: do not use while sending acknowledgement
 void nrf_flush_rx(){
     _csn = 0;
     rf_spiwrite(nrf24l01_FLUSH_RX);
@@ -160,7 +150,6 @@ int nrf_get_payload_width(){
 // Write a payload to be sent over the radio
 // data: array of chars to be sent (1-32 chars/bytes)
 // len: amount of chars in array/bytes to be sent
-// NOT TESTED YET
 void nrf_write_payload(char * data, char len){
     int i = 0;
     //Write packet to TX FIFO before pulsing
@@ -172,14 +161,10 @@ void nrf_write_payload(char * data, char len){
     _csn = 1; // end transmission
     
 }
-//
-//!!!!!!!!!WARNING!!!!
-//THIS FUNCTION MUST BE CHANGED
-//PAYLOAD SIZE IN FOR LOOP MUST BE ADJUSTEDF
-// should read the payload into a buffer NOT TESTED YET
+
+// should read the payload into a buffer
 void nrf_read_payload(char * buff){
-    char dpl;
-    
+    char dpl;   
     // get the pipe the payload was received on
     nrf_read_reg(nrf24l01_STATUS, &status, 1);
     pipe_no = (status & 0x0E) >> 1;
@@ -221,17 +206,14 @@ int nrf_get_payload(char * buff, char len){
     }
 }
 
-// TESTED
 int nrf_payload_available(){
     return received;
 }
 
-// TESTED
 int nrf_get_pipe(){
     return pipe_no;
 }
 
-// TESTED
 // This is meant for user use
 int nrf_get_width(){
     return width;
@@ -239,6 +221,7 @@ int nrf_get_width(){
 
 //Sets the power up bit and waits for the startup time, putting the radio in Standby-I mode
 void nrf_pwrup(){
+    char config;
     nrf_read_reg(nrf24l01_CONFIG, &config, 1);
     config |= nrf24l01_CONFIG_PWR_UP;
     nrf_write_reg(nrf24l01_CONFIG, &config, 1);
@@ -247,6 +230,7 @@ void nrf_pwrup(){
 
 //Clear the pwr_up bit, transitioning to power down mode
 void nrf_pwrdown(){
+    char config;
     nrf_read_reg(nrf24l01_CONFIG, &config, 1);
     config &= ~(nrf24l01_CONFIG_PWR_UP);
     nrf_write_reg(nrf24l01_CONFIG, &config, 1);
@@ -313,18 +297,19 @@ void nrf_state_rx_mode(){
 }
 
 void nrf_set_prim_rx(){
+    char config;
     nrf_read_reg(nrf24l01_CONFIG, &config, 1);
     config |= nrf24l01_CONFIG_PRIM_RX;
     nrf_write_reg(nrf24l01_CONFIG, &config, 1);
 }
 
 void nrf_clear_prim_rx(){
+    char config;
     nrf_read_reg(nrf24l01_CONFIG, &config, 1);
     config &= ~(nrf24l01_CONFIG_PRIM_RX);
     nrf_write_reg(nrf24l01_CONFIG, &config, 1);
 }
 
-// TESTED
 // sets power of transmitter, possible values and definitions for them are
 //  0dBm: nrf24l01_RF_SETUP_RF_PWR_0
 // -6dBm: nrf24l01_RF_SETUP_RF_PWR_6
@@ -338,7 +323,6 @@ void nrf_set_transmit_pwr(char power){
     nrf_write_reg(nrf24l01_RF_SETUP, &setup, 1);  
 }
 
-// TESTED
 // sets the rf data rate, possible values and definitoins for them are
 // 250 kbps: nrf24l01_DR_LOW
 // 1 Mbps: nrf24l01_DR_MED
@@ -351,7 +335,6 @@ void nrf_set_transmit_rate(char rate){
     nrf_write_reg(nrf24l01_RF_SETUP, &setup, 1); 
 }
 
-// TESTED
 void nrf_set_ard(char ard){
     char setup; // check value of setup register
     nrf_read_reg(nrf24l01_SETUP_RETR, &setup, 1);
@@ -360,7 +343,6 @@ void nrf_set_ard(char ard){
     nrf_write_reg(nrf24l01_SETUP_RETR, &setup, 1); 
 }
 
-// TESTED
 void nrf_set_arc(char arc){
     char setup; // check value of setup register
     nrf_read_reg(nrf24l01_SETUP_RETR, &setup, 1);
@@ -369,7 +351,6 @@ void nrf_set_arc(char arc){
     nrf_write_reg(nrf24l01_SETUP_RETR, &setup, 1); 
 }
 
-// TESTED
 void nrf_set_rf_ch(char ch){
     nrf_write_reg(nrf24l01_RF_CH, &ch, 1);
 }
@@ -379,13 +360,11 @@ char nrf_received_pipe_num(){
     return status & 0x0E;
 }
 
-// TESTED
 void nrf_set_address_width(char width){
     char setting = width - 2;
     nrf_write_reg(nrf24l01_SETUP_AW, &setting, 1);
 }
 
-// TESTED
 char * parse_addr(uint64_t address){
     static char addr[5];
     int i = 0;
@@ -395,7 +374,6 @@ char * parse_addr(uint64_t address){
     return &addr;
 }
 
-// TESTED
 int nrf_set_rx_addr(int pipe, uint64_t address, int len){
     char width;
     nrf_read_reg(nrf24l01_SETUP_AW, &width, 1);
@@ -417,13 +395,11 @@ int nrf_set_rx_addr(int pipe, uint64_t address, int len){
     return 1;
 }
 
-// TESTED
 void nrf_set_tx_addr(uint64_t address){
     char * addr = parse_addr(address);
     nrf_write_reg(nrf24l01_TX_ADDR, addr, 5);
 }
 
-// TESTED
 void nrf_start_cont_wave(char pwr){
     nrf_state_standby_1();
     char setting;
@@ -434,7 +410,6 @@ void nrf_start_cont_wave(char pwr){
     _ce = 1;   
 }
 
-// TESTED
 void nrf_stop_cont_wave(){
     _ce = 0;
     char reg;
@@ -444,7 +419,6 @@ void nrf_stop_cont_wave(){
     nrf_pwrdown();
 }
 
-//TESTED
 char nrf_received_pwr(){
     char pwr;
     nrf_read_reg(nrf24l01_RPD, &pwr, 1);
@@ -452,7 +426,6 @@ char nrf_received_pwr(){
     return pwr;
 }
 
-// TESTED
 void nrf_en_aa(int pipe){
     char num = 0x01;
     num = num << pipe;
@@ -464,7 +437,6 @@ void nrf_en_aa(int pipe){
     nrf_write_reg(nrf24l01_EN_AA, &reg, 1);
 }
 
-// TESTED
 void nrf_dis_aa(int pipe){
     char num = 0x01;
     num = num << pipe;
@@ -475,7 +447,6 @@ void nrf_dis_aa(int pipe){
     nrf_write_reg(nrf24l01_EN_AA, &reg, 1);
 }
 
-// TESTED
 void nrf_en_rxaddr(int pipe){
     char num = 0x01;
     num = num << pipe;
@@ -485,7 +456,6 @@ void nrf_en_rxaddr(int pipe){
     nrf_write_reg(nrf24l01_EN_RXADDR, &reg, 1);
 }
 
-// TESTED
 void nrf_dis_rxaddr(int pipe){
     char num = 0x01;
     num = num << pipe;
@@ -496,13 +466,11 @@ void nrf_dis_rxaddr(int pipe){
     nrf_write_reg(nrf24l01_EN_RXADDR, &reg, 1);
 }
 
-// TESTED
 void nrf_set_pw(char width, int pipe){
    payload_size = width;
    nrf_write_reg(nrf24l01_RX_PW_P0 + pipe, &width, 1);
 }
 
-// TESTED
 void nrf_en_dpl(int pipe){
     char num = 0x01;
     num = num << pipe;
@@ -519,7 +487,6 @@ void nrf_en_dpl(int pipe){
     nrf_en_aa(pipe);
 }
 
-// TESTED
 void nrf_dis_dpl(int pipe){
     char num = 0x01;
     num = num << pipe;
@@ -537,7 +504,6 @@ void nrf_dis_dpl(int pipe){
     }
 }
 
-// TESTED
 void nrf_en_dyn_ack(){
     char reg;
     nrf_read_reg(nrf24l01_FEATURE, &reg, 1);
@@ -545,7 +511,6 @@ void nrf_en_dyn_ack(){
     nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
 }
 
-// TESTED
 void nrf_dis_dyn_ack(){
     char reg;
     nrf_read_reg(nrf24l01_FEATURE, &reg, 1);
@@ -553,7 +518,6 @@ void nrf_dis_dyn_ack(){
     nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
 }
 
-// TESTED
 void nrf_en_ack_pay(){
     char reg;
     nrf_read_reg(nrf24l01_FEATURE, &reg, 1);
@@ -561,7 +525,6 @@ void nrf_en_ack_pay(){
     nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
 }
 
-// TESTED
 void nrf_dis_ack_pay(){
     char reg;
     nrf_read_reg(nrf24l01_FEATURE, &reg, 1);
@@ -569,14 +532,12 @@ void nrf_dis_ack_pay(){
     nrf_write_reg(nrf24l01_FEATURE, &reg, 1);
 }
 
-// TESTED
 //Send a payload, with no checking for whether it was successfully received or not
 //Does not provide reliable data transfer, but makes it possible to push out more packets
 //and to have greater application level control over packet timing.
 int nrf_send_payload_nonblock(char * data, char len){
     nrf_flush_tx();
     nrf_write_payload(data, len);//Send payload to FIFO
-    //_LEDGREEN = nrf_empty_tx_fifo();
     nrf_state_standby_1();//Transition to standby 1 state to operate in a known state
     nrf_clear_prim_rx();
     
@@ -585,13 +546,11 @@ int nrf_send_payload_nonblock(char * data, char len){
     _ce = 0;    
     
     nrf_delay_us(130);//RX Settling Time
-    //while(!sent || !error);
  
     if(sent) return 1;
     else return 0;
 }
 
-// TESTED
 // send a payload with auto ack. Returns 1 if packet was received correctly
 int nrf_send_payload(char * data, char len){
     nrf_flush_tx();
@@ -664,7 +623,6 @@ void __ISR(_EXTERNAL_1_VECTOR, ipl2) INT1Handler(void){
         sent = 1; // signal main code that payload was sent
         status |= nrf24l01_STATUS_TX_DS; // clear interrupt on radio
     } else { // maximum number of retransmit attempts occurred
-        //_LEDRED = 1;
         error = 1; // signal main code that the payload was not received
         status |= nrf24l01_STATUS_MAX_RT; // clear interrupt on radio
     }

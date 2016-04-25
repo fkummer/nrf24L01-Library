@@ -1,5 +1,3 @@
-
-
 /**
  * @file nrf24l01.h
  * @author Douglas Katz and Frederick Kummer
@@ -9,17 +7,9 @@
  *
  */
 
-
  #define _SUPPRESS_PLIB_WARNING 1
  #include <plib.h>
  #include "inttypes.h"
-// PIN Setup
-// SCK -> SCK1 (pin 26)
-// SDI -> MISO (RPA4) (pin 12)
-// SDO -> MOSI (RPA2) (pin 9)
-// IRQ -> extern interrupt 1 (RPB10) (pin 21)
-// CSN -> RPB9 (I/O) (pin 18)
-// CE -> RPB8 (I/O) (pin 17)
 
 #define SPI_CHANNEL 2 //SPI channel used
 #define SDI RPA4 //Pin used as MISO for SPI
@@ -31,15 +21,6 @@
 
 #define _ce         LATBbits.LATB8
 #define TRIS_ce     TRISBbits.TRISB8
-
-#define _LEDGREEN        LATAbits.LATA0
-#define _TRIS_LEDGREEN   TRISAbits.TRISA0
-
-#define _LEDYELLOW        LATAbits.LATA3
-#define _TRIS_LEDYELLOW   TRISAbits.TRISA3
-
-#define _LEDRED        LATBbits.LATB4
-#define _TRIS_LEDRED   TRISBbits.TRISB4
 
 // SPI Commands
 #define nrf24l01_R_REGISTER		0x00
@@ -246,21 +227,17 @@
 #define dTime_us PBCLK/2000000
 
 
-static char status;
-static char config; // Should we remove this?
-static char buffer[120]; // Should we remove this?
-static volatile char RX_payload[32];
+static char status; // The value of the status register, updated after each command is sent
+static volatile char RX_payload[32]; // Payloads will be stored here as they are received
 static char payload_size; // static payload size in bytes
 static int pipe_no; // pipe most recent payload was received from
 static int width; // width of most recent dynamic length payload in bytes
 
-static int state;
+static int state; // The current state of the radio, NOTE: does not include TX state
 
 static volatile int received; // goes high when message is received
 static volatile int sent; // goes high after radio finishes sending payload correctly
 static volatile int error; // goes high when no acknowledge is received
-
-int TX; // is it transmitter or receiver (0 is rx 1 is tx) // Should we remove this?
 
 /**
  * @brief Transfer and receive a byte over SPI
