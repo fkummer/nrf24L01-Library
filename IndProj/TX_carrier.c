@@ -26,7 +26,6 @@ void radioSetup() {
     
     // set up addresses
     nrf_set_address_width(5);
-    nrf_set_tx_addr(0xAABBCCDDFF);
 }
 
 void main(void) {

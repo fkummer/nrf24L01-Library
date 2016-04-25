@@ -497,7 +497,7 @@ void nrf_stop_cont_wave();
 /**
  * @brief Check the power of the signal the nrf42l01 is receiving
  * 
- * RX mode must be enables for at leat 170 us before measurements will be 
+ * RX mode must be enables for at least 40 us before measurements will be 
  * accurate. 0 will be returned if power level is below -64dB and 1 will be 
  * returned if power level is above -64dB.
  * 
