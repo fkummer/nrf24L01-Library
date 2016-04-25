@@ -18,7 +18,37 @@
 // frequency we're running at
 #define	SYS_FREQ 64000000
 
+//Taken from tft_master.h, by Syed Tahmid Mahbub
+void nrf_delay_ms(unsigned long i){
+/* Create a software delay about i ms long
+ * Parameters:
+ *      i:  equal to number of milliseconds for delay
+ * Returns: Nothing
+ * Note: Uses Core Timer. Core Timer is cleared at the initialiazion of
+ *      this function. So, applications sensitive to the Core Timer are going
+ *      to be affected
+ */
+    unsigned int j;
+    j = dTime_ms * i;
+    WriteCoreTimer(0);
+    while (ReadCoreTimer() < j);
+}
 
+//Taken from tft_master.h, by Syed Tahmid Mahbub
+void nrf_delay_us(unsigned long i){
+/* Create a software delay about i us long
+ * Parameters:
+ *      i:  equal to number of microseconds for delay
+ * Returns: Nothing
+ * Note: Uses Core Timer. Core Timer is cleared at the initialiazion of
+ *      this function. So, applications sensitive to the Core Timer are going
+ *      to be affected
+ */
+    unsigned int j;
+    j = dTime_us * i;
+    WriteCoreTimer(0);
+    while (ReadCoreTimer() < j);
+}
 
 char rf_spiwrite(unsigned char c){ // Transfer to SPI
     while (TxBufFullSPI2());
@@ -37,7 +67,7 @@ void init_SPI(){
 }
 
 void nrf_setup(){
-    delay_ms(200);
+    nrf_delay_ms(200);
     init_SPI();   
     // Set external interrupt 1 to pin 21
     PPSInput(4, INT1, RPB10);
@@ -209,7 +239,7 @@ void nrf_pwrup(){
     nrf_read_reg(nrf24l01_CONFIG, &config, 1);
     config |= nrf24l01_CONFIG_PWR_UP;
     nrf_write_reg(nrf24l01_CONFIG, &config, 1);
-    delay_ms(2);//Delay for power up time
+    nrf_delay_ms(2);//Delay for power up time
 }
 
 //Clear the pwr_up bit, transitioning to power down mode
@@ -261,12 +291,12 @@ void nrf_state_rx_mode(){
             nrf_state_standby_1();
             nrf_set_prim_rx();
             _ce = 1;
-            delay_us(130);
+            nrf_delay_us(130);
             break;
         case STANDBY_1 :
             nrf_set_prim_rx();
             _ce = 1;
-            delay_us(130);
+            nrf_delay_us(130);
             break;
         case RX_MODE :
             break;
@@ -274,7 +304,7 @@ void nrf_state_rx_mode(){
             nrf_state_standby_1();
             nrf_set_prim_rx();
             _ce = 1;
-            delay_us(130);     
+            nrf_delay_us(130);     
     }
     state = RX_MODE;
 }
@@ -548,10 +578,10 @@ int nrf_send_payload_nonblock(char * data, char len){
     nrf_clear_prim_rx();
     
     _ce = 1;//Pulse the line to begin the transition to TX
-    delay_us(100);
+    nrf_delay_us(100);
     _ce = 0;    
     
-    delay_us(130);//RX Settling Time
+    nrf_delay_us(130);//RX Settling Time
     //while(!sent || !error);
  
     if(sent) return 1;
@@ -639,4 +669,3 @@ void __ISR(_EXTERNAL_1_VECTOR, ipl2) INT1Handler(void){
     nrf_write_reg(nrf24l01_STATUS, &status, 1);
     mINT1ClearIntFlag();
 }
-

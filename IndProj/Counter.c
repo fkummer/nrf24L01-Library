@@ -66,9 +66,9 @@ static PT_THREAD(protothread_radio(struct pt *pt)) {
         while(!nrf_send_payload(&counter,1)){
             // blink a circle on screen while waiting
             tft_fillCircle(20, 20, 10, ILI9340_BLACK);
-            delay_ms(300);
+            nrf_delay_ms(300);
             tft_fillCircle(20, 20, 10, ILI9340_RED);
-            delay_ms(300);
+            nrf_delay_ms(300);
         }
     }
     // set radio to receive mode to start

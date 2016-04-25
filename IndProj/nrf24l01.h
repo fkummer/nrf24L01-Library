@@ -240,6 +240,11 @@
 #define RX_MODE 2
 #define TX_MODE 3
 
+#define PBCLK 40000000 // peripheral bus clock
+
+#define dTime_ms PBCLK/2000
+#define dTime_us PBCLK/2000000
+
 
 static char status;
 static char config; // Should we remove this?
@@ -685,3 +690,9 @@ int nrf_send_payload_nonblock(char * data, char len);
  * not acknowledged.
  */
 int nrf_send_payload(char * data, char len);
+
+//From tft_master.h, by Syed Tahmid Mahbub
+void nrf_delay_ms(unsigned long);
+
+//From tft_master.h, by Syed Tahmid Mahbub
+void nrf_delay_us(unsigned long);
