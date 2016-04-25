@@ -4,7 +4,6 @@
 #include "tft_master.h"
 // serial stuff
 #include <stdio.h>
-#include <math.h>
 // threading library
 #define	SYS_FREQ 64000000 // change the frequency of the clock
 #include "pt_cornell_TFT.h"
@@ -34,7 +33,6 @@
 
 // === thread structures ============================================
 // thread control structs
-// note that UART input and output are threads
 static struct pt pt_radio;
 
 // set up the radio
@@ -50,6 +48,7 @@ void radioSetup() {
     nrf_set_pw(1, 0); //set the payload width to be 1 byte
     
     // set up addresses for autoack mode
+    // The tx address and the pipe 0 rx address must be the same for autoack mode
     nrf_set_address_width(5);
     nrf_set_rx_addr(0, 0xAABBCCDDFF, 5);
     nrf_set_tx_addr(0xAABBCCDDFF);
@@ -58,11 +57,10 @@ void radioSetup() {
 static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt); // main code starts here
     //NOTE: Set one radio's ID to 0 and the other radio's ID to 1
-    int ID = 1;
+    int ID = 0;
     volatile char counter = 0; // synchronous counter
-    if(!ID){ // the first radio will keep transmitting until a packet is received
-        
-        // while the packet isn't acknowledged/received
+    if(!ID){ // the first radio will keep transmitting until a packet is received        
+        // while the packet isn't acknowledged/received continously resend
         while(!nrf_send_payload(&counter,1)){
             // blink a circle on screen while waiting
             tft_fillCircle(20, 20, 10, ILI9340_BLACK);
@@ -116,6 +114,7 @@ void main(void) {
     tft_setRotation(0); // Use tft_setRotation(1) for 320x240
     mINT1ClearIntFlag();
    
+    // Start running the protothread.
     while (1) {
         PT_SCHEDULE(protothread_radio(&pt_radio));
     }

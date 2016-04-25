@@ -168,16 +168,17 @@ Microchip PIC32 Memory-Usage Report
 kseg0 Program-Memory Usage
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
-.text                   0x9d000000         0x64f8       25848  App's exec code 
-.text._vfprintf_cdnopux 0x9d0064f8          0xad0        2768   
-.rodata                 0x9d006fc8          0xf50        3920  Read-only const 
-.text                   0x9d007f18          0x8bc        2236  App's exec code 
-.text.fputc             0x9d0087d4          0x144         324   
-.text._flsbuf           0x9d008918          0x12c         300   
-.dinit                  0x9d008a44          0x110         272   
-.rodata                 0x9d008b54          0x104         260  Read-only const 
-.text.general_exception 0x9d008c58           0xdc         220   
-.text._mon_putc         0x9d008d34           0xd4         212   
+.text                   0x9d000000         0x64f4       25844  App's exec code 
+.text._vfprintf_cdnopux 0x9d0064f4          0xad0        2768   
+.rodata                 0x9d006fc4          0xf50        3920  Read-only const 
+.text                   0x9d007f14          0x8bc        2236  App's exec code 
+.text.fputc             0x9d0087d0          0x144         324   
+.text._flsbuf           0x9d008914          0x12c         300   
+.dinit                  0x9d008a40          0x110         272   
+.rodata                 0x9d008b50          0x104         260  Read-only const 
+.text.general_exception 0x9d008c54           0xdc         220   
+.text._mon_putc         0x9d008d30           0xd4         212   
+.rodata                 0x9d008e04            0x4           4  Read-only const 
 .rodata                 0x9d008e08           0xd0         208  Read-only const 
 .text.write             0x9d008ed8           0x9c         156   
 .text.SpiChnOpen        0x9d008f74           0x90         144   
@@ -215,8 +216,7 @@ section                    address  length [bytes]      (dec)  Description
 .text.INTEnableInterrup 0x9d009698            0x8           8   
 .text._on_reset         0x9d0096a0            0x8           8   
 .text._on_bootstrap     0x9d0096a8            0x8           8   
-.rodata                 0x9d0096b0            0x4           4  Read-only const 
-      Total kseg0_program_mem used  :      0x96b4       38580  30.4% of 0x1f000
+      Total kseg0_program_mem used  :      0x96b0       38576  30.4% of 0x1f000
 
 kseg0 Boot-Memory Usage
 section                    address  length [bytes]      (dec)  Description
@@ -280,7 +280,7 @@ section                    address  length [bytes]      (dec)  Description
 .bev_excpt              0xbfc00380           0x10          16  BEV-Exception 
          Total kseg1_boot_mem used  :       0x1e0         480  41.1% of 0x490
         --------------------------------------------------------------------------
-         Total Program Memory used  :      0x9a04       39428  29.8% of 0x20490
+         Total Program Memory used  :      0x9a00       39424  29.8% of 0x20490
         --------------------------------------------------------------------------
 
 
@@ -1993,7 +1993,7 @@ LOAD data_init
                 0xbfc00480       0x2c c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\debug-exception-return.o
                 0xbfc00480                __DbgExecReturn
 
-.text           0x9d000000     0x64f8
+.text           0x9d000000     0x64f4
  .text          0x9d000000     0x22b4 build/default/production/tft_gfx.o
                 0x9d000000                tft_drawCircle
                 0x9d0003f0                tft_drawCircleHelper
@@ -2095,60 +2095,60 @@ LOAD data_init
                 0x9d00577c                tft_setRotation
                 0x9d00589c                delay_ms
                 0x9d005920                delay_us
- .text          0x9d00598c      0xb6c build/default/production/Counter.o
+ .text          0x9d00598c      0xb68 build/default/production/Counter.o
                 0x9d00598c                PT_GetSerialBuffer
                 0x9d005db4                PutSerialBuffer
                 0x9d005f00                PT_DMA_PutSerialBuffer
                 0x9d006088                Timer1Handler
                 0x9d006108                PT_setup
                 0x9d0061b4                radioSetup
-                0x9d006484                main
+                0x9d006480                main
 
 .text._vfprintf_cdnopuxX
-                0x9d0064f8      0xad0
+                0x9d0064f4      0xad0
  .text._vfprintf_cdnopuxX
-                0x9d0064f8      0xad0 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libc.a(doprnt_cdnopuxX.eo)
-                0x9d0064f8                _vfprintf_cdnopuxX
+                0x9d0064f4      0xad0 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libc.a(doprnt_cdnopuxX.eo)
+                0x9d0064f4                _vfprintf_cdnopuxX
 
-.rodata         0x9d006fc8      0xf50
- .rodata        0x9d006fc8      0x558 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_tbl_lib.o)
-                0x9d006fc8                __IntSrcTbl
-                0x9d007310                __IntVectorTbl
- .rodata        0x9d007520      0x4fc build/default/production/tft_gfx.o
- .rodata        0x9d007a1c      0x4fc build/default/production/glcdfont.o
+.rodata         0x9d006fc4      0xf50
+ .rodata        0x9d006fc4      0x558 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_tbl_lib.o)
+                0x9d006fc4                __IntSrcTbl
+                0x9d00730c                __IntVectorTbl
+ .rodata        0x9d00751c      0x4fc build/default/production/tft_gfx.o
+ .rodata        0x9d007a18      0x4fc build/default/production/glcdfont.o
 
-.text           0x9d007f18      0x8bc
- .text          0x9d007f18      0x464 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3\libgcc.a(_umoddi3.o)
-                0x9d007f18                __umoddi3
- .text          0x9d00837c      0x458 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3\libgcc.a(_udivdi3.o)
-                0x9d00837c                __udivdi3
+.text           0x9d007f14      0x8bc
+ .text          0x9d007f14      0x464 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3\libgcc.a(_umoddi3.o)
+                0x9d007f14                __umoddi3
+ .text          0x9d008378      0x458 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3\libgcc.a(_udivdi3.o)
+                0x9d008378                __udivdi3
 
-.text.fputc     0x9d0087d4      0x144
- .text.fputc    0x9d0087d4      0x144 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libc.a(_fputc_simple.o)
-                0x9d0087d4                fputc
+.text.fputc     0x9d0087d0      0x144
+ .text.fputc    0x9d0087d0      0x144 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libc.a(_fputc_simple.o)
+                0x9d0087d0                fputc
 
-.text._flsbuf   0x9d008918      0x12c
- .text._flsbuf  0x9d008918      0x12c c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libc.a(_flsbuf_simple.o)
-                0x9d008918                _flsbuf
+.text._flsbuf   0x9d008914      0x12c
+ .text._flsbuf  0x9d008914      0x12c c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libc.a(_flsbuf_simple.o)
+                0x9d008914                _flsbuf
 
-.dinit          0x9d008a44      0x110
- .dinit         0x9d008a44      0x110 data_init
+.dinit          0x9d008a40      0x110
+ .dinit         0x9d008a40      0x110 data_init
 
-.rodata         0x9d008b54      0x104
- .rodata        0x9d008b54      0x104 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libc.a(ctype.o)
-                0x9d008b54                _ctype
+.rodata         0x9d008b50      0x104
+ .rodata        0x9d008b50      0x104 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libc.a(ctype.o)
+                0x9d008b50                _ctype
 
 .text.general_exception
-                0x9d008c58       0xdc
+                0x9d008c54       0xdc
  .text.general_exception
-                0x9d008c58       0xdc c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(general-exception.o)
-                0x9d008c58                _general_exception_context
+                0x9d008c54       0xdc c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(general-exception.o)
+                0x9d008c54                _general_exception_context
 
 .text._mon_putc
-                0x9d008d34       0xd4
+                0x9d008d30       0xd4
  .text._mon_putc
-                0x9d008d34       0xd4 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(_mon_putc.o)
-                0x9d008d34                _mon_putc
+                0x9d008d30       0xd4 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(_mon_putc.o)
+                0x9d008d30                _mon_putc
 
 .rodata         0x9d008e08       0xd0
  .rodata        0x9d008e08       0xd0 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libc.a(doprnt_cdnopuxX.eo)
@@ -2360,9 +2360,9 @@ LOAD data_init
                 0x9d0096a8        0x8 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
                 0x9d0096a8                _on_bootstrap
 
-.rodata         0x9d0096b0        0x4
- .rodata        0x9d0096b0        0x4 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(dma_reg_map_tbl_lib.o)
-                0x9d0096b0                _DmaMapTbl
+.rodata         0x9d008e04        0x4
+ .rodata        0x9d008e04        0x4 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(dma_reg_map_tbl_lib.o)
+                0x9d008e04                _DmaMapTbl
 
 .text           0x00000000        0x0
  .text          0x00000000        0x0 c:/program files (x86)/microchip/xc32/v1.40/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(xc32_uart.o)

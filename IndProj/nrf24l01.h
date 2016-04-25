@@ -510,7 +510,7 @@ void nrf_set_address_width(char width);
  *-12dBm: nrf24l01_RF_SETUP_RF_PWR_12
  *-18dBm: nrf24l01_RF_SETUP_RF_PWR_18
  */
-//void nrf_start_cont_wave(char pwr);
+void nrf_start_cont_wave(char pwr);
 
 /**
  * @brief Stop sending the carrier wave.
@@ -613,8 +613,6 @@ void nrf_en_dyn_ack();
  * the auto-acknowledge setting on the transmitter or receiver.
  */
 void nrf_dis_dyn_ack();
-
-
 
 /**
  * @brief Set the address of a pipe.
