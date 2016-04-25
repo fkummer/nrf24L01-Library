@@ -6,7 +6,6 @@
 #include <stdio.h>
 // threading library
 #define	SYS_FREQ 64000000 // change the frequency of the clock
-#include "pt_cornell_TFT.h"
 // radio library
 #include "nrf24l01.h"
 
@@ -31,10 +30,6 @@
  * update.
  */
 
-// === thread structures ============================================
-// thread control structs
-static struct pt pt_radio;
-
 // set up the radio
 void radioSetup() {
     nrf_setup(); // initializing function
@@ -54,69 +49,60 @@ void radioSetup() {
     nrf_set_tx_addr(0xAABBCCDDFF);
 }
 
-static PT_THREAD(protothread_radio(struct pt *pt)) {
-    PT_BEGIN(pt); // main code starts here
-    //NOTE: Set one radio's ID to 0 and the other radio's ID to 1
-    int ID = 0;
-    volatile char counter = 0; // synchronous counter
-    if(!ID){ // the first radio will keep transmitting until a packet is received        
-        // while the packet isn't acknowledged/received continously resend
-        while(!nrf_send_payload(&counter,1)){
-            // blink a circle on screen while waiting
-            tft_fillCircle(20, 20, 10, ILI9340_BLACK);
-            nrf_delay_ms(300);
-            tft_fillCircle(20, 20, 10, ILI9340_RED);
-            nrf_delay_ms(300);
-        }
-    }
-    // set radio to receive mode to start
-    nrf_state_rx_mode();
-    // clear the screen
-    tft_fillScreen(ILI9340_BLACK);
-    while(1){
-        // display "Current Count:" at top of screen
-        tft_setTextColor(ILI9340_GREEN);
-        tft_setTextSize(2);
-        tft_setCursor(20, 0);
-        sprintf(buffer, "%s", "Current Count:");
-        tft_writeString(buffer);
-        // wait until a payload is received before doing anything
-        if(nrf_payload_available()){ // when a payload has been received
-            tft_fillScreen(ILI9340_BLACK);
-            // get new counter value from transmitter
-            nrf_get_payload(&counter, 1);
-            // display counter value
-            tft_setCursor(20, 20);
-            sprintf(buffer, "%d", counter);
-            tft_writeString(buffer);
-            if(!ID){ // increment counter on one radio
-                counter++;
-            }
-            // send incremented payload
-            nrf_send_payload(&counter, 1); // send counter back to other radio
-            nrf_state_rx_mode(); // put the radio in rx mode after the transmission
-        }
-        
-    }
-    PT_END(pt);
-} // timer thread
-//=== Main  ======================================================
-
 void main(void) {
+    // Setup
     INTEnableSystemMultiVectoredInt();
-    PT_setup(); // protothreads setup
     radioSetup(); // setup the radio for this program
-    PT_INIT(&pt_radio); // part of protothreads
     tft_init_hw(); // setup for tft
-    tft_begin(); // part of protothreads
     tft_fillScreen(ILI9340_BLACK);
     //240x320 vertical display
     tft_setRotation(0); // Use tft_setRotation(1) for 320x240
     mINT1ClearIntFlag();
-   
-    // Start running the protothread.
+    
+    // Start running the program
     while (1) {
-        PT_SCHEDULE(protothread_radio(&pt_radio));
+        //NOTE: Set one radio's ID to 0 and the other radio's ID to 1
+        int ID = 1;
+        char buffer[120]; // used for making strings for tft
+        volatile char counter = 0; // synchronous counter
+        if(!ID){ // the first radio will keep transmitting until a packet is received        
+            // while the packet isn't acknowledged/received continously resend
+            while(!nrf_send_payload(&counter,1)){
+                // blink a circle on screen while waiting
+                tft_fillCircle(20, 20, 10, ILI9340_BLACK);
+                nrf_delay_ms(300);
+                tft_fillCircle(20, 20, 10, ILI9340_RED);
+                nrf_delay_ms(300);
+            }
+        }
+        // set radio to receive mode to start
+        nrf_state_rx_mode();
+        // clear the screen
+        tft_fillScreen(ILI9340_BLACK);
+        while(1){
+            // display "Current Count:" at top of screen
+            tft_setTextColor(ILI9340_GREEN);
+            tft_setTextSize(2);
+            tft_setCursor(20, 0);
+            sprintf(buffer, "%s", "Current Count:");
+            tft_writeString(buffer);
+            // wait until a payload is received before doing anything
+            if(nrf_payload_available()){ // when a payload has been received
+                tft_fillScreen(ILI9340_BLACK);
+                // get new counter value from transmitter
+                nrf_get_payload(&counter, 1);
+                // display counter value
+                tft_setCursor(20, 20);
+                sprintf(buffer, "%d", counter);
+                tft_writeString(buffer);
+                if(!ID){ // increment counter on one radio
+                    counter++;
+                }
+                // send incremented payload
+                nrf_send_payload(&counter, 1); // send counter back to other radio
+                nrf_state_rx_mode(); // put the radio in rx mode after the transmission
+            }
+        }
     }
 } // main
 
