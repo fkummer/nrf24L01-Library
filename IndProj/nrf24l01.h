@@ -339,16 +339,19 @@ void nrf_read_payload(char * buff);
 /**
  * @brief Read a received payload.
  * 
- * Read a payload into an array.  If dynamic payload length is enabled the
- * length of the payload can be found using nrf_get_width.
+ * Read a payload into an array if one is available.  If dynamic payload length 
+ * is enabled the length of the payload can be found using nrf_get_width. If a 
+ * payload is read, it is no longer available.
  * 
  * @param buff Array to read the payload into.
  * @param len Length of the payload to be read.
+ * 
+ * @return 1 if a payload is read, 0 if no payload is available to be read.
  */
-void nrf_get_payload(char * buff, char len);
+int nrf_get_payload(char * buff, char len);
 
 /**
- * @brief Checks if a payload was received and clears the flag signaling so.
+ * @brief Checks if a payload is available to be read.
  * 
  * @return 1 if a payload was received and is available to be read, 0 if not.
  */

@@ -207,20 +207,23 @@ void nrf_read_payload(char * buff){
 
 }
 
-void nrf_get_payload(char * buff, char len){
-    int i;
-    for(i=0;i<len;i++){
-        buff[i]=RX_payload[i];
+int nrf_get_payload(char * buff, char len){  
+    //A payload is available
+    if(received){
+        int i;
+        for(i=0;i<len;i++){
+            buff[i]=RX_payload[i];
+        }
+        received = 0;
+        return 1;
+    }else{//No payload is available
+        return 0;
     }
 }
 
 // TESTED
 int nrf_payload_available(){
-    int temp = received;
-    if(received){
-        received = 0;
-    }
-    return temp;
+    return received;
 }
 
 // TESTED

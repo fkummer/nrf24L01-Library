@@ -58,7 +58,7 @@ void radioSetup() {
 static PT_THREAD(protothread_radio(struct pt *pt)) {
     PT_BEGIN(pt); // main code starts here
     //NOTE: Set one radio's ID to 0 and the other radio's ID to 1
-    int ID = 0;
+    int ID = 1;
     volatile char counter = 0; // synchronous counter
     if(!ID){ // the first radio will keep transmitting until a packet is received
         
