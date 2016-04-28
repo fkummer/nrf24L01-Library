@@ -259,8 +259,32 @@
         <property key="programoptions.uselvpprogramming" value="false"/>
       </PKOBSKDEPlatformTool>
       <item path="RX_carrier.c" ex="true" overriding="false">
+        <C32>
+        </C32>
+        <C32-AR>
+        </C32-AR>
+        <C32-AS>
+        </C32-AS>
+        <C32-LD>
+        </C32-LD>
+        <C32CPP>
+        </C32CPP>
+        <C32Global>
+        </C32Global>
       </item>
       <item path="TX_carrier.c" ex="true" overriding="false">
+        <C32>
+        </C32>
+        <C32-AR>
+        </C32-AR>
+        <C32-AS>
+        </C32-AS>
+        <C32-LD>
+        </C32-LD>
+        <C32CPP>
+        </C32CPP>
+        <C32Global>
+        </C32Global>
       </item>
       <item path="basestation.c" ex="true" overriding="false">
         <C32>
@@ -303,6 +327,8 @@
         <C32-AR>
           <property key="additional-options-chop-files" value="false"/>
         </C32-AR>
+        <C32-AS>
+        </C32-AS>
         <C32-LD>
           <property key="additional-options-use-response-files" value="false"/>
           <property key="enable-check-sections" value="false"/>
