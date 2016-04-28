@@ -35,6 +35,8 @@ void radioSetup() {
     nrf_setup(); // initializing function
 
     nrf_set_arc(0x0A); // 10 retransmits
+    
+    nrf_set_ard(0x00); // 250 us between retransmission
 
     nrf_set_rf_ch(0x01); // freq = 2.401 GHz
 

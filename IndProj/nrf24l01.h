@@ -11,11 +11,6 @@
  #include <plib.h>
  #include "inttypes.h"
 
-#define SPI_CHANNEL 2 //SPI channel used
-#define SDI RPA4 //Pin used as MISO for SPI
-#define SDO RPA2 //Pin used as MOSI for SPI
-#define IRQ RPB10 //Pin used for external interrupts from radio
-
 #define _csn         LATBbits.LATB9
 #define TRIS_csn     TRISBbits.TRISB9
 
