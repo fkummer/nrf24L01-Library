@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>nrf24l01+ Library: nrf24l01.h File Reference</title>
+<title>nrf24l01+ Library: nrf24L01-Library/nrf24l01.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -34,7 +34,6 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">nrf24l01+ Library
    </div>
-   <div id="projectbrief">This is a library to simplify connecting an nrf24l01+ radio module to a PIC32 microcontroller</div>
   </td>
  </tr>
  </tbody>
@@ -105,8 +104,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">nrf24l01.h File Reference</div>  </div>
 </div><!--header-->
@@ -115,6 +113,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <p>Library for use of the nrf24l01+ radio module with a PIC32.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;plib.h&gt;</code><br />
+<code>#include &quot;inttypes.h&quot;</code><br />
 </div>
 <p><a href="nrf24l01_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -123,18 +122,6 @@ Macros</h2></td></tr>
 <tr class="memitem:a0c5ad667ee8b3fc41e20f88fef4093d8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0c5ad667ee8b3fc41e20f88fef4093d8"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>_SUPPRESS_PLIB_WARNING</b>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:a0c5ad667ee8b3fc41e20f88fef4093d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8cbb3355883e35c18820bfa63c4ce3a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8cbb3355883e35c18820bfa63c4ce3a"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SPI_CHANNEL</b>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:aa8cbb3355883e35c18820bfa63c4ce3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9617ba9cce1470da68cda07de38b035a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9617ba9cce1470da68cda07de38b035a"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SDI</b>&#160;&#160;&#160;RPA4</td></tr>
-<tr class="separator:a9617ba9cce1470da68cda07de38b035a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08e733edc95130b35f713014414851b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a08e733edc95130b35f713014414851b7"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SDO</b>&#160;&#160;&#160;RPA2</td></tr>
-<tr class="separator:a08e733edc95130b35f713014414851b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46fc8a17c0936cda0556a966cc2f62fb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a46fc8a17c0936cda0556a966cc2f62fb"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>IRQ</b>&#160;&#160;&#160;RPB10</td></tr>
-<tr class="separator:a46fc8a17c0936cda0556a966cc2f62fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a99e9efbe2a7193a6813166ded4d21f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a99e9efbe2a7193a6813166ded4d21f"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>_csn</b>&#160;&#160;&#160;LATBbits.LATB9</td></tr>
 <tr class="separator:a6a99e9efbe2a7193a6813166ded4d21f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,18 +134,6 @@ Macros</h2></td></tr>
 <tr class="memitem:a5c28679706f82955764ea0d80c7a1d62"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c28679706f82955764ea0d80c7a1d62"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>TRIS_ce</b>&#160;&#160;&#160;TRISBbits.TRISB8</td></tr>
 <tr class="separator:a5c28679706f82955764ea0d80c7a1d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40154ae2797e0b39a8c4e0ae2fdba95c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40154ae2797e0b39a8c4e0ae2fdba95c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>_LEDRED</b>&#160;&#160;&#160;LATAbits.LATA0</td></tr>
-<tr class="separator:a40154ae2797e0b39a8c4e0ae2fdba95c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08b79481d150145d623d7acf011b9036"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a08b79481d150145d623d7acf011b9036"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>_TRIS_LEDRED</b>&#160;&#160;&#160;TRISAbits.TRISA0</td></tr>
-<tr class="separator:a08b79481d150145d623d7acf011b9036"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6879f85d1278401cbdfef9c4e7572e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6879f85d1278401cbdfef9c4e7572e4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>_LEDYELLOW</b>&#160;&#160;&#160;LATBbits.LATB0</td></tr>
-<tr class="separator:ae6879f85d1278401cbdfef9c4e7572e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84e4a88db06851c594bb602604823133"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a84e4a88db06851c594bb602604823133"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>_TRIS_LEDYELLOW</b>&#160;&#160;&#160;TRISBbits.TRISB0</td></tr>
-<tr class="separator:a84e4a88db06851c594bb602604823133"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb4b83c2cd72bab8601d97c1a569f0df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb4b83c2cd72bab8601d97c1a569f0df"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>nrf24l01_R_REGISTER</b>&#160;&#160;&#160;0x00</td></tr>
 <tr class="separator:adb4b83c2cd72bab8601d97c1a569f0df"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -168,6 +143,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ad8f73804b4522f97384873ee547903f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8f73804b4522f97384873ee547903f3"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>nrf24l01_R_REGISTER_WID</b>&#160;&#160;&#160;0x61</td></tr>
 <tr class="separator:ad8f73804b4522f97384873ee547903f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dcfb03da4c8b1388923442551b16746"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2dcfb03da4c8b1388923442551b16746"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>nrf24l01_R_RX_PL_WID</b>&#160;&#160;&#160;0x60</td></tr>
+<tr class="separator:a2dcfb03da4c8b1388923442551b16746"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e1eda1560834420445f0b2d5dbaf974"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e1eda1560834420445f0b2d5dbaf974"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>nrf24l01_R_RX_PAYLOAD</b>&#160;&#160;&#160;0x61</td></tr>
 <tr class="separator:a2e1eda1560834420445f0b2d5dbaf974"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -213,9 +191,9 @@ Macros</h2></td></tr>
 <tr class="memitem:a1efd91e806061958b5640eb688ce5c4c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1efd91e806061958b5640eb688ce5c4c"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>nrf24l01_OBSERVE_TX</b>&#160;&#160;&#160;0x08</td></tr>
 <tr class="separator:a1efd91e806061958b5640eb688ce5c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7b3c1dba4c1aa61b134da143df7b84f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7b3c1dba4c1aa61b134da143df7b84f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>nrf24l01_CD</b>&#160;&#160;&#160;0x09</td></tr>
-<tr class="separator:ac7b3c1dba4c1aa61b134da143df7b84f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cfcacbd6a13ccb093bbb014f9445fe9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5cfcacbd6a13ccb093bbb014f9445fe9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>nrf24l01_RPD</b>&#160;&#160;&#160;0x09</td></tr>
+<tr class="separator:a5cfcacbd6a13ccb093bbb014f9445fe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab85c1b269a076bd64fc658eeea29232d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab85c1b269a076bd64fc658eeea29232d"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>nrf24l01_RX_ADDR_P0</b>&#160;&#160;&#160;0x0A</td></tr>
 <tr class="separator:ab85c1b269a076bd64fc658eeea29232d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -258,6 +236,12 @@ Macros</h2></td></tr>
 <tr class="memitem:a666de65e852fb8e16936f8424a805790"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a666de65e852fb8e16936f8424a805790"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>nrf24l01_FIFO_STATUS</b>&#160;&#160;&#160;0x17</td></tr>
 <tr class="separator:a666de65e852fb8e16936f8424a805790"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad463a3ee95d8cf84d9c78da2f68777e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad463a3ee95d8cf84d9c78da2f68777e4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>nrf24l01_DYNPD</b>&#160;&#160;&#160;0x1C</td></tr>
+<tr class="separator:ad463a3ee95d8cf84d9c78da2f68777e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2399afc5e191f52756206571aa3bff92"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2399afc5e191f52756206571aa3bff92"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>nrf24l01_FEATURE</b>&#160;&#160;&#160;0x1D</td></tr>
+<tr class="separator:a2399afc5e191f52756206571aa3bff92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82741425888fb0a5d57a5a741c31824b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a82741425888fb0a5d57a5a741c31824b"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>nrf24l01_CONFIG_RESERVED</b>&#160;&#160;&#160;0x80</td></tr>
 <tr class="separator:a82741425888fb0a5d57a5a741c31824b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -459,6 +443,9 @@ Macros</h2></td></tr>
 <tr class="memitem:acdb5a5f1701d7e08d7deee2093a15ea4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acdb5a5f1701d7e08d7deee2093a15ea4"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>nrf24l01_RF_CH_RESERVED</b>&#160;&#160;&#160;0x80</td></tr>
 <tr class="separator:acdb5a5f1701d7e08d7deee2093a15ea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa13e8d3b9c4d7b262786137305772fce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa13e8d3b9c4d7b262786137305772fce"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>nrf24l01_RD_SETUP_CONT_WAVE</b>&#160;&#160;&#160;0x80</td></tr>
+<tr class="separator:aa13e8d3b9c4d7b262786137305772fce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb78a440b75be4bea5dc585a4428ec84"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb78a440b75be4bea5dc585a4428ec84"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>nrf24l01_RF_SETUP_RESERVED</b>&#160;&#160;&#160;0xE0</td></tr>
 <tr class="separator:acb78a440b75be4bea5dc585a4428ec84"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -591,21 +578,37 @@ Macros</h2></td></tr>
 <tr class="memitem:ac3cb84a8511db5dbfecda89ffd0ec8fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3cb84a8511db5dbfecda89ffd0ec8fe"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>nrf24l01_SEND_CLOCK</b>&#160;&#160;&#160;0x00</td></tr>
 <tr class="separator:ac3cb84a8511db5dbfecda89ffd0ec8fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af532cebd708e8f665589eae4469c8cbe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af532cebd708e8f665589eae4469c8cbe"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PWR_DOWN</b>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:af532cebd708e8f665589eae4469c8cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d5c864c2c8863e859b97db0b52190b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d5c864c2c8863e859b97db0b52190b1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>STANDBY_1</b>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a1d5c864c2c8863e859b97db0b52190b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca1f7e0907b7f07b7ea6ddbe8fac6ac5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca1f7e0907b7f07b7ea6ddbe8fac6ac5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RX_MODE</b>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:aca1f7e0907b7f07b7ea6ddbe8fac6ac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60bcaae69589922d624e3a7c1cedd686"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60bcaae69589922d624e3a7c1cedd686"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TX_MODE</b>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:a60bcaae69589922d624e3a7c1cedd686"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac23c0047c8aba00b8c269fc2a181959"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac23c0047c8aba00b8c269fc2a181959"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PBCLK</b>&#160;&#160;&#160;40000000</td></tr>
+<tr class="separator:aac23c0047c8aba00b8c269fc2a181959"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acee96af0727b51ea154fe8146064c707"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acee96af0727b51ea154fe8146064c707"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>dTime_ms</b>&#160;&#160;&#160;PBCLK/2000</td></tr>
+<tr class="separator:acee96af0727b51ea154fe8146064c707"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcfb3dd971efcab3608ea0afe2973b62"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adcfb3dd971efcab3608ea0afe2973b62"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>dTime_us</b>&#160;&#160;&#160;PBCLK/2000000</td></tr>
+<tr class="separator:adcfb3dd971efcab3608ea0afe2973b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a791a7e9ce53d1cebfcbf3482ed8b3088"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a791a7e9ce53d1cebfcbf3482ed8b3088"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>rf_spiwrite</b> (unsigned char c)</td></tr>
-<tr class="separator:a791a7e9ce53d1cebfcbf3482ed8b3088"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1065be4c03eff55f82e136ccb95a2854"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1065be4c03eff55f82e136ccb95a2854"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>init_SPI</b> ()</td></tr>
+<tr class="memitem:a1065be4c03eff55f82e136ccb95a2854"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a1065be4c03eff55f82e136ccb95a2854">init_SPI</a> ()</td></tr>
+<tr class="memdesc:a1065be4c03eff55f82e136ccb95a2854"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up SPI for the radio.  <a href="#a1065be4c03eff55f82e136ccb95a2854">More...</a><br /></td></tr>
 <tr class="separator:a1065be4c03eff55f82e136ccb95a2854"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b43364348632e13d98688e8d441d1ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a0b43364348632e13d98688e8d441d1ee">nrf_write_reg_byte</a> (char reg, char data)</td></tr>
-<tr class="memdesc:a0b43364348632e13d98688e8d441d1ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a single byte to a register.  <a href="#a0b43364348632e13d98688e8d441d1ee">More...</a><br /></td></tr>
-<tr class="separator:a0b43364348632e13d98688e8d441d1ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79578e07cb4af17f8e4475bbdfd6f581"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a79578e07cb4af17f8e4475bbdfd6f581">nrf_read_reg_byte</a> (char reg)</td></tr>
-<tr class="memdesc:a79578e07cb4af17f8e4475bbdfd6f581"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a single byte from a register.  <a href="#a79578e07cb4af17f8e4475bbdfd6f581">More...</a><br /></td></tr>
-<tr class="separator:a79578e07cb4af17f8e4475bbdfd6f581"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af022f4a6e0c8d5bfee1f88bc868759d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af022f4a6e0c8d5bfee1f88bc868759d6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#af022f4a6e0c8d5bfee1f88bc868759d6">nrf_setup</a> ()</td></tr>
+<tr class="memdesc:af022f4a6e0c8d5bfee1f88bc868759d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the radio, SPI, and interrupts. Also resets all radio registers to their default values. <br /></td></tr>
+<tr class="separator:af022f4a6e0c8d5bfee1f88bc868759d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb423b6fa53a9b3f5d62c9a7b764767e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#afb423b6fa53a9b3f5d62c9a7b764767e">nrf_read_reg</a> (char reg, char *buff, int len)</td></tr>
 <tr class="memdesc:afb423b6fa53a9b3f5d62c9a7b764767e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a register and store the data in an array. Can be multiple bytes of data.  <a href="#afb423b6fa53a9b3f5d62c9a7b764767e">More...</a><br /></td></tr>
 <tr class="separator:afb423b6fa53a9b3f5d62c9a7b764767e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -620,79 +623,443 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf2
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a2202d7987490038eefb270445900189a">nrf_flush_rx</a> ()</td></tr>
 <tr class="memdesc:a2202d7987490038eefb270445900189a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush the RX FIFO. <br /></td></tr>
 <tr class="separator:a2202d7987490038eefb270445900189a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5099baab714a8a73ae66a32ba3fe04a6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a5099baab714a8a73ae66a32ba3fe04a6">nrf_get_payload_width</a> ()</td></tr>
+<tr class="memdesc:a5099baab714a8a73ae66a32ba3fe04a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the width of the top payload in the RX FIFO.  <a href="#a5099baab714a8a73ae66a32ba3fe04a6">More...</a><br /></td></tr>
+<tr class="separator:a5099baab714a8a73ae66a32ba3fe04a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9786fb43141c287c235e37d9c8b6c5c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a9786fb43141c287c235e37d9c8b6c5c6">nrf_write_payload</a> (char *data, char len)</td></tr>
 <tr class="memdesc:a9786fb43141c287c235e37d9c8b6c5c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a payload to the TX FIFO.  <a href="#a9786fb43141c287c235e37d9c8b6c5c6">More...</a><br /></td></tr>
 <tr class="separator:a9786fb43141c287c235e37d9c8b6c5c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae3b4320f6f731a94b99236ca54e0ed3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#aae3b4320f6f731a94b99236ca54e0ed3">nrf_read_payload</a> (char *buff)</td></tr>
 <tr class="memdesc:aae3b4320f6f731a94b99236ca54e0ed3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a payload from the RX FIFO.  <a href="#aae3b4320f6f731a94b99236ca54e0ed3">More...</a><br /></td></tr>
 <tr class="separator:aae3b4320f6f731a94b99236ca54e0ed3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a6944aa00dfd20af0f540e93613e19a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a6a6944aa00dfd20af0f540e93613e19a">nrf_get_payload</a> (char *buff, char len)</td></tr>
+<tr class="memdesc:a6a6944aa00dfd20af0f540e93613e19a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a received payload.  <a href="#a6a6944aa00dfd20af0f540e93613e19a">More...</a><br /></td></tr>
+<tr class="separator:a6a6944aa00dfd20af0f540e93613e19a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66cbce1bcbd67f721f752d7848857b26"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a66cbce1bcbd67f721f752d7848857b26">nrf_payload_available</a> ()</td></tr>
+<tr class="memdesc:a66cbce1bcbd67f721f752d7848857b26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a payload is available to be read.  <a href="#a66cbce1bcbd67f721f752d7848857b26">More...</a><br /></td></tr>
+<tr class="separator:a66cbce1bcbd67f721f752d7848857b26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bbcabdf5bea986738a069cdcdf7fd04"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a5bbcabdf5bea986738a069cdcdf7fd04">nrf_get_pipe</a> ()</td></tr>
+<tr class="memdesc:a5bbcabdf5bea986738a069cdcdf7fd04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of the pipe the most recent payload was received on.  <a href="#a5bbcabdf5bea986738a069cdcdf7fd04">More...</a><br /></td></tr>
+<tr class="separator:a5bbcabdf5bea986738a069cdcdf7fd04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec88da95fdf7d2baea7a9c5ddcec492b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#aec88da95fdf7d2baea7a9c5ddcec492b">nrf_get_width</a> ()</td></tr>
+<tr class="memdesc:aec88da95fdf7d2baea7a9c5ddcec492b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the width of the most recently received payload.  <a href="#aec88da95fdf7d2baea7a9c5ddcec492b">More...</a><br /></td></tr>
+<tr class="separator:aec88da95fdf7d2baea7a9c5ddcec492b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0aff41d82f977ee13b061b9d6c58457a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0aff41d82f977ee13b061b9d6c58457a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a0aff41d82f977ee13b061b9d6c58457a">nrf_pwrup</a> ()</td></tr>
-<tr class="memdesc:a0aff41d82f977ee13b061b9d6c58457a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the power up bit in the status register to leave the power down state. <br /></td></tr>
+<tr class="memdesc:a0aff41d82f977ee13b061b9d6c58457a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the power up bit in the status register in order to leave the power down state. <br /></td></tr>
 <tr class="separator:a0aff41d82f977ee13b061b9d6c58457a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac113e8e3f58a1d82700fd4d0b8784110"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac113e8e3f58a1d82700fd4d0b8784110"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#ac113e8e3f58a1d82700fd4d0b8784110">nrf_pwrdown</a> ()</td></tr>
-<tr class="memdesc:ac113e8e3f58a1d82700fd4d0b8784110"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the power up bit in the status register to enter the power down state. <br /></td></tr>
+<tr class="memdesc:ac113e8e3f58a1d82700fd4d0b8784110"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the power up bit in the status register in order to enter the power down state. <br /></td></tr>
 <tr class="separator:ac113e8e3f58a1d82700fd4d0b8784110"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55d293b99f7fb62d72dd3c3cd4c01757"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55d293b99f7fb62d72dd3c3cd4c01757"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a55d293b99f7fb62d72dd3c3cd4c01757">nrf_rx_mode</a> ()</td></tr>
-<tr class="memdesc:a55d293b99f7fb62d72dd3c3cd4c01757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets PRIM_RX in status register and sets CE to transition to RX mode state from standby-I state. <br /></td></tr>
-<tr class="separator:a55d293b99f7fb62d72dd3c3cd4c01757"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af62822470d2e0b9e3de782d722b76730"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af62822470d2e0b9e3de782d722b76730"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#af62822470d2e0b9e3de782d722b76730">nrf_tx_mode</a> ()</td></tr>
-<tr class="memdesc:af62822470d2e0b9e3de782d722b76730"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears PRIM_RX in status register and CE to transition to TX mode state from standby-I state if there is data in the TX FIFO. <br /></td></tr>
-<tr class="separator:af62822470d2e0b9e3de782d722b76730"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07d50febfacf92a11328846c0e6af62f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07d50febfacf92a11328846c0e6af62f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a07d50febfacf92a11328846c0e6af62f">nrf_standby_mode</a> ()</td></tr>
-<tr class="memdesc:a07d50febfacf92a11328846c0e6af62f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets to standby mode. <br /></td></tr>
-<tr class="separator:a07d50febfacf92a11328846c0e6af62f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6473277a36d424febfdecb9aa3e0f6a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6473277a36d424febfdecb9aa3e0f6a2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a6473277a36d424febfdecb9aa3e0f6a2">nrf_state_pwr_down</a> ()</td></tr>
+<tr class="memdesc:a6473277a36d424febfdecb9aa3e0f6a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put the radio in the power down state. <br /></td></tr>
+<tr class="separator:a6473277a36d424febfdecb9aa3e0f6a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab678d78f9d288d902289dae46e382148"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab678d78f9d288d902289dae46e382148"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#ab678d78f9d288d902289dae46e382148">nrf_state_standby_1</a> ()</td></tr>
+<tr class="memdesc:ab678d78f9d288d902289dae46e382148"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put the radio in the standby 1 state. <br /></td></tr>
+<tr class="separator:ab678d78f9d288d902289dae46e382148"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6c009513f9cf48b9d4beed89e9a2a61"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab6c009513f9cf48b9d4beed89e9a2a61"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#ab6c009513f9cf48b9d4beed89e9a2a61">nrf_state_rx_mode</a> ()</td></tr>
+<tr class="memdesc:ab6c009513f9cf48b9d4beed89e9a2a61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put the radio in the rx mode state. <br /></td></tr>
+<tr class="separator:ab6c009513f9cf48b9d4beed89e9a2a61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83214eb0409339eead0fb00544c60b58"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83214eb0409339eead0fb00544c60b58"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a83214eb0409339eead0fb00544c60b58">nrf_set_prim_rx</a> ()</td></tr>
+<tr class="memdesc:a83214eb0409339eead0fb00544c60b58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the PRIM_RX bit in the CONFIG register. <br /></td></tr>
+<tr class="separator:a83214eb0409339eead0fb00544c60b58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae758fe127bd80cb84d7872810723dee8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae758fe127bd80cb84d7872810723dee8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#ae758fe127bd80cb84d7872810723dee8">nrf_clear_prim_rx</a> ()</td></tr>
+<tr class="memdesc:ae758fe127bd80cb84d7872810723dee8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the PRIM_RX bit in the CONFIG register. <br /></td></tr>
+<tr class="separator:ae758fe127bd80cb84d7872810723dee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6847a9be46161756478ac38a091a755"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#ab6847a9be46161756478ac38a091a755">nrf_set_transmit_pwr</a> (char power)</td></tr>
 <tr class="memdesc:ab6847a9be46161756478ac38a091a755"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set power of transmitter.  <a href="#ab6847a9be46161756478ac38a091a755">More...</a><br /></td></tr>
 <tr class="separator:ab6847a9be46161756478ac38a091a755"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62bbc3e318cd92552d65d9ce240c595c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a62bbc3e318cd92552d65d9ce240c595c">nrf_set_transmit_rate</a> (char rate)</td></tr>
 <tr class="memdesc:a62bbc3e318cd92552d65d9ce240c595c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set data rate.  <a href="#a62bbc3e318cd92552d65d9ce240c595c">More...</a><br /></td></tr>
 <tr class="separator:a62bbc3e318cd92552d65d9ce240c595c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67e52b7b8f6d4acae16e7f7d99951347"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a67e52b7b8f6d4acae16e7f7d99951347">nrf_send_payload</a> (char *data, int len)</td></tr>
-<tr class="memdesc:a67e52b7b8f6d4acae16e7f7d99951347"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a payload over the radio.  <a href="#a67e52b7b8f6d4acae16e7f7d99951347">More...</a><br /></td></tr>
-<tr class="separator:a67e52b7b8f6d4acae16e7f7d99951347"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a051c9e198ee930358372c407a17e8b78"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a051c9e198ee930358372c407a17e8b78"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>status</b></td></tr>
-<tr class="separator:a051c9e198ee930358372c407a17e8b78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fc28c605d40412757b5872649b33a38"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2fc28c605d40412757b5872649b33a38"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>config</b></td></tr>
-<tr class="separator:a2fc28c605d40412757b5872649b33a38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5af81e48f7eac475f86da6b02360e4f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5af81e48f7eac475f86da6b02360e4f2"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>buffer</b> [120]</td></tr>
-<tr class="separator:a5af81e48f7eac475f86da6b02360e4f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c430b2007a794246f33bcc5c90882e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c430b2007a794246f33bcc5c90882e8"></a>
-volatile char&#160;</td><td class="memItemRight" valign="bottom"><b>RX_payload</b> [32]</td></tr>
-<tr class="separator:a3c430b2007a794246f33bcc5c90882e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8c627e4ca85e84f89dffd3509e3b1bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab8c627e4ca85e84f89dffd3509e3b1bd"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>payload_size</b></td></tr>
-<tr class="separator:ab8c627e4ca85e84f89dffd3509e3b1bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa18a586975da79e5f04a8a19e08df7e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa18a586975da79e5f04a8a19e08df7e2"></a>
-volatile int&#160;</td><td class="memItemRight" valign="bottom"><b>received</b></td></tr>
-<tr class="separator:aa18a586975da79e5f04a8a19e08df7e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a284bef2e03fa3bce582ff54990b1b0f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a284bef2e03fa3bce582ff54990b1b0f7"></a>
-volatile int&#160;</td><td class="memItemRight" valign="bottom"><b>sent</b></td></tr>
-<tr class="separator:a284bef2e03fa3bce582ff54990b1b0f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92dad899cc7fec5f17e847448f03a8ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92dad899cc7fec5f17e847448f03a8ac"></a>
-volatile int&#160;</td><td class="memItemRight" valign="bottom"><b>error</b></td></tr>
-<tr class="separator:a92dad899cc7fec5f17e847448f03a8ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc08a0fcd8df4e6bce105cb4d4f8a21e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc08a0fcd8df4e6bce105cb4d4f8a21e"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>TX</b></td></tr>
-<tr class="separator:abc08a0fcd8df4e6bce105cb4d4f8a21e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8322aaf437804fcd531291a1684906d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a8322aaf437804fcd531291a1684906d9">nrf_set_ard</a> (char ard)</td></tr>
+<tr class="memdesc:a8322aaf437804fcd531291a1684906d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the auto retransmit delay.  <a href="#a8322aaf437804fcd531291a1684906d9">More...</a><br /></td></tr>
+<tr class="separator:a8322aaf437804fcd531291a1684906d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7501b4fa31eba5ad34aed21b18bb2a72"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a7501b4fa31eba5ad34aed21b18bb2a72">nrf_set_arc</a> (char arc)</td></tr>
+<tr class="memdesc:a7501b4fa31eba5ad34aed21b18bb2a72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the auto retransmit count.  <a href="#a7501b4fa31eba5ad34aed21b18bb2a72">More...</a><br /></td></tr>
+<tr class="separator:a7501b4fa31eba5ad34aed21b18bb2a72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bf48d64e99c204f20b6fe7c75b703c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a4bf48d64e99c204f20b6fe7c75b703c6">nrf_set_rf_ch</a> (char ch)</td></tr>
+<tr class="memdesc:a4bf48d64e99c204f20b6fe7c75b703c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the RF frequency the radio will operate at.  <a href="#a4bf48d64e99c204f20b6fe7c75b703c6">More...</a><br /></td></tr>
+<tr class="separator:a4bf48d64e99c204f20b6fe7c75b703c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ca9456023217dc20dad11bf5f5682e0"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a8ca9456023217dc20dad11bf5f5682e0">nrf_received_pipe_num</a> ()</td></tr>
+<tr class="memdesc:a8ca9456023217dc20dad11bf5f5682e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the pipe data is available in.  <a href="#a8ca9456023217dc20dad11bf5f5682e0">More...</a><br /></td></tr>
+<tr class="separator:a8ca9456023217dc20dad11bf5f5682e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79ae591959bfbf33e42d91df58447771"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a79ae591959bfbf33e42d91df58447771">nrf_set_address_width</a> (char width)</td></tr>
+<tr class="memdesc:a79ae591959bfbf33e42d91df58447771"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the address width of RX and TX pipes.  <a href="#a79ae591959bfbf33e42d91df58447771">More...</a><br /></td></tr>
+<tr class="separator:a79ae591959bfbf33e42d91df58447771"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d7cce4e1b636fabeb1b2f831cb0be88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a5d7cce4e1b636fabeb1b2f831cb0be88">nrf_start_cont_wave</a> (char pwr)</td></tr>
+<tr class="memdesc:a5d7cce4e1b636fabeb1b2f831cb0be88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a constant carrier wave out at specified power.  <a href="#a5d7cce4e1b636fabeb1b2f831cb0be88">More...</a><br /></td></tr>
+<tr class="separator:a5d7cce4e1b636fabeb1b2f831cb0be88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a7db2b3a11078b67e7d10f6a84ef151"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a2a7db2b3a11078b67e7d10f6a84ef151">nrf_stop_cont_wave</a> ()</td></tr>
+<tr class="memdesc:a2a7db2b3a11078b67e7d10f6a84ef151"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop sending the carrier wave.  <a href="#a2a7db2b3a11078b67e7d10f6a84ef151">More...</a><br /></td></tr>
+<tr class="separator:a2a7db2b3a11078b67e7d10f6a84ef151"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2335bab20b9cea17169bee98a9c69ce1"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a2335bab20b9cea17169bee98a9c69ce1">nrf_received_pwr</a> ()</td></tr>
+<tr class="memdesc:a2335bab20b9cea17169bee98a9c69ce1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the power of the signal the nrf42l01 is receiving.  <a href="#a2335bab20b9cea17169bee98a9c69ce1">More...</a><br /></td></tr>
+<tr class="separator:a2335bab20b9cea17169bee98a9c69ce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8b472c03dfdf4c5057e51014938e2c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#aa8b472c03dfdf4c5057e51014938e2c5">nrf_en_aa</a> (int pipe)</td></tr>
+<tr class="memdesc:aa8b472c03dfdf4c5057e51014938e2c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable auto-acknowledge for a pipe.  <a href="#aa8b472c03dfdf4c5057e51014938e2c5">More...</a><br /></td></tr>
+<tr class="separator:aa8b472c03dfdf4c5057e51014938e2c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c61d78f6f37370e11ebe21fd70f4cc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a0c61d78f6f37370e11ebe21fd70f4cc4">nrf_dis_aa</a> (int pipe)</td></tr>
+<tr class="memdesc:a0c61d78f6f37370e11ebe21fd70f4cc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable auto-acknowledge for a pipe.  <a href="#a0c61d78f6f37370e11ebe21fd70f4cc4">More...</a><br /></td></tr>
+<tr class="separator:a0c61d78f6f37370e11ebe21fd70f4cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abda8a4fc738cba7e3d6130e635dacff1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#abda8a4fc738cba7e3d6130e635dacff1">nrf_en_rxaddr</a> (int pipe)</td></tr>
+<tr class="memdesc:abda8a4fc738cba7e3d6130e635dacff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable a pipe to receive packets.  <a href="#abda8a4fc738cba7e3d6130e635dacff1">More...</a><br /></td></tr>
+<tr class="separator:abda8a4fc738cba7e3d6130e635dacff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af813fcdbfd3df6f8b89aa1848adce5f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#af813fcdbfd3df6f8b89aa1848adce5f2">nrf_dis_rxaddr</a> (int pipe)</td></tr>
+<tr class="memdesc:af813fcdbfd3df6f8b89aa1848adce5f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable a pipe from receiving packets.  <a href="#af813fcdbfd3df6f8b89aa1848adce5f2">More...</a><br /></td></tr>
+<tr class="separator:af813fcdbfd3df6f8b89aa1848adce5f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a501ef571a9262e1dc5c3b7b1abcf76d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a501ef571a9262e1dc5c3b7b1abcf76d9">nrf_set_pw</a> (char width, int pipe)</td></tr>
+<tr class="memdesc:a501ef571a9262e1dc5c3b7b1abcf76d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the width received static payloads should be.  <a href="#a501ef571a9262e1dc5c3b7b1abcf76d9">More...</a><br /></td></tr>
+<tr class="separator:a501ef571a9262e1dc5c3b7b1abcf76d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58dfdd90a3f6ad785a3ec57ea18a6106"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a58dfdd90a3f6ad785a3ec57ea18a6106">nrf_en_dpl</a> (int pipe)</td></tr>
+<tr class="memdesc:a58dfdd90a3f6ad785a3ec57ea18a6106"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable dynamic payload length for a pipe.  <a href="#a58dfdd90a3f6ad785a3ec57ea18a6106">More...</a><br /></td></tr>
+<tr class="separator:a58dfdd90a3f6ad785a3ec57ea18a6106"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08f7c4fbf94b3e5b69d1e5a143853e8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a08f7c4fbf94b3e5b69d1e5a143853e8a">nrf_dis_dpl</a> (int pipe)</td></tr>
+<tr class="memdesc:a08f7c4fbf94b3e5b69d1e5a143853e8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable dynamic payload length for a pipe.  <a href="#a08f7c4fbf94b3e5b69d1e5a143853e8a">More...</a><br /></td></tr>
+<tr class="separator:a08f7c4fbf94b3e5b69d1e5a143853e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a6413c413eec79b1c1d39a98e4a57ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a0a6413c413eec79b1c1d39a98e4a57ea">nrf_en_dyn_ack</a> ()</td></tr>
+<tr class="memdesc:a0a6413c413eec79b1c1d39a98e4a57ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable dynamic auto-acknowledgements.  <a href="#a0a6413c413eec79b1c1d39a98e4a57ea">More...</a><br /></td></tr>
+<tr class="separator:a0a6413c413eec79b1c1d39a98e4a57ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f0034a956c9c2d2d6a5623a0865cba5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a7f0034a956c9c2d2d6a5623a0865cba5">nrf_dis_dyn_ack</a> ()</td></tr>
+<tr class="memdesc:a7f0034a956c9c2d2d6a5623a0865cba5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable dynamic auto-acknowledgements.  <a href="#a7f0034a956c9c2d2d6a5623a0865cba5">More...</a><br /></td></tr>
+<tr class="separator:a7f0034a956c9c2d2d6a5623a0865cba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a713e1f78e3468d2c82c9d98e357a5f79"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a713e1f78e3468d2c82c9d98e357a5f79">nrf_set_rx_addr</a> (int pipe, uint64_t address, int len)</td></tr>
+<tr class="memdesc:a713e1f78e3468d2c82c9d98e357a5f79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the address of a pipe.  <a href="#a713e1f78e3468d2c82c9d98e357a5f79">More...</a><br /></td></tr>
+<tr class="separator:a713e1f78e3468d2c82c9d98e357a5f79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cb014d392432800319725fc5fedc3c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a7cb014d392432800319725fc5fedc3c5">nrf_set_tx_addr</a> (uint64_t address)</td></tr>
+<tr class="memdesc:a7cb014d392432800319725fc5fedc3c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the address for transmitting.  <a href="#a7cb014d392432800319725fc5fedc3c5">More...</a><br /></td></tr>
+<tr class="separator:a7cb014d392432800319725fc5fedc3c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa306c7ac8a44ea0e39287b3f18ec68a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#afa306c7ac8a44ea0e39287b3f18ec68a">nrf_reset</a> ()</td></tr>
+<tr class="memdesc:afa306c7ac8a44ea0e39287b3f18ec68a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets all registers to their default values as listed on the datasheet.  <a href="#afa306c7ac8a44ea0e39287b3f18ec68a">More...</a><br /></td></tr>
+<tr class="separator:afa306c7ac8a44ea0e39287b3f18ec68a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa82cc1119eb71ba500cc2c55ca312eb2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#aa82cc1119eb71ba500cc2c55ca312eb2">nrf_send_payload</a> (char *data, char len)</td></tr>
+<tr class="memdesc:aa82cc1119eb71ba500cc2c55ca312eb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a payload with auto-acknowledge enabled.  <a href="#aa82cc1119eb71ba500cc2c55ca312eb2">More...</a><br /></td></tr>
+<tr class="separator:aa82cc1119eb71ba500cc2c55ca312eb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Library for use of the nrf24l01+ radio module with a PIC32. </p>
 <dl class="section author"><dt>Author</dt><dd>Douglas Katz and Frederick Kummer </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>February 7 2016 </dd></dl>
-
-<p>Definition in file <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a1065be4c03eff55f82e136ccb95a2854"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void init_SPI </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set up SPI for the radio. </p>
+<p>/** </p>
+
+</div>
+</div>
+<a class="anchor" id="a0c61d78f6f37370e11ebe21fd70f4cc4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_dis_aa </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pipe</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable auto-acknowledge for a pipe. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pipe</td><td>The pipe to autoack will be disabled on. Pipes range from 0 to 5. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a08f7c4fbf94b3e5b69d1e5a143853e8a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_dis_dpl </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pipe</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable dynamic payload length for a pipe. </p>
+<p>If dynamic payload length is disabled the length of a packet must be set using <a class="el" href="nrf24l01_8h.html#a501ef571a9262e1dc5c3b7b1abcf76d9" title="Set the width received static payloads should be. ">nrf_set_pw</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pipe</td><td>Which pipe to disable dynamic payload length on. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a7f0034a956c9c2d2d6a5623a0865cba5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_dis_dyn_ack </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable dynamic auto-acknowledgements. </p>
+<p>Disables sending payloads without using auto-acknowlegment without disabling the auto-acknowledge setting on the transmitter or receiver. </p>
+
+</div>
+</div>
+<a class="anchor" id="af813fcdbfd3df6f8b89aa1848adce5f2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_dis_rxaddr </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pipe</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable a pipe from receiving packets. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pipe</td><td>The pipe that will be disabled. Pipes range from 0 to 5. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa8b472c03dfdf4c5057e51014938e2c5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_en_aa </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pipe</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable auto-acknowledge for a pipe. </p>
+<p>This function will enable receiving on a pipe automatically in addition to enabling auto-acknowledge as if <a class="el" href="nrf24l01_8h.html#abda8a4fc738cba7e3d6130e635dacff1" title="Enable a pipe to receive packets. ">nrf_en_rxaddr</a> was called.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pipe</td><td>The pipe autoack will be enabled on. Pipes range from 0 to 5. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a58dfdd90a3f6ad785a3ec57ea18a6106"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_en_dpl </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pipe</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable dynamic payload length for a pipe. </p>
+<p>If dynamic payload length is enabled the number of bytes in a packet does not need to be specified. For this feature to work the transmitter must have dynamic payload length enabled for pipe 0 and the receiver must have dynamic payload length enabled for the pipe it will receive from this transmitter on.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pipe</td><td>The pipe dynamic payload length will be enabled on. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a0a6413c413eec79b1c1d39a98e4a57ea"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_en_dyn_ack </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable dynamic auto-acknowledgements. </p>
+<p>Enables sending payloads without using auto-acknowlegment without disabling the auto-acknowledge setting on the transmitter or receiver. The SENDNOACK function can then be used to do this. </p>
+
+</div>
+</div>
+<a class="anchor" id="abda8a4fc738cba7e3d6130e635dacff1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_en_rxaddr </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pipe</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable a pipe to receive packets. </p>
+<p>The nrf24l01+ contains six parallel pipes that can receive packets from six different transmitters. Each pipe must have a unique address.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pipe</td><td>The pipe that will be enabled. Pipes range from 0 to 5. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a6a6944aa00dfd20af0f540e93613e19a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nrf_get_payload </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read a received payload. </p>
+<p>Read a payload into an array if one is available. If dynamic payload length is enabled the length of the payload can be found using <a class="el" href="nrf24l01_8h.html#aec88da95fdf7d2baea7a9c5ddcec492b" title="Get the width of the most recently received payload. ">nrf_get_width</a>. If a payload is read, it is no longer available. This function should only be called if <a class="el" href="nrf24l01_8h.html#a66cbce1bcbd67f721f752d7848857b26" title="Check if a payload is available to be read. ">nrf_payload_available()</a> returns 1.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buff</td><td>The array the payload will be read into. </td></tr>
+    <tr><td class="paramname">len</td><td>Length of the payload that will be read (1-32 bytes).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 if a payload is read, 0 if no payload is available to be read. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5099baab714a8a73ae66a32ba3fe04a6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nrf_get_payload_width </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the width of the top payload in the RX FIFO. </p>
+<p>This function is only meant for use with dynamic payload lengths.</p>
+<dl class="section return"><dt>Returns</dt><dd>The width of the payload in bytes. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5bbcabdf5bea986738a069cdcdf7fd04"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nrf_get_pipe </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the number of the pipe the most recent payload was received on. </p>
+<dl class="section return"><dt>Returns</dt><dd>The number of the pipe the most recent payload was received on. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aec88da95fdf7d2baea7a9c5ddcec492b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nrf_get_width </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the width of the most recently received payload. </p>
+<dl class="section return"><dt>Returns</dt><dd>Width of the received payload in bytes. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a66cbce1bcbd67f721f752d7848857b26"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nrf_payload_available </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if a payload is available to be read. </p>
+<p>This function should be used to poll for received payloads.</p>
+<dl class="section return"><dt>Returns</dt><dd>1 if a payload was received and is available to be read, 0 if not. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="aae3b4320f6f731a94b99236ca54e0ed3"></a>
 <div class="memitem">
 <div class="memproto">
@@ -714,8 +1081,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>TX</b></td></tr>
   </table>
   </dd>
 </dl>
-
-<p>Definition at line <a class="el" href="nrf24l01_8c_source.html#l00118">118</a> of file <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a>.</p>
 
 </div>
 </div>
@@ -752,53 +1117,258 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>TX</b></td></tr>
 <p>Read a register and store the data in an array. Can be multiple bytes of data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">reg</td><td>What register to read from. Use constants in <a class="el" href="nrf24l01_8h.html" title="Library for use of the nrf24l01+ radio module with a PIC32. ">nrf24l01.h</a> </td></tr>
-    <tr><td class="paramname">buff</td><td>Pointer to array to store data. LSB first. </td></tr>
-    <tr><td class="paramname">len</td><td>How many bytes of data need to be read. 1 to 5 bytes. </td></tr>
+    <tr><td class="paramname">reg</td><td>The register to read from. Use constants in <a class="el" href="nrf24l01_8h.html" title="Library for use of the nrf24l01+ radio module with a PIC32. ">nrf24l01.h</a> </td></tr>
+    <tr><td class="paramname">buff</td><td>Pointer to the array the data will be stored in. LSB first. </td></tr>
+    <tr><td class="paramname">len</td><td>How many bytes of data need to be read. (1-5 bytes) </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="nrf24l01_8c_source.html#l00062">62</a> of file <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a79578e07cb4af17f8e4475bbdfd6f581"></a>
+<a class="anchor" id="a8ca9456023217dc20dad11bf5f5682e0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char nrf_read_reg_byte </td>
+          <td class="memname">char nrf_received_pipe_num </td>
           <td>(</td>
-          <td class="paramtype">char&#160;</td>
-          <td class="paramname"><em>reg</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Read a single byte from a register. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">reg</td><td>What register to read from. Use constants in <a class="el" href="nrf24l01_8h.html" title="Library for use of the nrf24l01+ radio module with a PIC32. ">nrf24l01.h</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Data in the register. </dd></dl>
-
-<p>Definition at line <a class="el" href="nrf24l01_8c_source.html#l00051">51</a> of file <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a>.</p>
+<p>Returns the pipe data is available in. </p>
+<p>If 8 is returned the FIFO is empty and no data was received.</p>
+<dl class="section return"><dt>Returns</dt><dd>The pipe data is available in. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a67e52b7b8f6d4acae16e7f7d99951347"></a>
+<a class="anchor" id="a2335bab20b9cea17169bee98a9c69ce1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void nrf_send_payload </td>
+          <td class="memname">char nrf_received_pwr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check the power of the signal the nrf42l01 is receiving. </p>
+<p>RX mode must be enabled for at least 40 us before measurements will be accurate. 0 will be returned if power level is below -64dB and 1 will be returned if power level is above -64dB.</p>
+<dl class="section return"><dt>Returns</dt><dd>1 if power level is above -64dB, 0 if the power level is not above -64dB. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="afa306c7ac8a44ea0e39287b3f18ec68a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_reset </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resets all registers to their default values as listed on the datasheet. </p>
+<p>/** </p>
+
+</div>
+</div>
+<a class="anchor" id="aa82cc1119eb71ba500cc2c55ca312eb2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nrf_send_payload </td>
           <td>(</td>
           <td class="paramtype">char *&#160;</td>
           <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send a payload with auto-acknowledge enabled. </p>
+<p>/** </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>The payload to be sent. </td></tr>
+    <tr><td class="paramname">len</td><td>The length of the payload in bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 if payload was successfully sent and acknowledged 0 if payload was not acknowledged. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a79ae591959bfbf33e42d91df58447771"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_set_address_width </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>width</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the address width of RX and TX pipes. </p>
+<p>Sets the address width of all receiving pipes and the transmitting address width.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>The address width to be set in bytes (3-5 bytes) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a7501b4fa31eba5ad34aed21b18bb2a72"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_set_arc </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>arc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the auto retransmit count. </p>
+<p>Set how many times the nrf24l01 should attempt to retransmit the packet after not receiving an acknowledgment packet.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">arc</td><td>The amount of times the radio should attempt to retransmit. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8322aaf437804fcd531291a1684906d9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_set_ard </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>ard</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the auto retransmit delay. </p>
+<p>Set how long the nrf24l01 should wait between retransmitting packets after not receiving an acknowledgement packet. Delay is defined as the end of one transmission to the start of the next. The delay is set according to the equation, delay = 250 + ard * 250 (us).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ard</td><td>The length of auto retransmit delay to be set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a501ef571a9262e1dc5c3b7b1abcf76d9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_set_pw </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pipe</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the width received static payloads should be. </p>
+<p>When using static payload widths the width of packets must be explicitly set. The receiver's width must be set to the size of the payloads being transmitted. Use this function to set the width on the receiver. This function is unnecessary for a pipe if dynamic payload length is enabled on that pipe.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>The number of bytes the pipe will be set to receive in a static payload. (1-32 bytes)</td></tr>
+    <tr><td class="paramname">pipe</td><td>The pipe whose payload width will be set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a4bf48d64e99c204f20b6fe7c75b703c6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_set_rf_ch </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>ch</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the RF frequency the radio will operate at. </p>
+<p>The nrf24l01 can operate at frequencies ranging from 2.400GHz to 2.525 GHz. At 250 kbps or 1 Mbps the radio occupies less than a 1MHz bandwidth. At 2 Mbps the radio occupies less than a 2 MHz bandwidth. The frequency is set according to the equation, frequency = 2400 + ch (MHz). The transmitter and receiver must be set operate at the same frequency to communicate. This function will set the center frequency of the radio.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ch</td><td>The frequency the radio should transmit at. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a713e1f78e3468d2c82c9d98e357a5f79"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nrf_set_rx_addr </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pipe</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -814,16 +1384,17 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>TX</b></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Send a payload over the radio. </p>
-<p>Sends out a specified payload (in auto acknowledge mode by default) use after powering up radio, and setting address or other settings </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Set the address of a pipe. </p>
+<p>The nrf24l01 has six pipes to receive on. Pipes have addresses that are 3-5 bytes long. Pipes 0 and 1 can have all 5 bytes of their addresses changed. The other four pipes can only have the LSB of their address changed. The four MSBs of the other four pipes are the MSBs of the address of pipe 1. The address width must be set using nrf_set_address_width before calling this function. If the address width set does not match the length specified in this function 0 will be returned and the address will not be written. 0 will also be returned if length is not set to 1 when writing to pipes 2-5.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">data</td><td>Pointer to data to be sent. </td></tr>
-    <tr><td class="paramname">len</td><td>How many bytes of data to be sent. (1-32bytes) </td></tr>
+    <tr><td class="paramname">pipe</td><td>The pipe whose address will be set. Pipes range from 0-5. </td></tr>
+    <tr><td class="paramname">address</td><td>Address pipe will be set to. </td></tr>
+    <tr><td class="paramname">len</td><td>The length of the address being set in bytes. (1-5 bytes) </td></tr>
   </table>
   </dd>
 </dl>
-
-<p>Definition at line <a class="el" href="nrf24l01_8c_source.html#l00210">210</a> of file <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>Returns 1 if address was written correctly. Returns 0 if address was written incorrectly. If 0 is returned address was not written. </dd></dl>
 
 </div>
 </div>
@@ -842,14 +1413,17 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>TX</b></td></tr>
 </div><div class="memdoc">
 
 <p>Set power of transmitter. </p>
+<p>The possible power settings are: <br />
+ 0dBm: nrf24l01_RF_SETUP_RF_PWR_0 <br />
+-6dBm: nrf24l01_RF_SETUP_RF_PWR_6 <br />
+-12dBm: nrf24l01_RF_SETUP_RF_PWR_12 <br />
+-18dBm: nrf24l01_RF_SETUP_RF_PWR_18</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">power</td><td>Power level to set transmitter to. Possible values are: 0dBm: nrf24l01_RF_SETUP_RF_PWR_0 -6dBm: nrf24l01_RF_SETUP_RF_PWR_6 -12dBm: nrf24l01_RF_SETUP_RF_PWR_12 -18dBm: nrf24l01_RF_SETUP_RF_PWR_18 </td></tr>
+    <tr><td class="paramname">power</td><td>Power level the transmitter will be set to. </td></tr>
   </table>
   </dd>
 </dl>
-
-<p>Definition at line <a class="el" href="nrf24l01_8c_source.html#l00189">189</a> of file <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a>.</p>
 
 </div>
 </div>
@@ -868,14 +1442,87 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>TX</b></td></tr>
 </div><div class="memdoc">
 
 <p>Set data rate. </p>
+<p>The possible rate settings are: <br />
+250 kbps: nrf24l01_DR_LOW <br />
+1 Mbps: nrf24l01_DR_MED <br />
+2 Mbps: nrf24l01_DR_HIGH</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">rate</td><td>Rate to set transmitter to. Possible values are: 250 kbps: nrf24l01_DR_LOW 1 Mbps: nrf24l01_DR_MED 2 Mbps: nrf24l01_DR_HIGH </td></tr>
+    <tr><td class="paramname">rate</td><td>Rate the transmitter will be set to. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="nrf24l01_8c_source.html#l00201">201</a> of file <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a>.</p>
+</div>
+</div>
+<a class="anchor" id="a7cb014d392432800319725fc5fedc3c5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_set_tx_addr </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>address</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the address for transmitting. </p>
+<p>The address of the transmitter should match the address of the receiver or packets will not be received. If auto acknowledge is enabled rx pipe 0 on the transmitter must be set to the same address as the tx address set in this function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>The address that will be set for transmitting. (5 bytes) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a5d7cce4e1b636fabeb1b2f831cb0be88"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_start_cont_wave </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>pwr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send a constant carrier wave out at specified power. </p>
+<p>Send a continuous carrier wave for testing purposes. Wave can be stopped by calling nrf_stop_cont_wave.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pwr</td><td>Power level to set transmitter to. Possible values are: 0dBm: nrf24l01_RF_SETUP_RF_PWR_0<br />
+ -6dBm: nrf24l01_RF_SETUP_RF_PWR_6<br />
+ -12dBm: nrf24l01_RF_SETUP_RF_PWR_12<br />
+ -18dBm: nrf24l01_RF_SETUP_RF_PWR_18 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a2a7db2b3a11078b67e7d10f6a84ef151"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_stop_cont_wave </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stop sending the carrier wave. </p>
+<p>This function should only be called some time after <a class="el" href="nrf24l01_8h.html#a5d7cce4e1b636fabeb1b2f831cb0be88" title="Send a constant carrier wave out at specified power. ">nrf_start_cont_wave</a> has been called. </p>
 
 </div>
 </div>
@@ -907,12 +1554,10 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>TX</b></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Pointer to data to be written. </td></tr>
-    <tr><td class="paramname">len</td><td>How many bytes of data to be written. (1-32bytes) </td></tr>
+    <tr><td class="paramname">len</td><td>How many bytes of data will be written. (1-32 bytes) </td></tr>
   </table>
   </dd>
 </dl>
-
-<p>Definition at line <a class="el" href="nrf24l01_8c_source.html#l00106">106</a> of file <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a>.</p>
 
 </div>
 </div>
@@ -949,51 +1594,12 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>TX</b></td></tr>
 <p>Write to a register from an array. Can be multiple bytes of data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">reg</td><td>What register to read from. Use constants in <a class="el" href="nrf24l01_8h.html" title="Library for use of the nrf24l01+ radio module with a PIC32. ">nrf24l01.h</a> </td></tr>
-    <tr><td class="paramname">buff</td><td>Pointer to array to write data from. LSB first. </td></tr>
-    <tr><td class="paramname">len</td><td>How many bytes of data to be written. (1-5bytes) </td></tr>
+    <tr><td class="paramname">reg</td><td>The register to read from. Use constants in <a class="el" href="nrf24l01_8h.html" title="Library for use of the nrf24l01+ radio module with a PIC32. ">nrf24l01.h</a> </td></tr>
+    <tr><td class="paramname">buff</td><td>Pointer to the array data will be read from. LSB first. </td></tr>
+    <tr><td class="paramname">len</td><td>How many bytes of data to be written. (1-5 bytes) </td></tr>
   </table>
   </dd>
 </dl>
-
-<p>Definition at line <a class="el" href="nrf24l01_8c_source.html#l00075">75</a> of file <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a0b43364348632e13d98688e8d441d1ee"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void nrf_write_reg_byte </td>
-          <td>(</td>
-          <td class="paramtype">char&#160;</td>
-          <td class="paramname"><em>reg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Write a single byte to a register. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">reg</td><td>What register to write to. Use constants in <a class="el" href="nrf24l01_8h.html" title="Library for use of the nrf24l01+ radio module with a PIC32. ">nrf24l01.h</a> </td></tr>
-    <tr><td class="paramname">data</td><td>What to write to the register </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="nrf24l01_8c_source.html#l00043">43</a> of file <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a>.</p>
 
 </div>
 </div>
@@ -1002,7 +1608,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>TX</b></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="nrf24l01_8h.html">nrf24l01.h</a></li>
+    <li class="navelem"><a class="el" href="dir_f78a03cd710f19883cbfda318f6357d4.html">nrf24L01-Library</a></li><li class="navelem"><a class="el" href="nrf24l01_8h.html">nrf24l01.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>

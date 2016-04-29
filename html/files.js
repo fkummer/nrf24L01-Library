@@ -1,5 +1,4 @@
 var files =
 [
-    [ "nrf24l01.c", "nrf24l01_8c_source.html", null ],
-    [ "nrf24l01.h", "nrf24l01_8h.html", "nrf24l01_8h" ]
+    [ "nrf24L01-Library", "dir_f78a03cd710f19883cbfda318f6357d4.html", "dir_f78a03cd710f19883cbfda318f6357d4" ]
 ];

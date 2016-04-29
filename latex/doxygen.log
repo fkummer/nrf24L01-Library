@@ -1,0 +1,14 @@
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdftex 2016.4.28)  28 APR 2016 23:23
+entering extended mode
+**C:/Users/Lab*User/Desktop/nrf24L01-Library/latex/doxygen.sty
+("C:/Users/Lab User/Desktop/nrf24L01-Library/latex/doxygen.sty"
+! Undefined control sequence.
+l.1 \NeedsTeXFormat
+                   {LaTeX2e}
+? 
+! Emergency stop.
+l.1 \NeedsTeXFormat
+                   {LaTeX2e}
+End of file on the terminal!
+
+!  ==> Fatal error occurred, no output PDF file produced!

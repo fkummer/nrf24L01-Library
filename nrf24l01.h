@@ -1,5 +1,3 @@
-
-
 /**
  * @file nrf24l01.h
  * @author Douglas Katz and Frederick Kummer
@@ -9,22 +7,9 @@
  *
  */
 
-
  #define _SUPPRESS_PLIB_WARNING 1
  #include <plib.h>
-
-// PIN Setup
-// SCK -> SCK1 (pin 26)
-// SDI -> MISO (RPA4) (pin 12)
-// SDO -> MOSI (RPA2) (pin 9)
-// IRQ -> extern interrupt 1 (RPB10) (pin 21)
-// CSN -> RPB9 (I/O) (pin 18)
-// CE -> RPB8 (I/O) (pin 17)
-
-#define SPI_CHANNEL 2 //SPI channel used
-#define SDI RPA4 //Pin used as MISO for SPI
-#define SDO RPA2 //Pin used as MOSI for SPI
-#define IRQ RPB10 //Pin used for external interrupts from radio
+ #include "inttypes.h"
 
 #define _csn         LATBbits.LATB9
 #define TRIS_csn     TRISBbits.TRISB9
@@ -32,16 +17,14 @@
 #define _ce         LATBbits.LATB8
 #define TRIS_ce     TRISBbits.TRISB8
 
-#define _LEDRED        LATAbits.LATA0
-#define _TRIS_LEDRED   TRISAbits.TRISA0
-
-#define _LEDYELLOW        LATBbits.LATB0
-#define _TRIS_LEDYELLOW   TRISBbits.TRISB0
+// Credit to S. Brennen Ball for the register definitions
+// https://github.com/fffaraz/Introduction-to-Microprocessors/blob/master/material/atmel/sample_code/nordic1/nrf24l01.h
 
 // SPI Commands
 #define nrf24l01_R_REGISTER		0x00
 #define nrf24l01_W_REGISTER		0x20
 #define nrf24l01_R_REGISTER_WID 0x61
+#define nrf24l01_R_RX_PL_WID    0x60
 #define nrf24l01_R_RX_PAYLOAD	0x61
 #define nrf24l01_W_TX_PAYLOAD	0xA0
 #define nrf24l01_FLUSH_TX		0xE1
@@ -60,7 +43,7 @@
 #define nrf24l01_RF_SETUP		0x06
 #define nrf24l01_STATUS			0x07
 #define nrf24l01_OBSERVE_TX		0x08
-#define nrf24l01_CD				0x09
+#define nrf24l01_RPD            0x09
 #define nrf24l01_RX_ADDR_P0		0x0A
 #define nrf24l01_RX_ADDR_P1		0x0B
 #define nrf24l01_RX_ADDR_P2		0x0C
@@ -75,6 +58,8 @@
 #define nrf24l01_RX_PW_P4		0x15
 #define nrf24l01_RX_PW_P5		0x16
 #define nrf24l01_FIFO_STATUS	0x17
+#define nrf24l01_DYNPD          0x1C
+#define nrf24l01_FEATURE        0x1D
 
 //CONFIG register bitwise definitions
 #define nrf24l01_CONFIG_RESERVED	0x80
@@ -156,6 +141,7 @@
 #define nrf24l01_RF_CH_RESERVED	0x80
 
 //RF_SETUP register bitwise definitions
+#define nrf24l01_RD_SETUP_CONT_WAVE 0x80
 #define nrf24l01_RF_SETUP_RESERVED	0xE0
 #define nrf24l01_RF_SETUP_PLL_LOCK	0x10
 #define nrf24l01_RF_SETUP_RF_DR		0x08
@@ -227,136 +213,466 @@
 // Send no data for when you read data from the radio
 #define nrf24l01_SEND_CLOCK             0x00
 
-char status;
-char config;
-char buffer[120];
+// State Definitions
+#define PWR_DOWN 0
+#define STANDBY_1 1
+#define RX_MODE 2
+#define TX_MODE 3
 
-volatile char RX_payload[32];
-char payload_size;
+#define PBCLK 40000000 // peripheral bus clock
 
-volatile int received; // goes high when message is received
-volatile int sent; // goes high after radio finishes sending payload correctly
-volatile int error; // goes high when no acknowledge is received
+#define dTime_ms PBCLK/2000
+#define dTime_us PBCLK/2000000
 
-int TX; // is it transmitter or receiver (0 is rx 1 is tx)
 
+static char status; // The value of the status register, updated after each command is sent
+static volatile char RX_payload[32]; // Payloads will be stored here as they are received
+static char payload_size; // static payload size in bytes
+static int pipe_no; // pipe most recent payload was received from
+static int width; // width of most recent dynamic length payload in bytes
+
+static int state; // The current state of the radio, NOTE: does not include TX state
+
+static volatile int received; // goes high when message is received
+static volatile int sent; // goes high after radio finishes sending payload correctly
+static volatile int error; // goes high when no acknowledge is received
+
+/** \cond
+ * @brief Transfer and receive a byte over SPI
+ * 
+ * @param c The byte to transfer over SPI.
+ * @return The byte received over SPI.
+ */
 char rf_spiwrite(unsigned char c);
+//\endcond
 
+/**
+ * @brief Set up SPI for the radio.
+ */
 void init_SPI();
 
 /**
-   * @brief Write a single byte to a register
-   *
-   * @param reg What register to write to.  Use constants in nrf24l01.h
-   * @param data What to write to the register
-   */
-void nrf_write_reg_byte(char reg, char data);
+ * @brief Sets up the radio, SPI, and interrupts.  Also resets all radio 
+ * registers to their default values.
+ */
+void nrf_setup();
 
 /**
-   *@brief Read a single byte from a register
-   *
-   * @param reg What register to read from.  Use constants in nrf24l01.h
-   * @return Data in the register.
-   */
-char nrf_read_reg_byte(char reg);
-
-/**
-   *@brief Read a register and store the data in an array. Can be multiple bytes of data.
-   *
-   * @param reg What register to read from.  Use constants in nrf24l01.h
-   * @param buff Pointer to array to store data. LSB first.
-   * @param len How many bytes of data need to be read. 1 to 5 bytes.
-   */
+ * @brief Read a register and store the data in an array. Can be multiple bytes 
+ * of data.
+ *
+ * @param reg The register to read from.  Use constants in nrf24l01.h
+ * @param buff Pointer to the array the data will be stored in. LSB first.
+ * @param len How many bytes of data need to be read. (1-5 bytes)
+ */
 void nrf_read_reg(char reg, char * buff, int len);
 
 /**
-   *@brief Write to a register from an array. Can be multiple bytes of data.
-   *
-   * @param reg What register to read from.  Use constants in nrf24l01.h
-   * @param buff Pointer to array to write data from. LSB first.
-   * @param len How many bytes of data to be written. (1-5bytes)
-   */
+ * @brief Write to a register from an array. Can be multiple bytes of data.
+ *
+ * @param reg The register to read from.  Use constants in nrf24l01.h
+ * @param buff Pointer to the array data will be read from. LSB first.
+ * @param len How many bytes of data to be written. (1-5 bytes)
+ */
 void nrf_write_reg(char reg, char * data, char len);
 
 /**
-   * @brief Flush the TX FIFO.
-   */
+ * @brief Flush the TX FIFO.
+ */
 void nrf_flush_tx();
 
 /**
-   * @brief Flush the RX FIFO.
-   */
+ * @brief Flush the RX FIFO.
+ */
 void nrf_flush_rx();
 
 /**
-   * @brief Write a payload to the TX FIFO.
-   *
-   * @param data Pointer to data to be written.
-   * @param len How many bytes of data to be written. (1-32bytes)
-   */
+ * @brief Get the width of the top payload in the RX FIFO.
+ * 
+ * This function is only meant for use with dynamic payload lengths.
+ * 
+ * @return The width of the payload in bytes.
+ */
+int nrf_get_payload_width();
+
+/**
+ * @brief Write a payload to the TX FIFO.
+ *
+ * @param data Pointer to data to be written.
+ * @param len How many bytes of data will be written. (1-32 bytes)
+ */
 void nrf_write_payload(char * data, char len);
 
 /**
-   * @brief Read a payload from the RX FIFO.
-   *
-   * @param buff Pointer to array where data will be written.
-   */
+ * @brief Read a payload from the RX FIFO.
+ *
+ * @param buff Pointer to array where data will be written.
+ */
 void nrf_read_payload(char * buff);
 
 /**
-   * @brief Sets the power up bit in the status register to leave the power down state.
-   */
+ * @brief Read a received payload.
+ * 
+ * Read a payload into an array if one is available.  If dynamic payload length 
+ * is enabled the length of the payload can be found using ::nrf_get_width. If a 
+ * payload is read, it is no longer available.  This function should only be 
+ * called if ::nrf_payload_available() returns 1. 
+ * 
+ * @param buff The array the payload will be read into.
+ * @param len Length of the payload that will be read (1-32 bytes).
+ * 
+ * @return 1 if a payload is read, 0 if no payload is available to be read.
+ */
+int nrf_get_payload(char * buff, char len);
+
+/**
+ * @brief Check if a payload is available to be read.
+ * 
+ * This function should be used to poll for received payloads.
+ * 
+ * @return 1 if a payload was received and is available to be read, 0 if not.
+ */
+int nrf_payload_available();
+
+/**
+ * @brief Get the number of the pipe the most recent payload was received on.
+ * 
+ * @return The number of the pipe the most recent payload was received on.
+ */
+int nrf_get_pipe();
+
+/**
+ * @brief Get the width of the most recently received payload.
+ * 
+ * @return Width of the received payload in bytes.
+ */
+int nrf_get_width();
+
+/**
+ * @brief Sets the power up bit in the status register in order to leave the 
+ * power down state.
+ */
 void nrf_pwrup();
 
 /**
-   * @brief Clears the power up bit in the status register to enter the power down state.
-   */
+ * @brief Clears the power up bit in the status register in order to enter the 
+ * power down state.
+ */
 void nrf_pwrdown();
 
 /**
-   * @brief Sets PRIM_RX in status register and sets CE to transition to RX mode state from standby-I state.
-   */
-void nrf_rx_mode();
+ * @brief Put the radio in the power down state.
+ */
+void nrf_state_pwr_down();
 
 /**
-   * @brief Clears PRIM_RX in status register and CE to transition to TX mode state from standby-I state if there is data in the TX FIFO.
-   */
-void nrf_tx_mode();
-
-
+ * @brief Put the radio in the standby 1 state.
+ */
+void nrf_state_standby_1();
 
 /**
-   * @brief Sets to standby mode
-   */
-void nrf_standby_mode();
+ * @brief Put the radio in the rx mode state.
+ */
+void nrf_state_rx_mode();
 
 /**
-   * @brief Set power of transmitter.
-   *
-   * @param power Power level to set transmitter to.  Possible values are:
-   * 0dBm: nrf24l01_RF_SETUP_RF_PWR_0
-   *-6dBm: nrf24l01_RF_SETUP_RF_PWR_6
-   *-12dBm: nrf24l01_RF_SETUP_RF_PWR_12
-   *-18dBm: nrf24l01_RF_SETUP_RF_PWR_18
-   */
+ * @brief Set the PRIM_RX bit in the CONFIG register.
+ */
+void nrf_set_prim_rx();
+
+/**
+ * @brief Clear the PRIM_RX bit in the CONFIG register.
+ */
+void nrf_clear_prim_rx();
+
+/**
+ * @brief Set power of transmitter.
+ * 
+ * The possible power settings are: \n
+ *  0dBm: nrf24l01_RF_SETUP_RF_PWR_0 \n
+ * -6dBm: nrf24l01_RF_SETUP_RF_PWR_6 \n
+ * -12dBm: nrf24l01_RF_SETUP_RF_PWR_12 \n
+ * -18dBm: nrf24l01_RF_SETUP_RF_PWR_18
+ *
+ * @param power Power level the transmitter will be set to.
+ */
 void nrf_set_transmit_pwr(char power);
 
+
 /**
-   * @brief Set data rate.
-   *
-   * @param rate Rate to set transmitter to.  Possible values are:
-   * 250 kbps: nrf24l01_DR_LOW
-   * 1 Mbps: nrf24l01_DR_MED
-   * 2 Mbps: nrf24l01_DR_HIGH
-   */
+ * @brief Set data rate.
+ *
+ * The possible rate settings are: \n
+ * 250 kbps: nrf24l01_DR_LOW \n
+ * 1 Mbps: nrf24l01_DR_MED \n
+ * 2 Mbps: nrf24l01_DR_HIGH
+ * 
+ * @param rate Rate the transmitter will be set to.
+ */
 void nrf_set_transmit_rate(char rate);
 
 /**
-   * @brief Send a payload over the radio.
-   *
-   * Sends out a specified payload (in auto acknowledge mode by default)
-   * use after powering up radio, and setting address or other settings
-   * @param data Pointer to data to be sent.
-   * @param len How many bytes of data to be sent. (1-32bytes)
-   */
-void nrf_send_payload(char * data, int len);
+ * @brief Set the auto retransmit delay.
+ * 
+ * Set how long the nrf24l01 should wait between retransmitting packets after
+ * not receiving an acknowledgement packet. Delay is defined as the end of one 
+ * transmission to the start of the next. The delay is set according to the 
+ * equation, delay = 250 + ard * 250 (us).
+ * 
+ * @param ard The length of auto retransmit delay to be set.
+ */
+void nrf_set_ard(char ard);
+
+/**
+ * @brief Set the auto retransmit count.
+ * 
+ * Set how many times the nrf24l01 should attempt to retransmit the packet after
+ * not receiving an acknowledgment packet.
+ * 
+ * @param arc The amount of times the radio should attempt to retransmit.
+ */
+void nrf_set_arc(char arc);
+
+/**
+ * @brief Set the RF frequency the radio will operate at.
+ * 
+ * The nrf24l01 can operate at frequencies ranging from 2.400GHz to 2.525 GHz.
+ * At 250 kbps or 1 Mbps the radio occupies less than a 1MHz bandwidth. At 
+ * 2 Mbps the radio occupies less than a 2 MHz bandwidth. The frequency is set 
+ * according to the equation, frequency = 2400 + ch (MHz). The transmitter and 
+ * receiver must be set operate at the same frequency to communicate. This 
+ * function will set the center frequency of the radio.
+ * 
+ * @param ch The frequency the radio should transmit at.
+ */
+void nrf_set_rf_ch(char ch);
+
+/**
+ * @brief Returns the pipe data is available in.
+ * 
+ * If 8 is returned the FIFO is empty and no data was received.
+ * 
+ * @return The pipe data is available in.
+ */
+char nrf_received_pipe_num();
+
+/**
+ * @brief Set the address width of RX and TX pipes
+ * 
+ * Sets the address width of all receiving pipes and the transmitting address 
+ * width.
+ * 
+ * @param width The address width to be set in bytes (3-5 bytes)
+ */
+void nrf_set_address_width(char width);
+
+/**
+ * @brief Send a constant carrier wave out at specified power.
+ * 
+ * Send a continuous carrier wave for testing purposes. Wave can be stopped by
+ * calling nrf_stop_cont_wave.  
+ * 
+ * @param pwr Power level to set transmitter to.  Possible values are:
+ *  0dBm: nrf24l01_RF_SETUP_RF_PWR_0\n
+ *  -6dBm: nrf24l01_RF_SETUP_RF_PWR_6\n
+ *  -12dBm: nrf24l01_RF_SETUP_RF_PWR_12\n
+ *  -18dBm: nrf24l01_RF_SETUP_RF_PWR_18
+ */
+void nrf_start_cont_wave(char pwr);
+
+/**
+ * @brief Stop sending the carrier wave.
+ * 
+ * This function should only be called some time after ::nrf_start_cont_wave has
+ * been called.
+ */
+void nrf_stop_cont_wave();
+
+/**
+ * @brief Check the power of the signal the nrf42l01 is receiving
+ * 
+ * RX mode must be enabled for at least 40 us before measurements will be 
+ * accurate. 0 will be returned if power level is below -64dB and 1 will be 
+ * returned if power level is above -64dB.
+ * 
+ * @return 1 if power level is above -64dB, 0 if the power level is not above 
+ * -64dB.
+ */
+char nrf_received_pwr();
+
+/**
+ * @brief Enable auto-acknowledge for a pipe.
+ * 
+ * This function will enable receiving on a pipe automatically in addition to
+ * enabling auto-acknowledge as if ::nrf_en_rxaddr was called.
+ * 
+ * @param pipe The pipe autoack will be enabled on. Pipes range from 0 to 5. 
+ */
+void nrf_en_aa(int pipe);
+
+/**
+ * @brief Disable auto-acknowledge for a pipe.
+ * 
+ * @param pipe The pipe to autoack will be disabled on. Pipes range from 0 to 5.
+ */
+void nrf_dis_aa(int pipe);
+
+/**
+ * @brief Enable a pipe to receive packets.
+ * 
+ * The nrf24l01+ contains six parallel pipes that can receive packets from six 
+ * different transmitters.  Each pipe must have a unique address.
+ * 
+ * @param pipe The pipe that will be enabled. Pipes range from 0 to 5.
+ */
+void nrf_en_rxaddr(int pipe);
+
+/**
+ * @brief Disable a pipe from receiving packets.
+ * 
+ * @param pipe The pipe that will be disabled. Pipes range from 0 to 5.
+ */
+void nrf_dis_rxaddr(int pipe);
+
+/**
+ * @brief Set the width received static payloads should be.
+ * 
+ * When using static payload widths the width of packets must be explicitly set.
+ * The receiver's width must be set to the size of the payloads being 
+ * transmitted. Use this function to set the width on the receiver. This 
+ * function is unnecessary for a pipe if dynamic payload length is enabled on 
+ * that pipe.
+ * 
+ * @param width The number of bytes the pipe will be set to receive in a static 
+ * payload. (1-32 bytes)
+ * 
+ * @param pipe The pipe whose payload width will be set.
+ */
+void nrf_set_pw(char width, int pipe);
+
+/**
+ * @brief Enable dynamic payload length for a pipe.
+ * 
+ * If dynamic payload length is enabled the number of bytes in a packet does not
+ * need to be specified.  For this feature to work the transmitter must 
+ * have dynamic payload length enabled for pipe 0 and the receiver must have 
+ * dynamic payload length enabled for the pipe it will receive from this 
+ * transmitter on. 
+ * 
+ * @param pipe The pipe dynamic payload length will be enabled on.
+ */
+void nrf_en_dpl(int pipe);
+
+/**
+ * @brief Disable dynamic payload length for a pipe.
+ * 
+ * If dynamic payload length is disabled the length of a packet must be set 
+ * using ::nrf_set_pw.
+ * 
+ * @param pipe Which pipe to disable dynamic payload length on.
+ */
+void nrf_dis_dpl(int pipe);
+
+/**
+ * @brief Enable dynamic auto-acknowledgements.
+ * 
+ * Enables sending payloads without using auto-acknowlegment without disabling 
+ * the auto-acknowledge setting on the transmitter or receiver.  The SENDNOACK
+ * function can then be used to do this.
+ */
+void nrf_en_dyn_ack();
+
+/**
+ * @brief Disable dynamic auto-acknowledgements.
+ * 
+ * Disables sending payloads without using auto-acknowlegment without disabling 
+ * the auto-acknowledge setting on the transmitter or receiver.
+ */
+void nrf_dis_dyn_ack();
+
+/**
+ * @brief Set the address of a pipe.
+ * 
+ * The nrf24l01 has six pipes to receive on.  Pipes have addresses
+ * that are 3-5 bytes long.  Pipes 0 and 1 can have all 5 bytes of their 
+ * addresses changed.  The other four pipes can only have the LSB of their 
+ * address changed.  The four MSBs of the other four pipes are the MSBs of the 
+ * address of pipe 1.  The address width must be set using nrf_set_address_width
+ * before calling this function.  If the address width set does not match the
+ * length specified in this function 0 will be returned and the address will not
+ * be written.  0 will also be returned if length is not set to 1 when writing
+ * to pipes 2-5.  
+ * 
+ * @param pipe The pipe whose address will be set. Pipes range from 0-5.
+ * @param address Address pipe will be set to.
+ * @param len The length of the address being set in bytes. (1-5 bytes)
+ * @return Returns 1 if address was written correctly.  Returns 0 if address was
+ * written incorrectly.  If 0 is returned address was not written.
+ */
+int nrf_set_rx_addr(int pipe, uint64_t address, int len);
+
+/**
+ * @brief Set the address for transmitting.
+ * 
+ * The address of the transmitter should match the address of the receiver or
+ * packets will not be received.  If auto acknowledge is enabled rx pipe 0 on 
+ * the transmitter must be set to the same address as the tx address set in this 
+ * function.
+ * 
+ * @param address The address that will be set for transmitting. (5 bytes)
+ */
+void nrf_set_tx_addr(uint64_t address);
+
+//\cond
+// Helper function for parsing addresses into a buffer
+char * parse_addr(uint64_t address);
+
+
+/**
+ * @brief Enables acknowledge packets to carry payloads.
+ */
+void nrf_en_ack_pay();
+
+/**
+ * @brief Disables acknowledge packets to carry payloads.
+ */
+void nrf_dis_ack_pay();
+//\endcond
+
+/**
+ * @brief Resets all registers to their default values as listed on the 
+ * datasheet.
+ */
+void nrf_reset();
+
+//\cond
+/**
+ * @brief Send a payload without using auto-acknowledge.
+ * 
+ * Auto-acknowledge mode should not be enabled when calling this function. This
+ * function will not check if a payload is received successfully.
+ * 
+ * @param data The payload to be sent
+ * @param len The length of the payload in bytes.
+ * @return 1 if payload was successfully sent 0 if not.
+ */
+int nrf_send_payload_nonblock(char * data, char len);
+//\endcond
+
+/**
+ * @brief Send a payload with auto-acknowledge enabled.
+ * 
+ * @param data The payload to be sent.
+ * @param len The length of the payload in bytes.
+ * @return 1 if payload was successfully sent and acknowledged 0 if payload was
+ * not acknowledged.
+ */
+int nrf_send_payload(char * data, char len);
+
+//\cond
+//From tft_master.h, by Syed Tahmid Mahbub
+void nrf_delay_ms(unsigned long);
+
+//From tft_master.h, by Syed Tahmid Mahbub
+void nrf_delay_us(unsigned long);
+//\endcond
