@@ -64,6 +64,7 @@ void nrf_setup(){
     
     ConfigINT1(EXT_INT_PRI_2 | FALLING_EDGE_INT | EXT_INT_ENABLE);
     EnableINT1;
+    mINT1ClearIntFlag();
     
     TRIS_csn = 0;
     TRIS_ce = 0;

@@ -59,11 +59,10 @@ void main(void) {
     tft_fillScreen(ILI9340_BLACK);
     //240x320 vertical display
     tft_setRotation(0); // Use tft_setRotation(1) for 320x240
-    mINT1ClearIntFlag();
     char buffer[120]; // a buffer for writing to the tft
     while (1) {
         //NOTE: Set one radio's ID to 0 and the other radio's ID to 1
-        int ID = 1;
+        int ID = 0;
         volatile char counter = 0; // synchronous counter
         if (!ID) { // the first radio will keep transmitting until a packet is received        
             // while the packet isn't acknowledged/received continously resend
