@@ -660,7 +660,13 @@ int nrf_send_payload_nonblock(char * data, char len);
 //\endcond
 
 /**
- * @brief Send a payload with auto-acknowledge enabled.
+ * @brief Send a payload over the radio.
+ * 
+ * If auto-acknowledge is disabled this function will return 1 when the packet
+ * is successfully sent and does not reflect the packet being acknowledged. 
+ * This function will never return 0 if auto-acknowledge is disabled. If auto-
+ * acknowledge is enabled this function returns 1 when a packet is acknowledged 
+ * after being sent and 0 if the packet is not acknowledged.
  * 
  * @param data The payload to be sent.
  * @param len The length of the payload in bytes.
