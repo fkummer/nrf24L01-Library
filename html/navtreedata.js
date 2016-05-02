@@ -1,6 +1,7 @@
 var NAVTREE =
 [
   [ "nrf24l01+ Library", "index.html", [
+    [ "Modules", "modules.html", "modules" ],
     [ "Files", null, [
       [ "File List", "files.html", "files" ],
       [ "Globals", "globals.html", [
@@ -13,7 +14,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"dir_f78a03cd710f19883cbfda318f6357d4.html"
+"files.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
