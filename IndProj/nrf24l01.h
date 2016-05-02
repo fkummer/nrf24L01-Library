@@ -225,17 +225,17 @@
 #define dTime_us PBCLK/2000000
 
 
-static char status; // The value of the status register, updated after each command is sent
-static volatile char RX_payload[32]; // Payloads will be stored here as they are received
-static char payload_size; // static payload size in bytes
-static int pipe_no; // pipe most recent payload was received from
-static int width; // width of most recent dynamic length payload in bytes
+static char status; /**< The value of the status register, updated after each command is sent*/
+static volatile char RX_payload[32]; /**< Payloads will be stored here as they are received*/
+static char payload_size; /**< static payload size in bytes*/
+static int pipe_no; /**< pipe most recent payload was received from*/
+static int width; /**< width of most recent dynamic length payload in bytes*/
 
-static int state; // The current state of the radio, NOTE: does not include TX state
+static int state; /**< The current state of the radio, NOTE: does not include TX state*/
 
-static volatile int received; // goes high when message is received
-static volatile int sent; // goes high after radio finishes sending payload correctly
-static volatile int error; // goes high when no acknowledge is received
+static volatile int received; /**< goes high when message is received*/
+static volatile int sent; /**< goes high after radio finishes sending payload correctly*/
+static volatile int error; /**< goes high when no acknowledge is received*/
 
 /** \cond
  * @brief Transfer and receive a byte over SPI
