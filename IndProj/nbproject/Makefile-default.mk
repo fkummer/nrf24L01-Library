@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=tft_master.c tft_gfx.c glcdfont.c nrf24l01.c Counter.c
+SOURCEFILES_QUOTED_IF_SPACED=tft_master.c tft_gfx.c glcdfont.c nrf24l01.c TX_carrier.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/tft_master.o ${OBJECTDIR}/tft_gfx.o ${OBJECTDIR}/glcdfont.o ${OBJECTDIR}/nrf24l01.o ${OBJECTDIR}/Counter.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/tft_master.o.d ${OBJECTDIR}/tft_gfx.o.d ${OBJECTDIR}/glcdfont.o.d ${OBJECTDIR}/nrf24l01.o.d ${OBJECTDIR}/Counter.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/tft_master.o ${OBJECTDIR}/tft_gfx.o ${OBJECTDIR}/glcdfont.o ${OBJECTDIR}/nrf24l01.o ${OBJECTDIR}/TX_carrier.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/tft_master.o.d ${OBJECTDIR}/tft_gfx.o.d ${OBJECTDIR}/glcdfont.o.d ${OBJECTDIR}/nrf24l01.o.d ${OBJECTDIR}/TX_carrier.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/tft_master.o ${OBJECTDIR}/tft_gfx.o ${OBJECTDIR}/glcdfont.o ${OBJECTDIR}/nrf24l01.o ${OBJECTDIR}/Counter.o
+OBJECTFILES=${OBJECTDIR}/tft_master.o ${OBJECTDIR}/tft_gfx.o ${OBJECTDIR}/glcdfont.o ${OBJECTDIR}/nrf24l01.o ${OBJECTDIR}/TX_carrier.o
 
 # Source Files
-SOURCEFILES=tft_master.c tft_gfx.c glcdfont.c nrf24l01.c Counter.c
+SOURCEFILES=tft_master.c tft_gfx.c glcdfont.c nrf24l01.c TX_carrier.c
 
 
 CFLAGS=
@@ -118,11 +118,11 @@ ${OBJECTDIR}/nrf24l01.o: nrf24l01.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/nrf24l01.o 
 	@${FIXDEPS} "${OBJECTDIR}/nrf24l01.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/nrf24l01.o.d" -o ${OBJECTDIR}/nrf24l01.o nrf24l01.c   
 	
-${OBJECTDIR}/Counter.o: Counter.c  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/TX_carrier.o: TX_carrier.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Counter.o.d 
-	@${RM} ${OBJECTDIR}/Counter.o 
-	@${FIXDEPS} "${OBJECTDIR}/Counter.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Counter.o.d" -o ${OBJECTDIR}/Counter.o Counter.c   
+	@${RM} ${OBJECTDIR}/TX_carrier.o.d 
+	@${RM} ${OBJECTDIR}/TX_carrier.o 
+	@${FIXDEPS} "${OBJECTDIR}/TX_carrier.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/TX_carrier.o.d" -o ${OBJECTDIR}/TX_carrier.o TX_carrier.c   
 	
 else
 ${OBJECTDIR}/tft_master.o: tft_master.c  nbproject/Makefile-${CND_CONF}.mk
@@ -149,11 +149,11 @@ ${OBJECTDIR}/nrf24l01.o: nrf24l01.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/nrf24l01.o 
 	@${FIXDEPS} "${OBJECTDIR}/nrf24l01.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/nrf24l01.o.d" -o ${OBJECTDIR}/nrf24l01.o nrf24l01.c   
 	
-${OBJECTDIR}/Counter.o: Counter.c  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/TX_carrier.o: TX_carrier.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Counter.o.d 
-	@${RM} ${OBJECTDIR}/Counter.o 
-	@${FIXDEPS} "${OBJECTDIR}/Counter.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Counter.o.d" -o ${OBJECTDIR}/Counter.o Counter.c   
+	@${RM} ${OBJECTDIR}/TX_carrier.o.d 
+	@${RM} ${OBJECTDIR}/TX_carrier.o 
+	@${FIXDEPS} "${OBJECTDIR}/TX_carrier.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/TX_carrier.o.d" -o ${OBJECTDIR}/TX_carrier.o TX_carrier.c   
 	
 endif
 

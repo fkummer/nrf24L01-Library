@@ -1,17 +1,7 @@
-// graphics libraries
 #include "config.h"
-// serial stuff
 #include <stdio.h>
-// threading library
 #define	SYS_FREQ 64000000 // change the frequency of the clock
-// radio library
 #include "nrf24l01.h"
-
-#define spi_channel	1
-// Use channel 2 since channel 1 is used by TFT display
-
-#define spi_divider 10
-
 
 // Set up LEDs for displaying power
 // Green LED on pin 2
