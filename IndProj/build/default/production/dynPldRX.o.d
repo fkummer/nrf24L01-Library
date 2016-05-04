@@ -1,5 +1,5 @@
-build/default/production/Counter.o:  \
-Counter.c  \
+build/default/production/dynPldRX.o:  \
+dynPldRX.c  \
 config.h  \
 tft_gfx.h  \
  tft_master.h  \

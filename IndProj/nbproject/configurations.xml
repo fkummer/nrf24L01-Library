@@ -276,7 +276,7 @@
         <C32Global>
         </C32Global>
       </item>
-      <item path="TX_carrier.c" ex="false" overriding="false">
+      <item path="TX_carrier.c" ex="true" overriding="false">
         <C32>
         </C32>
         <C32-AR>
@@ -304,7 +304,7 @@
         <C32Global>
         </C32Global>
       </item>
-      <item path="dynPldRX.c" ex="true" overriding="false">
+      <item path="dynPldRX.c" ex="false" overriding="false">
         <C32>
           <property key="additional-warnings" value="false"/>
           <property key="enable-app-io" value="false"/>

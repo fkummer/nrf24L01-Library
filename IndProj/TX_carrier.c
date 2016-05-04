@@ -7,11 +7,6 @@
 // radio library
 #include "nrf24l01.h"
 
-//#define spi_channel	1
-//// Use channel 2 since channel 1 is used by TFT display
-//
-//#define spi_divider 10
-
 /*
  * This code will send a continuous carrier wave that can be detected by another
  * radio.  It can be helpful for finding the maximum distance two radios can

@@ -1,16 +1,15 @@
 #include "config.h"
 #include <stdio.h>
 #define	SYS_FREQ 64000000 // change the frequency of the clock
-// radio library
 #include "nrf24l01.h"
 #define spi_divider 10
 
-/* This code sends four arrays of different sizes using the 
- * dynamic payload length (dpl) feature of the radio. This file is the
- * transmitter and will only send data. The other file is the receiver and will
- * receive the data of each array and display it. This code is made to 
- * demonstrate sending multiple bytes at once and sending dynamic length 
- * payloads
+/* 
+ * This code sends data of different sizes using the dynamic payload length 
+ * (dpl) feature of the radio. This file is the transmitter and will only send 
+ * data. The other file is the receiver and will receive the data of each array 
+ * and display it. This code is made to demonstrate sending multiple bytes at 
+ * once and sending dynamic length payloads.
  */
 
 // set up the radio
@@ -47,23 +46,19 @@ void main(void) {
     radioSetup(); // setup the radio for this program
     //240x320 vertical display
     tft_setRotation(0); // Use tft_setRotation(1) for 320x240
-    char array1;
-    char array5[5];
-    char array10[10];
-    char array32[32];
-    // Fill each array with consecutive incrementing numbers
-    array1 = 1;
-    fillArray(&array5,5);
-    fillArray(&array10,10);
-    fillArray(&array32,32);
-    while (1) { // send each array one after the other
-        while(!nrf_send_payload(&array1, 1));
-        nrf_delay_ms(1000); // wait a second between sending each array
-        while(!nrf_send_payload(&array5, 5));
+    /* array of data that will be sent.
+     * the maximum data length that can be sent in one packet is 32 bytes. */
+    char array[32]; 
+    // Fill the array with consecutive incrementing numbers
+    fillArray(&array,32);
+    while (1) { // send varying amounts of data
+        while(!nrf_send_payload(&array, 1)); // send one byte of data
+        nrf_delay_ms(1000); // wait a second between each transmission
+        while(!nrf_send_payload(&array, 5)); // send five bytes of data
         nrf_delay_ms(1000);
-        while(!nrf_send_payload(&array10, 10));
+        while(!nrf_send_payload(&array, 10)); // send ten bytes of data
         nrf_delay_ms(1000);
-        while(!nrf_send_payload(&array32, 32));
+        while(!nrf_send_payload(&array, 32)); // send 32 bytes of data
         nrf_delay_ms(1000);
     }
 } // main

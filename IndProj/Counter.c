@@ -1,10 +1,8 @@
-/// graphics libraries
 #include "config.h"
 #include "tft_gfx.h"
 #include "tft_master.h"
 #include <stdio.h>
 #define	SYS_FREQ 64000000 // change the frequency of the clock
-// radio library
 #include "nrf24l01.h"
 // These two defines are for the tft
 #define spi_channel	1
