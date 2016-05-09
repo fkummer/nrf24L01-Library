@@ -10,7 +10,7 @@
 
 /* This code sends four arrays of different sizes using the 
  * dynamic payload length (dpl) feature of the radio. This file is the
- * receiver and will receive arrays of varying size and display them.  The other
+ * receiver and will receive arrays of varying size and display them. The other
  * file will create and send these arrays.
  */
 
@@ -26,7 +26,6 @@ void radioSetup() {
     // The radio will receive on pipe 1
     nrf_set_address_width(3);
     nrf_set_rx_addr(1, 0xAABBCC, 3);
-    nrf_set_tx_addr(0xAABBCC);
 }
 void main(void) {
     INTEnableSystemMultiVectoredInt();
@@ -50,7 +49,6 @@ void main(void) {
         nrf_state_rx_mode();
         if(nrf_payload_available()){ // wait for a payload to be received
             width = nrf_get_width(); // get the width of the payload
-            // figure out which array to read into depending on 
             nrf_get_payload(&array, width); // read the payload into the array
             tft_fillScreen(ILI9340_BLACK); // clear the display
             

@@ -22,7 +22,7 @@ void radioSetup() {
 
     nrf_set_rf_ch(0x01); // freq = 2.401 GHz
 
-    nrf_en_dpl(0);
+    nrf_en_dpl(0); // enable dynamic payloads for transmitting
 
     // set up addresses for autoack mode and dynamic payload length (dpl) mode
     // The tx address and the pipe 0 rx address must be the same for autoack mode

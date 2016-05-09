@@ -46,7 +46,7 @@
         <targetDevice>PIC32MX250F128B</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>PKOBSKDEPlatformTool</platformTool>
+        <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>1.40</languageToolchainVersion>
         <platform>3</platform>
@@ -165,6 +165,18 @@
         <property key="wpo-lto" value="false"/>
       </C32Global>
       <item path="Counter.c" ex="true" overriding="false">
+        <C32>
+        </C32>
+        <C32-AR>
+        </C32-AR>
+        <C32-AS>
+        </C32-AS>
+        <C32-LD>
+        </C32-LD>
+        <C32CPP>
+        </C32CPP>
+        <C32Global>
+        </C32Global>
       </item>
       <PICkit3PlatformTool>
         <property key="ADC 1" value="true"/>
@@ -304,7 +316,7 @@
         <C32Global>
         </C32Global>
       </item>
-      <item path="dynPldRX.c" ex="false" overriding="false">
+      <item path="dynPldRX.c" ex="true" overriding="false">
         <C32>
           <property key="additional-warnings" value="false"/>
           <property key="enable-app-io" value="false"/>
@@ -331,6 +343,8 @@
         <C32-AR>
           <property key="additional-options-chop-files" value="false"/>
         </C32-AR>
+        <C32-AS>
+        </C32-AS>
         <C32-LD>
           <property key="additional-options-use-response-files" value="false"/>
           <property key="enable-check-sections" value="false"/>
@@ -397,7 +411,19 @@
           <property key="wpo-lto" value="false"/>
         </C32Global>
       </item>
-      <item path="dynPldTX.c" ex="true" overriding="false">
+      <item path="dynPldTX.c" ex="false" overriding="false">
+        <C32>
+        </C32>
+        <C32-AR>
+        </C32-AR>
+        <C32-AS>
+        </C32-AS>
+        <C32-LD>
+        </C32-LD>
+        <C32CPP>
+        </C32CPP>
+        <C32Global>
+        </C32Global>
       </item>
       <item path="pt_cornell_TFT.h" ex="false" overriding="false">
         <C32>
