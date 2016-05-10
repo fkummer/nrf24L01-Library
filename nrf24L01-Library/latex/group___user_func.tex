@@ -1,0 +1,533 @@
+\hypertarget{group___user_func}{}\section{User Functions}
+\label{group___user_func}\index{User Functions@{User Functions}}
+
+
+Functions for simple radio use.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group___user_func_gaf022f4a6e0c8d5bfee1f88bc868759d6}{nrf\+\_\+setup} ()\hypertarget{group___user_func_gaf022f4a6e0c8d5bfee1f88bc868759d6}{}\label{group___user_func_gaf022f4a6e0c8d5bfee1f88bc868759d6}
+
+\begin{DoxyCompactList}\small\item\em Sets up the radio, S\+PI, and interrupts. Also resets all radio registers to their default values. \end{DoxyCompactList}\item 
+int \hyperlink{group___user_func_ga5099baab714a8a73ae66a32ba3fe04a6}{nrf\+\_\+get\+\_\+payload\+\_\+width} ()
+\begin{DoxyCompactList}\small\item\em Get the width of the top payload in the RX F\+I\+FO. \end{DoxyCompactList}\item 
+int \hyperlink{group___user_func_ga6a6944aa00dfd20af0f540e93613e19a}{nrf\+\_\+get\+\_\+payload} (char $\ast$buff, char len)
+\begin{DoxyCompactList}\small\item\em Read a received payload. \end{DoxyCompactList}\item 
+int \hyperlink{group___user_func_ga66cbce1bcbd67f721f752d7848857b26}{nrf\+\_\+payload\+\_\+available} ()
+\begin{DoxyCompactList}\small\item\em Check if a payload is available to be read. \end{DoxyCompactList}\item 
+int \hyperlink{group___user_func_ga5bbcabdf5bea986738a069cdcdf7fd04}{nrf\+\_\+get\+\_\+pipe} ()
+\begin{DoxyCompactList}\small\item\em Get the number of the pipe the most recent payload was received on. \end{DoxyCompactList}\item 
+int \hyperlink{group___user_func_gaec88da95fdf7d2baea7a9c5ddcec492b}{nrf\+\_\+get\+\_\+width} ()
+\begin{DoxyCompactList}\small\item\em Get the width of the most recently received payload. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_ga6473277a36d424febfdecb9aa3e0f6a2}{nrf\+\_\+state\+\_\+pwr\+\_\+down} ()\hypertarget{group___user_func_ga6473277a36d424febfdecb9aa3e0f6a2}{}\label{group___user_func_ga6473277a36d424febfdecb9aa3e0f6a2}
+
+\begin{DoxyCompactList}\small\item\em Put the radio in the power down state. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_gab678d78f9d288d902289dae46e382148}{nrf\+\_\+state\+\_\+standby\+\_\+1} ()\hypertarget{group___user_func_gab678d78f9d288d902289dae46e382148}{}\label{group___user_func_gab678d78f9d288d902289dae46e382148}
+
+\begin{DoxyCompactList}\small\item\em Put the radio in the standby 1 state. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_gab6c009513f9cf48b9d4beed89e9a2a61}{nrf\+\_\+state\+\_\+rx\+\_\+mode} ()\hypertarget{group___user_func_gab6c009513f9cf48b9d4beed89e9a2a61}{}\label{group___user_func_gab6c009513f9cf48b9d4beed89e9a2a61}
+
+\begin{DoxyCompactList}\small\item\em Put the radio in the rx mode state. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_gab6847a9be46161756478ac38a091a755}{nrf\+\_\+set\+\_\+transmit\+\_\+pwr} (char power)
+\begin{DoxyCompactList}\small\item\em Set power of transmitter. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_ga62bbc3e318cd92552d65d9ce240c595c}{nrf\+\_\+set\+\_\+transmit\+\_\+rate} (char rate)
+\begin{DoxyCompactList}\small\item\em Set data rate. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_ga7501b4fa31eba5ad34aed21b18bb2a72}{nrf\+\_\+set\+\_\+arc} (char arc)
+\begin{DoxyCompactList}\small\item\em Set the auto retransmit count. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_ga4bf48d64e99c204f20b6fe7c75b703c6}{nrf\+\_\+set\+\_\+rf\+\_\+ch} (char ch)
+\begin{DoxyCompactList}\small\item\em Set the RF frequency the radio will operate at. \end{DoxyCompactList}\item 
+char \hyperlink{group___user_func_ga8ca9456023217dc20dad11bf5f5682e0}{nrf\+\_\+received\+\_\+pipe\+\_\+num} ()
+\begin{DoxyCompactList}\small\item\em Returns the pipe data is available in. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_ga79ae591959bfbf33e42d91df58447771}{nrf\+\_\+set\+\_\+address\+\_\+width} (char width)
+\begin{DoxyCompactList}\small\item\em Set the address width of RX and TX pipes. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_ga5d7cce4e1b636fabeb1b2f831cb0be88}{nrf\+\_\+start\+\_\+cont\+\_\+wave} (char pwr)
+\begin{DoxyCompactList}\small\item\em Send a constant carrier wave out at specified power. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_ga2a7db2b3a11078b67e7d10f6a84ef151}{nrf\+\_\+stop\+\_\+cont\+\_\+wave} ()
+\begin{DoxyCompactList}\small\item\em Stop sending the carrier wave. \end{DoxyCompactList}\item 
+char \hyperlink{group___user_func_ga2335bab20b9cea17169bee98a9c69ce1}{nrf\+\_\+received\+\_\+pwr} ()
+\begin{DoxyCompactList}\small\item\em Check the power of the signal the nrf42l01 is receiving. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_gaa8b472c03dfdf4c5057e51014938e2c5}{nrf\+\_\+en\+\_\+aa} (int pipe)
+\begin{DoxyCompactList}\small\item\em Enable auto-\/acknowledge for a pipe. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_ga0c61d78f6f37370e11ebe21fd70f4cc4}{nrf\+\_\+dis\+\_\+aa} (int pipe)
+\begin{DoxyCompactList}\small\item\em Disable auto-\/acknowledge for a pipe. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_gabda8a4fc738cba7e3d6130e635dacff1}{nrf\+\_\+en\+\_\+rxaddr} (int pipe)
+\begin{DoxyCompactList}\small\item\em Enable a pipe to receive packets. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_gaf813fcdbfd3df6f8b89aa1848adce5f2}{nrf\+\_\+dis\+\_\+rxaddr} (int pipe)
+\begin{DoxyCompactList}\small\item\em Disable a pipe from receiving packets. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_ga501ef571a9262e1dc5c3b7b1abcf76d9}{nrf\+\_\+set\+\_\+pw} (char width, int pipe)
+\begin{DoxyCompactList}\small\item\em Set the width received static payloads should be. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_ga58dfdd90a3f6ad785a3ec57ea18a6106}{nrf\+\_\+en\+\_\+dpl} (int pipe)
+\begin{DoxyCompactList}\small\item\em Enable dynamic payload length for a pipe. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_ga08f7c4fbf94b3e5b69d1e5a143853e8a}{nrf\+\_\+dis\+\_\+dpl} (int pipe)
+\begin{DoxyCompactList}\small\item\em Disable dynamic payload length for a pipe. \end{DoxyCompactList}\item 
+int \hyperlink{group___user_func_ga713e1f78e3468d2c82c9d98e357a5f79}{nrf\+\_\+set\+\_\+rx\+\_\+addr} (int pipe, uint64\+\_\+t address, int len)
+\begin{DoxyCompactList}\small\item\em Set the address of a pipe. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_ga7cb014d392432800319725fc5fedc3c5}{nrf\+\_\+set\+\_\+tx\+\_\+addr} (uint64\+\_\+t address)
+\begin{DoxyCompactList}\small\item\em Set the address for transmitting. \end{DoxyCompactList}\item 
+void \hyperlink{group___user_func_gafa306c7ac8a44ea0e39287b3f18ec68a}{nrf\+\_\+reset} ()
+\begin{DoxyCompactList}\small\item\em Resets all registers to their default values as listed on the datasheet. \end{DoxyCompactList}\item 
+int \hyperlink{group___user_func_gaa82cc1119eb71ba500cc2c55ca312eb2}{nrf\+\_\+send\+\_\+payload} (char $\ast$data, char len)
+\begin{DoxyCompactList}\small\item\em Send a payload over the radio. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Functions for simple radio use. 
+
+This group contains functions intended for simple radio use. There are more advanced functions available for developers and for more advanced radio control in the \hyperlink{nrf24l01_8h}{nrf24l01.\+h}. 
+
+\subsection{Function Documentation}
+\index{User Functions@{User Functions}!nrf\+\_\+dis\+\_\+aa@{nrf\+\_\+dis\+\_\+aa}}
+\index{nrf\+\_\+dis\+\_\+aa@{nrf\+\_\+dis\+\_\+aa}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+dis\+\_\+aa(int pipe)}{nrf_dis_aa(int pipe)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+dis\+\_\+aa (
+\begin{DoxyParamCaption}
+\item[{int}]{pipe}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga0c61d78f6f37370e11ebe21fd70f4cc4}{}\label{group___user_func_ga0c61d78f6f37370e11ebe21fd70f4cc4}
+
+
+Disable auto-\/acknowledge for a pipe. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pipe} & The pipe to autoack will be disabled on. Pipes range from 0 to 5. \\
+\hline
+\end{DoxyParams}
+\index{User Functions@{User Functions}!nrf\+\_\+dis\+\_\+dpl@{nrf\+\_\+dis\+\_\+dpl}}
+\index{nrf\+\_\+dis\+\_\+dpl@{nrf\+\_\+dis\+\_\+dpl}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+dis\+\_\+dpl(int pipe)}{nrf_dis_dpl(int pipe)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+dis\+\_\+dpl (
+\begin{DoxyParamCaption}
+\item[{int}]{pipe}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga08f7c4fbf94b3e5b69d1e5a143853e8a}{}\label{group___user_func_ga08f7c4fbf94b3e5b69d1e5a143853e8a}
+
+
+Disable dynamic payload length for a pipe. 
+
+If dynamic payload length is disabled the length of a packet must be set using \hyperlink{group___user_func_ga501ef571a9262e1dc5c3b7b1abcf76d9}{nrf\+\_\+set\+\_\+pw}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pipe} & Which pipe to disable dynamic payload length on. \\
+\hline
+\end{DoxyParams}
+\index{User Functions@{User Functions}!nrf\+\_\+dis\+\_\+rxaddr@{nrf\+\_\+dis\+\_\+rxaddr}}
+\index{nrf\+\_\+dis\+\_\+rxaddr@{nrf\+\_\+dis\+\_\+rxaddr}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+dis\+\_\+rxaddr(int pipe)}{nrf_dis_rxaddr(int pipe)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+dis\+\_\+rxaddr (
+\begin{DoxyParamCaption}
+\item[{int}]{pipe}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_gaf813fcdbfd3df6f8b89aa1848adce5f2}{}\label{group___user_func_gaf813fcdbfd3df6f8b89aa1848adce5f2}
+
+
+Disable a pipe from receiving packets. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pipe} & The pipe that will be disabled. Pipes range from 0 to 5. \\
+\hline
+\end{DoxyParams}
+\index{User Functions@{User Functions}!nrf\+\_\+en\+\_\+aa@{nrf\+\_\+en\+\_\+aa}}
+\index{nrf\+\_\+en\+\_\+aa@{nrf\+\_\+en\+\_\+aa}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+en\+\_\+aa(int pipe)}{nrf_en_aa(int pipe)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+en\+\_\+aa (
+\begin{DoxyParamCaption}
+\item[{int}]{pipe}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_gaa8b472c03dfdf4c5057e51014938e2c5}{}\label{group___user_func_gaa8b472c03dfdf4c5057e51014938e2c5}
+
+
+Enable auto-\/acknowledge for a pipe. 
+
+This function will enable receiving on a pipe automatically in addition to enabling auto-\/acknowledge as if \hyperlink{group___user_func_gabda8a4fc738cba7e3d6130e635dacff1}{nrf\+\_\+en\+\_\+rxaddr} was called.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pipe} & The pipe autoack will be enabled on. Pipes range from 0 to 5. \\
+\hline
+\end{DoxyParams}
+\index{User Functions@{User Functions}!nrf\+\_\+en\+\_\+dpl@{nrf\+\_\+en\+\_\+dpl}}
+\index{nrf\+\_\+en\+\_\+dpl@{nrf\+\_\+en\+\_\+dpl}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+en\+\_\+dpl(int pipe)}{nrf_en_dpl(int pipe)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+en\+\_\+dpl (
+\begin{DoxyParamCaption}
+\item[{int}]{pipe}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga58dfdd90a3f6ad785a3ec57ea18a6106}{}\label{group___user_func_ga58dfdd90a3f6ad785a3ec57ea18a6106}
+
+
+Enable dynamic payload length for a pipe. 
+
+If dynamic payload length is enabled the number of bytes in a packet does not need to be specified. For this feature to work the transmitter must have dynamic payload length enabled for pipe 0 and the receiver must have dynamic payload length enabled for the pipe it will receive from this transmitter on.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pipe} & The pipe dynamic payload length will be enabled on. \\
+\hline
+\end{DoxyParams}
+\index{User Functions@{User Functions}!nrf\+\_\+en\+\_\+rxaddr@{nrf\+\_\+en\+\_\+rxaddr}}
+\index{nrf\+\_\+en\+\_\+rxaddr@{nrf\+\_\+en\+\_\+rxaddr}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+en\+\_\+rxaddr(int pipe)}{nrf_en_rxaddr(int pipe)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+en\+\_\+rxaddr (
+\begin{DoxyParamCaption}
+\item[{int}]{pipe}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_gabda8a4fc738cba7e3d6130e635dacff1}{}\label{group___user_func_gabda8a4fc738cba7e3d6130e635dacff1}
+
+
+Enable a pipe to receive packets. 
+
+The nrf24l01+ contains six parallel pipes that can receive packets from six different transmitters. Each pipe must have a unique address.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pipe} & The pipe that will be enabled. Pipes range from 0 to 5. \\
+\hline
+\end{DoxyParams}
+\index{User Functions@{User Functions}!nrf\+\_\+get\+\_\+payload@{nrf\+\_\+get\+\_\+payload}}
+\index{nrf\+\_\+get\+\_\+payload@{nrf\+\_\+get\+\_\+payload}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+get\+\_\+payload(char $\ast$buff, char len)}{nrf_get_payload(char *buff, char len)}}]{\setlength{\rightskip}{0pt plus 5cm}int nrf\+\_\+get\+\_\+payload (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{buff, }
+\item[{char}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga6a6944aa00dfd20af0f540e93613e19a}{}\label{group___user_func_ga6a6944aa00dfd20af0f540e93613e19a}
+
+
+Read a received payload. 
+
+Read a payload into an array if one is available. If dynamic payload length is enabled the length of the payload can be found using \hyperlink{group___user_func_gaec88da95fdf7d2baea7a9c5ddcec492b}{nrf\+\_\+get\+\_\+width}. If a payload is read, it is no longer available. This function should only be called if \hyperlink{group___user_func_ga66cbce1bcbd67f721f752d7848857b26}{nrf\+\_\+payload\+\_\+available()} returns 1.
+
+
+\begin{DoxyParams}{Parameters}
+{\em buff} & The array the payload will be read into. \\
+\hline
+{\em len} & Length of the payload that will be read (1-\/32 bytes).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if a payload is read, 0 if no payload is available to be read. 
+\end{DoxyReturn}
+\index{User Functions@{User Functions}!nrf\+\_\+get\+\_\+payload\+\_\+width@{nrf\+\_\+get\+\_\+payload\+\_\+width}}
+\index{nrf\+\_\+get\+\_\+payload\+\_\+width@{nrf\+\_\+get\+\_\+payload\+\_\+width}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+get\+\_\+payload\+\_\+width()}{nrf_get_payload_width()}}]{\setlength{\rightskip}{0pt plus 5cm}int nrf\+\_\+get\+\_\+payload\+\_\+width (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga5099baab714a8a73ae66a32ba3fe04a6}{}\label{group___user_func_ga5099baab714a8a73ae66a32ba3fe04a6}
+
+
+Get the width of the top payload in the RX F\+I\+FO. 
+
+This function is only meant for use with dynamic payload lengths.
+
+\begin{DoxyReturn}{Returns}
+The width of the payload in bytes. 
+\end{DoxyReturn}
+\index{User Functions@{User Functions}!nrf\+\_\+get\+\_\+pipe@{nrf\+\_\+get\+\_\+pipe}}
+\index{nrf\+\_\+get\+\_\+pipe@{nrf\+\_\+get\+\_\+pipe}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+get\+\_\+pipe()}{nrf_get_pipe()}}]{\setlength{\rightskip}{0pt plus 5cm}int nrf\+\_\+get\+\_\+pipe (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga5bbcabdf5bea986738a069cdcdf7fd04}{}\label{group___user_func_ga5bbcabdf5bea986738a069cdcdf7fd04}
+
+
+Get the number of the pipe the most recent payload was received on. 
+
+\begin{DoxyReturn}{Returns}
+The number of the pipe the most recent payload was received on. 
+\end{DoxyReturn}
+\index{User Functions@{User Functions}!nrf\+\_\+get\+\_\+width@{nrf\+\_\+get\+\_\+width}}
+\index{nrf\+\_\+get\+\_\+width@{nrf\+\_\+get\+\_\+width}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+get\+\_\+width()}{nrf_get_width()}}]{\setlength{\rightskip}{0pt plus 5cm}int nrf\+\_\+get\+\_\+width (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_gaec88da95fdf7d2baea7a9c5ddcec492b}{}\label{group___user_func_gaec88da95fdf7d2baea7a9c5ddcec492b}
+
+
+Get the width of the most recently received payload. 
+
+\begin{DoxyReturn}{Returns}
+Width of the received payload in bytes. 
+\end{DoxyReturn}
+\index{User Functions@{User Functions}!nrf\+\_\+payload\+\_\+available@{nrf\+\_\+payload\+\_\+available}}
+\index{nrf\+\_\+payload\+\_\+available@{nrf\+\_\+payload\+\_\+available}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+payload\+\_\+available()}{nrf_payload_available()}}]{\setlength{\rightskip}{0pt plus 5cm}int nrf\+\_\+payload\+\_\+available (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga66cbce1bcbd67f721f752d7848857b26}{}\label{group___user_func_ga66cbce1bcbd67f721f752d7848857b26}
+
+
+Check if a payload is available to be read. 
+
+This function should be used to poll for received payloads.
+
+\begin{DoxyReturn}{Returns}
+1 if a payload was received and is available to be read, 0 if not. 
+\end{DoxyReturn}
+\index{User Functions@{User Functions}!nrf\+\_\+received\+\_\+pipe\+\_\+num@{nrf\+\_\+received\+\_\+pipe\+\_\+num}}
+\index{nrf\+\_\+received\+\_\+pipe\+\_\+num@{nrf\+\_\+received\+\_\+pipe\+\_\+num}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+received\+\_\+pipe\+\_\+num()}{nrf_received_pipe_num()}}]{\setlength{\rightskip}{0pt plus 5cm}char nrf\+\_\+received\+\_\+pipe\+\_\+num (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga8ca9456023217dc20dad11bf5f5682e0}{}\label{group___user_func_ga8ca9456023217dc20dad11bf5f5682e0}
+
+
+Returns the pipe data is available in. 
+
+If 8 is returned the F\+I\+FO is empty and no data was received.
+
+\begin{DoxyReturn}{Returns}
+The pipe data is available in. 
+\end{DoxyReturn}
+\index{User Functions@{User Functions}!nrf\+\_\+received\+\_\+pwr@{nrf\+\_\+received\+\_\+pwr}}
+\index{nrf\+\_\+received\+\_\+pwr@{nrf\+\_\+received\+\_\+pwr}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+received\+\_\+pwr()}{nrf_received_pwr()}}]{\setlength{\rightskip}{0pt plus 5cm}char nrf\+\_\+received\+\_\+pwr (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga2335bab20b9cea17169bee98a9c69ce1}{}\label{group___user_func_ga2335bab20b9cea17169bee98a9c69ce1}
+
+
+Check the power of the signal the nrf42l01 is receiving. 
+
+RX mode must be enabled for at least 40 us before measurements will be accurate. 0 will be returned if power level is below -\/64dB and 1 will be returned if power level is above -\/64dB.
+
+\begin{DoxyReturn}{Returns}
+1 if power level is above -\/64dB, 0 if the power level is not above -\/64dB. 
+\end{DoxyReturn}
+\index{User Functions@{User Functions}!nrf\+\_\+reset@{nrf\+\_\+reset}}
+\index{nrf\+\_\+reset@{nrf\+\_\+reset}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+reset()}{nrf_reset()}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+reset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_gafa306c7ac8a44ea0e39287b3f18ec68a}{}\label{group___user_func_gafa306c7ac8a44ea0e39287b3f18ec68a}
+
+
+Resets all registers to their default values as listed on the datasheet. 
+
+/$\ast$$\ast$ \index{User Functions@{User Functions}!nrf\+\_\+send\+\_\+payload@{nrf\+\_\+send\+\_\+payload}}
+\index{nrf\+\_\+send\+\_\+payload@{nrf\+\_\+send\+\_\+payload}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+send\+\_\+payload(char $\ast$data, char len)}{nrf_send_payload(char *data, char len)}}]{\setlength{\rightskip}{0pt plus 5cm}int nrf\+\_\+send\+\_\+payload (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{data, }
+\item[{char}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_gaa82cc1119eb71ba500cc2c55ca312eb2}{}\label{group___user_func_gaa82cc1119eb71ba500cc2c55ca312eb2}
+
+
+Send a payload over the radio. 
+
+/$\ast$$\ast$
+
+If auto-\/acknowledge is disabled this function will return 1 when the packet is successfully sent and does not reflect the packet being acknowledged. This function will never return 0 if auto-\/acknowledge is disabled. If auto-\/ acknowledge is enabled this function returns 1 when a packet is acknowledged after being sent and 0 if the packet is not acknowledged.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The payload to be sent. \\
+\hline
+{\em len} & The length of the payload in bytes. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if payload was successfully sent and acknowledged 0 if payload was not acknowledged. 
+\end{DoxyReturn}
+\index{User Functions@{User Functions}!nrf\+\_\+set\+\_\+address\+\_\+width@{nrf\+\_\+set\+\_\+address\+\_\+width}}
+\index{nrf\+\_\+set\+\_\+address\+\_\+width@{nrf\+\_\+set\+\_\+address\+\_\+width}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+set\+\_\+address\+\_\+width(char width)}{nrf_set_address_width(char width)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+set\+\_\+address\+\_\+width (
+\begin{DoxyParamCaption}
+\item[{char}]{width}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga79ae591959bfbf33e42d91df58447771}{}\label{group___user_func_ga79ae591959bfbf33e42d91df58447771}
+
+
+Set the address width of RX and TX pipes. 
+
+Sets the address width of all receiving pipes and the transmitting address width.
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & The address width to be set in bytes (3-\/5 bytes) \\
+\hline
+\end{DoxyParams}
+\index{User Functions@{User Functions}!nrf\+\_\+set\+\_\+arc@{nrf\+\_\+set\+\_\+arc}}
+\index{nrf\+\_\+set\+\_\+arc@{nrf\+\_\+set\+\_\+arc}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+set\+\_\+arc(char arc)}{nrf_set_arc(char arc)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+set\+\_\+arc (
+\begin{DoxyParamCaption}
+\item[{char}]{arc}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga7501b4fa31eba5ad34aed21b18bb2a72}{}\label{group___user_func_ga7501b4fa31eba5ad34aed21b18bb2a72}
+
+
+Set the auto retransmit count. 
+
+Set how many times the nrf24l01 should attempt to retransmit the packet after not receiving an acknowledgment packet.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arc} & The amount of times the radio should attempt to retransmit. \\
+\hline
+\end{DoxyParams}
+\index{User Functions@{User Functions}!nrf\+\_\+set\+\_\+pw@{nrf\+\_\+set\+\_\+pw}}
+\index{nrf\+\_\+set\+\_\+pw@{nrf\+\_\+set\+\_\+pw}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+set\+\_\+pw(char width, int pipe)}{nrf_set_pw(char width, int pipe)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+set\+\_\+pw (
+\begin{DoxyParamCaption}
+\item[{char}]{width, }
+\item[{int}]{pipe}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga501ef571a9262e1dc5c3b7b1abcf76d9}{}\label{group___user_func_ga501ef571a9262e1dc5c3b7b1abcf76d9}
+
+
+Set the width received static payloads should be. 
+
+When using static payload widths the width of packets must be explicitly set. The receiver\textquotesingle{}s width must be set to the size of the payloads being transmitted. Use this function to set the width on the receiver. This function is unnecessary for a pipe if dynamic payload length is enabled on that pipe.
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & The number of bytes the pipe will be set to receive in a static payload. (1-\/32 bytes)\\
+\hline
+{\em pipe} & The pipe whose payload width will be set. \\
+\hline
+\end{DoxyParams}
+\index{User Functions@{User Functions}!nrf\+\_\+set\+\_\+rf\+\_\+ch@{nrf\+\_\+set\+\_\+rf\+\_\+ch}}
+\index{nrf\+\_\+set\+\_\+rf\+\_\+ch@{nrf\+\_\+set\+\_\+rf\+\_\+ch}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+set\+\_\+rf\+\_\+ch(char ch)}{nrf_set_rf_ch(char ch)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+set\+\_\+rf\+\_\+ch (
+\begin{DoxyParamCaption}
+\item[{char}]{ch}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga4bf48d64e99c204f20b6fe7c75b703c6}{}\label{group___user_func_ga4bf48d64e99c204f20b6fe7c75b703c6}
+
+
+Set the RF frequency the radio will operate at. 
+
+The nrf24l01 can operate at frequencies ranging from 2.\+400\+G\+Hz to 2.\+525 G\+Hz. At 250 kbps or 1 Mbps the radio occupies less than a 1\+M\+Hz bandwidth. At 2 Mbps the radio occupies less than a 2 M\+Hz bandwidth. The frequency is set according to the equation, frequency = 2400 + ch (M\+Hz). The transmitter and receiver must be set operate at the same frequency to communicate. This function will set the center frequency of the radio.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ch} & The frequency the radio should transmit at. \\
+\hline
+\end{DoxyParams}
+\index{User Functions@{User Functions}!nrf\+\_\+set\+\_\+rx\+\_\+addr@{nrf\+\_\+set\+\_\+rx\+\_\+addr}}
+\index{nrf\+\_\+set\+\_\+rx\+\_\+addr@{nrf\+\_\+set\+\_\+rx\+\_\+addr}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+set\+\_\+rx\+\_\+addr(int pipe, uint64\+\_\+t address, int len)}{nrf_set_rx_addr(int pipe, uint64_t address, int len)}}]{\setlength{\rightskip}{0pt plus 5cm}int nrf\+\_\+set\+\_\+rx\+\_\+addr (
+\begin{DoxyParamCaption}
+\item[{int}]{pipe, }
+\item[{uint64\+\_\+t}]{address, }
+\item[{int}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga713e1f78e3468d2c82c9d98e357a5f79}{}\label{group___user_func_ga713e1f78e3468d2c82c9d98e357a5f79}
+
+
+Set the address of a pipe. 
+
+The nrf24l01 has six pipes to receive on. Pipes have addresses that are 3-\/5 bytes long. Pipes 0 and 1 can have all 5 bytes of their addresses changed. The other four pipes can only have the L\+SB of their address changed. The four M\+S\+Bs of the other four pipes are the M\+S\+Bs of the address of pipe 1. The address width must be set using nrf\+\_\+set\+\_\+address\+\_\+width before calling this function. If the address width set does not match the length specified in this function 0 will be returned and the address will not be written. 0 will also be returned if length is not set to 1 when writing to pipes 2-\/5.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pipe} & The pipe whose address will be set. Pipes range from 0-\/5. \\
+\hline
+{\em address} & Address pipe will be set to. \\
+\hline
+{\em len} & The length of the address being set in bytes. (1-\/5 bytes) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns 1 if address was written correctly. Returns 0 if address was written incorrectly. If 0 is returned address was not written. 
+\end{DoxyReturn}
+\index{User Functions@{User Functions}!nrf\+\_\+set\+\_\+transmit\+\_\+pwr@{nrf\+\_\+set\+\_\+transmit\+\_\+pwr}}
+\index{nrf\+\_\+set\+\_\+transmit\+\_\+pwr@{nrf\+\_\+set\+\_\+transmit\+\_\+pwr}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+set\+\_\+transmit\+\_\+pwr(char power)}{nrf_set_transmit_pwr(char power)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+set\+\_\+transmit\+\_\+pwr (
+\begin{DoxyParamCaption}
+\item[{char}]{power}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_gab6847a9be46161756478ac38a091a755}{}\label{group___user_func_gab6847a9be46161756478ac38a091a755}
+
+
+Set power of transmitter. 
+
+The possible power settings are\+: ~\newline
+ 0d\+Bm\+: nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+W\+R\+\_\+0 ~\newline
+-\/6d\+Bm\+: nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+W\+R\+\_\+6 ~\newline
+-\/12d\+Bm\+: nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+W\+R\+\_\+12 ~\newline
+-\/18d\+Bm\+: nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+W\+R\+\_\+18
+
+
+\begin{DoxyParams}{Parameters}
+{\em power} & Power level the transmitter will be set to. \\
+\hline
+\end{DoxyParams}
+\index{User Functions@{User Functions}!nrf\+\_\+set\+\_\+transmit\+\_\+rate@{nrf\+\_\+set\+\_\+transmit\+\_\+rate}}
+\index{nrf\+\_\+set\+\_\+transmit\+\_\+rate@{nrf\+\_\+set\+\_\+transmit\+\_\+rate}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+set\+\_\+transmit\+\_\+rate(char rate)}{nrf_set_transmit_rate(char rate)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+set\+\_\+transmit\+\_\+rate (
+\begin{DoxyParamCaption}
+\item[{char}]{rate}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga62bbc3e318cd92552d65d9ce240c595c}{}\label{group___user_func_ga62bbc3e318cd92552d65d9ce240c595c}
+
+
+Set data rate. 
+
+The possible rate settings are\+: ~\newline
+250 kbps\+: nrf24l01\+\_\+\+D\+R\+\_\+\+L\+OW ~\newline
+1 Mbps\+: nrf24l01\+\_\+\+D\+R\+\_\+\+M\+ED ~\newline
+2 Mbps\+: nrf24l01\+\_\+\+D\+R\+\_\+\+H\+I\+GH
+
+
+\begin{DoxyParams}{Parameters}
+{\em rate} & Rate the transmitter will be set to. \\
+\hline
+\end{DoxyParams}
+\index{User Functions@{User Functions}!nrf\+\_\+set\+\_\+tx\+\_\+addr@{nrf\+\_\+set\+\_\+tx\+\_\+addr}}
+\index{nrf\+\_\+set\+\_\+tx\+\_\+addr@{nrf\+\_\+set\+\_\+tx\+\_\+addr}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+set\+\_\+tx\+\_\+addr(uint64\+\_\+t address)}{nrf_set_tx_addr(uint64_t address)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+set\+\_\+tx\+\_\+addr (
+\begin{DoxyParamCaption}
+\item[{uint64\+\_\+t}]{address}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga7cb014d392432800319725fc5fedc3c5}{}\label{group___user_func_ga7cb014d392432800319725fc5fedc3c5}
+
+
+Set the address for transmitting. 
+
+The address of the transmitter should match the address of the receiver or packets will not be received. If auto acknowledge is enabled rx pipe 0 on the transmitter must be set to the same address as the tx address set in this function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & The address that will be set for transmitting. (5 bytes) \\
+\hline
+\end{DoxyParams}
+\index{User Functions@{User Functions}!nrf\+\_\+start\+\_\+cont\+\_\+wave@{nrf\+\_\+start\+\_\+cont\+\_\+wave}}
+\index{nrf\+\_\+start\+\_\+cont\+\_\+wave@{nrf\+\_\+start\+\_\+cont\+\_\+wave}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+start\+\_\+cont\+\_\+wave(char pwr)}{nrf_start_cont_wave(char pwr)}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+start\+\_\+cont\+\_\+wave (
+\begin{DoxyParamCaption}
+\item[{char}]{pwr}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga5d7cce4e1b636fabeb1b2f831cb0be88}{}\label{group___user_func_ga5d7cce4e1b636fabeb1b2f831cb0be88}
+
+
+Send a constant carrier wave out at specified power. 
+
+Send a continuous carrier wave for testing purposes. Wave can be stopped by calling nrf\+\_\+stop\+\_\+cont\+\_\+wave.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pwr} & Power level to set transmitter to. Possible values are\+: 0d\+Bm\+: nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+W\+R\+\_\+0~\newline
+ -\/6d\+Bm\+: nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+W\+R\+\_\+6~\newline
+ -\/12d\+Bm\+: nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+W\+R\+\_\+12~\newline
+ -\/18d\+Bm\+: nrf24l01\+\_\+\+R\+F\+\_\+\+S\+E\+T\+U\+P\+\_\+\+R\+F\+\_\+\+P\+W\+R\+\_\+18 \\
+\hline
+\end{DoxyParams}
+\index{User Functions@{User Functions}!nrf\+\_\+stop\+\_\+cont\+\_\+wave@{nrf\+\_\+stop\+\_\+cont\+\_\+wave}}
+\index{nrf\+\_\+stop\+\_\+cont\+\_\+wave@{nrf\+\_\+stop\+\_\+cont\+\_\+wave}!User Functions@{User Functions}}
+\subsubsection[{\texorpdfstring{nrf\+\_\+stop\+\_\+cont\+\_\+wave()}{nrf_stop_cont_wave()}}]{\setlength{\rightskip}{0pt plus 5cm}void nrf\+\_\+stop\+\_\+cont\+\_\+wave (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group___user_func_ga2a7db2b3a11078b67e7d10f6a84ef151}{}\label{group___user_func_ga2a7db2b3a11078b67e7d10f6a84ef151}
+
+
+Stop sending the carrier wave. 
+
+This function should only be called some time after \hyperlink{group___user_func_ga5d7cce4e1b636fabeb1b2f831cb0be88}{nrf\+\_\+start\+\_\+cont\+\_\+wave} has been called. 

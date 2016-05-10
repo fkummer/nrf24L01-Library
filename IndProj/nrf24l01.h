@@ -262,14 +262,13 @@ char rf_spiwrite(unsigned char c);
  */
 void init_SPI();
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Sets up the radio, SPI, and interrupts.  Also resets all radio 
  * registers to their default values.
  */
 void nrf_setup();
-/*@}*/
 
 /**
  * @brief Read a register and store the data in an array. Can be multiple bytes 
@@ -279,7 +278,6 @@ void nrf_setup();
  * @param buff Pointer to the array the data will be stored in. LSB first.
  * @param len How many bytes of data need to be read. (1-5 bytes)
  */
-
 void nrf_read_reg(char reg, char * buff, int len);
 
 /**
@@ -301,9 +299,9 @@ void nrf_flush_tx();
  */
 void nrf_flush_rx();
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Get the width of the top payload in the RX FIFO.
  * 
  * This function is only meant for use with dynamic payload lengths.
@@ -311,7 +309,6 @@ void nrf_flush_rx();
  * @return The width of the payload in bytes.
  */
 int nrf_get_payload_width();
-/*@}*/
 
 /**
  * @brief Write a payload to the TX FIFO.
@@ -346,9 +343,9 @@ void nrf_read_payload(char * buff);
 int nrf_get_payload(char * buff, char len);
 /*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Check if a payload is available to be read.
  * 
  * This function should be used to poll for received payloads.
@@ -356,27 +353,25 @@ int nrf_get_payload(char * buff, char len);
  * @return 1 if a payload was received and is available to be read, 0 if not.
  */
 int nrf_payload_available();
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Get the number of the pipe the most recent payload was received on.
  * 
  * @return The number of the pipe the most recent payload was received on.
  */
 int nrf_get_pipe();
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Get the width of the most recently received payload.
  * 
  * @return Width of the received payload in bytes.
  */
 int nrf_get_width();
-/*@}*/
+
 
 /**
  * @brief Sets the power up bit in the status register in order to leave the 
@@ -390,29 +385,26 @@ void nrf_pwrup();
  */
 void nrf_pwrdown();
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Put the radio in the power down state.
  */
 void nrf_state_pwr_down();
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Put the radio in the standby 1 state.
  */
 void nrf_state_standby_1();
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Put the radio in the rx mode state.
  */
 void nrf_state_rx_mode();
-/*@}*/
 
 /**
  * @brief Set the PRIM_RX bit in the CONFIG register.
@@ -424,9 +416,9 @@ void nrf_set_prim_rx();
  */
 void nrf_clear_prim_rx();
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Set power of transmitter.
  * 
  * The possible power settings are: \n
@@ -438,11 +430,10 @@ void nrf_clear_prim_rx();
  * @param power Power level the transmitter will be set to.
  */
 void nrf_set_transmit_pwr(char power);
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Set data rate.
  *
  * The possible rate settings are: \n
@@ -453,10 +444,7 @@ void nrf_set_transmit_pwr(char power);
  * @param rate Rate the transmitter will be set to.
  */
 void nrf_set_transmit_rate(char rate);
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
  * @brief Set the auto retransmit delay.
  * 
@@ -468,11 +456,10 @@ void nrf_set_transmit_rate(char rate);
  * @param ard The length of auto retransmit delay to be set.
  */
 void nrf_set_ard(char ard);
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Set the auto retransmit count.
  * 
  * Set how many times the nrf24l01 should attempt to retransmit the packet after
@@ -481,11 +468,10 @@ void nrf_set_ard(char ard);
  * @param arc The amount of times the radio should attempt to retransmit.
  */
 void nrf_set_arc(char arc);
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Set the RF frequency the radio will operate at.
  * 
  * The nrf24l01 can operate at frequencies ranging from 2.400GHz to 2.525 GHz.
@@ -498,11 +484,10 @@ void nrf_set_arc(char arc);
  * @param ch The frequency the radio should transmit at.
  */
 void nrf_set_rf_ch(char ch);
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Returns the pipe data is available in.
  * 
  * If 8 is returned the FIFO is empty and no data was received.
@@ -510,11 +495,10 @@ void nrf_set_rf_ch(char ch);
  * @return The pipe data is available in.
  */
 char nrf_received_pipe_num();
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Set the address width of RX and TX pipes
  * 
  * Sets the address width of all receiving pipes and the transmitting address 
@@ -523,11 +507,10 @@ char nrf_received_pipe_num();
  * @param width The address width to be set in bytes (3-5 bytes)
  */
 void nrf_set_address_width(char width);
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Send a constant carrier wave out at specified power.
  * 
  * Send a continuous carrier wave for testing purposes. Wave can be stopped by
@@ -540,22 +523,20 @@ void nrf_set_address_width(char width);
  *  -18dBm: nrf24l01_RF_SETUP_RF_PWR_18
  */
 void nrf_start_cont_wave(char pwr);
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Stop sending the carrier wave.
  * 
  * This function should only be called some time after ::nrf_start_cont_wave has
  * been called.
  */
 void nrf_stop_cont_wave();
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Check the power of the signal the nrf42l01 is receiving
  * 
  * RX mode must be enabled for at least 40 us before measurements will be 
@@ -566,11 +547,10 @@ void nrf_stop_cont_wave();
  * -64dB.
  */
 char nrf_received_pwr();
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Enable auto-acknowledge for a pipe.
  * 
  * This function will enable receiving on a pipe automatically in addition to
@@ -579,22 +559,19 @@ char nrf_received_pwr();
  * @param pipe The pipe autoack will be enabled on. Pipes range from 0 to 5. 
  */
 void nrf_en_aa(int pipe);
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Disable auto-acknowledge for a pipe.
  * 
  * @param pipe The pipe to autoack will be disabled on. Pipes range from 0 to 5.
  */
 void nrf_dis_aa(int pipe);
-/*@}*/
 
-
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Enable a pipe to receive packets.
  * 
  * The nrf24l01+ contains six parallel pipes that can receive packets from six 
@@ -603,21 +580,19 @@ void nrf_dis_aa(int pipe);
  * @param pipe The pipe that will be enabled. Pipes range from 0 to 5.
  */
 void nrf_en_rxaddr(int pipe);
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Disable a pipe from receiving packets.
  * 
  * @param pipe The pipe that will be disabled. Pipes range from 0 to 5.
  */
 void nrf_dis_rxaddr(int pipe);
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Set the width received static payloads should be.
  * 
  * When using static payload widths the width of packets must be explicitly set.
@@ -632,11 +607,10 @@ void nrf_dis_rxaddr(int pipe);
  * @param pipe The pipe whose payload width will be set.
  */
 void nrf_set_pw(char width, int pipe);
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Enable dynamic payload length for a pipe.
  * 
  * If dynamic payload length is enabled the number of bytes in a packet does not
@@ -648,11 +622,10 @@ void nrf_set_pw(char width, int pipe);
  * @param pipe The pipe dynamic payload length will be enabled on.
  */
 void nrf_en_dpl(int pipe);
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Disable dynamic payload length for a pipe.
  * 
  * If dynamic payload length is disabled the length of a packet must be set 
@@ -661,7 +634,6 @@ void nrf_en_dpl(int pipe);
  * @param pipe Which pipe to disable dynamic payload length on.
  */
 void nrf_dis_dpl(int pipe);
-/*@}*/
 
 /**
  * @brief Enable dynamic auto-acknowledgements.
@@ -680,9 +652,9 @@ void nrf_en_dyn_ack();
  */
 void nrf_dis_dyn_ack();
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Set the address of a pipe.
  * 
  * The nrf24l01 has six pipes to receive on.  Pipes have addresses
@@ -702,11 +674,10 @@ void nrf_dis_dyn_ack();
  * written incorrectly.  If 0 is returned address was not written.
  */
 int nrf_set_rx_addr(int pipe, uint64_t address, int len);
-/*@}*/
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Set the address for transmitting.
  * 
  * The address of the transmitter should match the address of the receiver or
@@ -717,7 +688,6 @@ int nrf_set_rx_addr(int pipe, uint64_t address, int len);
  * @param address The address that will be set for transmitting. (5 bytes)
  */
 void nrf_set_tx_addr(uint64_t address);
-/*@}*/
 
 //\cond
 // Helper function for parsing addresses into a buffer
@@ -735,14 +705,13 @@ void nrf_en_ack_pay();
 void nrf_dis_ack_pay();
 //\endcond
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Resets all registers to their default values as listed on the 
  * datasheet.
  */
 void nrf_reset();
-/*@}*/
 
 //\cond
 /**
@@ -758,9 +727,9 @@ void nrf_reset();
 int nrf_send_payload_nonblock(char * data, char len);
 //\endcond
 
-/** @addtogroup UserFunc */
-/*@{*/
 /**
+ * @ingroup UserFunc
+ * 
  * @brief Send a payload over the radio.
  * 
  * If auto-acknowledge is disabled this function will return 1 when the packet
@@ -775,7 +744,6 @@ int nrf_send_payload_nonblock(char * data, char len);
  * not acknowledged.
  */
 int nrf_send_payload(char * data, char len);
-/*@}*/
 
 //\cond
 //From tft_master.h, by Syed Tahmid Mahbub
